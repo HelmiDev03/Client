@@ -1,0 +1,16 @@
+
+
+.EmployeesContainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 94%;
+    margin-left: 37px;
+    margin-bottom: 2rem;
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem;
+    border-radius: 10px;
+    height : auto;
+  }
+  
+  

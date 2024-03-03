@@ -1,0 +1,21 @@
+.InputContainer {
+   
+    display: flex;
+    flex-direction: column;
+    width: 374px;
+    height: 61px;
+    margin-right: 8px;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 65px;
+}
+
+.InputLabel{
+    /*font-lexend font-light  text-[14px] leading-[22px] text-[#A2A1A8] mb-1*/
+    
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 22px;
+    color: #A2A1A8;
+    margin-bottom: 4px;
+}

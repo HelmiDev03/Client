@@ -1,33 +1,60 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
+body{
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  
+}
+input {
+  font-family: Lexend;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  text-align: left;
+  color: text-gray-500;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #D1D5DB; /* Gray 300 */
+  transition-property: border-color;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+ 
+}
+input[type="date"]{
+ 
+  padding: 24px;
+
+
+  height : 56px;
+ 
+ 
+}
+select option {
+  background-color: text-gray-500;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+
+input:not([type='checkbox']):focus {
+  outline: none;
+  border-color: #4F46E5; /* Indigo 600 */
+  box-shadow: 0 0 0 2px #4F46E5; /* Indigo 600 */
+}
+ option:hover{
+  background-color: #7152F3;
+ }
+
+.react-international-phone-country-selector{
+   transform: translateX(52px);
+   z-index: 1000;
+}
+.centered-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -1,0 +1,41 @@
+.maintext{
+    
+    margin-left: -6px;
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Lexend', sans-serif; 
+    color: #16151C;
+    line-height: 40px;
+    
+}
+
+.InputContainer {
+   
+    display: flex;
+    flex-direction: column;
+    width: 374px;
+    height: 61px;
+    margin-right: 8px;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 45px;
+}
+
+
+.cercle{
+   
+    width: 17px;
+    height: 17px;
+    border-radius: 10px;
+    margin-right: 1.5rem ;
+}
+.InputWithEye {
+    display: flex;
+    align-items: center;
+}
+
+.InputWithEye button {
+    margin-left: -30px; /* Adjust the margin as needed */
+    z-index: 5;
+}
+
