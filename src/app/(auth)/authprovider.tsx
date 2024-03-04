@@ -11,12 +11,20 @@ const Authprovider = ({ children }: { children: React.ReactNode }) => {
 
    
     const dispatch = useDispatch();
-    
+    const errors = useSelector((state: any) => state.errors);
+    const success = useSelector((state: any) => state.success);
 
     useEffect(() => {
         
         const successMessage = localStorage.getItem('successMessage');
         const errorMessage = localStorage.getItem('errorMessage');
+        
+        if (Object.keys(errors).length > 0) {
+            dispatch({ type: 'ERRORS', payload: {}});
+        }
+        if (success.message !='') {
+            dispatch({ type: 'SUCCESS', payload: ''});
+        }
 
         if (successMessage) {
            

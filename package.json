@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.11",
@@ -16,7 +17,7 @@
     "@mui/x-data-grid": "^6.19.6",
     "axios": "^1.6.7",
     "flowbite-react": "^0.7.2",
-    "framer-motion": "^11.0.7",
+    "framer-motion": "^11.0.8",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",

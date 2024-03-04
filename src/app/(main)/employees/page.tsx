@@ -10,7 +10,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 const Employees = () => {
     const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'id', headerName: 'ID',   width: 90 },
         {
           field: 'firstName',
           headerName: 'First name',
@@ -71,6 +71,7 @@ const Employees = () => {
         pageSizeOptions={[5]}
         checkboxSelection
         disableRowSelectionOnClick
+        
       />
     </Box>
       

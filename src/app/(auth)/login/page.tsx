@@ -117,7 +117,7 @@ const Login = () => {
                                     <input type="checkbox" id="remember" name="remember" className="  rounded-[5px]  " />
                                     <label htmlFor="remember" className=" ml-2 font-lexend text-[14px] font-light text-gray-400">Remember me</label>
                                 </div>
-                                <a href="#" className="font-lexend leading-[22px] text-[14px] font-light text-[#7152F3]">Forgot Password ?</a>
+                                <Link href="/forgetpassword" className="font-lexend leading-[22px] text-[14px] font-light text-[#7152F3]">Forgot Password ?</Link>
                                
                             </div>
                             {errorMessage && <div className=" h-[30px] w-[445px] flex justify-center items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
