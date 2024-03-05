@@ -14,14 +14,14 @@ import { FileInput, Label } from 'flowbite-react';
 import axios from 'axios';
 import ButtonSubmit from '../ButtonSubmit/Button';
 import ButtonCancel from '../ButtonCancel/Button';
-
-
+import { extractPublicId } from 'cloudinary-build-url'
+import { IoMdClose } from "react-icons/io";
 import { MdOutlineDownloading } from "react-icons/md";
 import { updateProfilePicture } from '@/redux/actions/userActions/updateProfilePicture'
 import { AppDispatch } from '@/redux/store';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-
+    const errors = useSelector((state: any) => state.errors);
     const pathname = usePathname();
     const auth = useSelector((state: any) => state.auth);
     const [showUpload, setshowUpload] = useState(false)
@@ -64,16 +64,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       .put("http://localhost:5000/api/update/profilepicture", { image: base64 })
       .then((res) => {
         setUrl(res.data);
-    
+        dispatch({ type : 'ERRORS' , payload : {} });
+        setLoading(false) ;
       })
-      .then(() => setLoading(false))
-      .catch(console.log);
+      .catch((err:any) => {
+        console.log(err);
+      setLoading(false) ; 
+      dispatch({ type : 'ERRORS' , payload : {image : 'Image Size is too large'}})
+      });
   }
     
 
 
     const updatePic = async (ImageUrl: string, choose: string) => {
-        dispatch(updateProfilePicture(ImageUrl, choose));
+        const publicId = extractPublicId(
+            ImageUrl
+          )
+        dispatch(updateProfilePicture(ImageUrl,publicId, choose));
         
         setUrl('')
         setLoading(false);
@@ -120,10 +127,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                         </div>}
 
 
-                    {Url && <div className=" z-[100] absolute top-[23%] right-[32%] right p-4 w-[400px]  max-w-lg ">
+                    {Url  && <div className=" z-[100] absolute top-[23%] right-[32%] right p-4 w-[400px]  max-w-lg ">
                         <div className=" bg-lavender relative p-4  rounded-lg drop-shadow-md  md:p-8 flex flex-col justify-center">
 
-                            <img src={Url} alt="Image from Cloudinary" />
+                           <img src={Url} alt="Image from Cloudinary" /> 
+                      
 
 
 
@@ -141,6 +149,28 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                                 </div>
 
                             </div>
+                        </div>
+                    </div>}
+                    {errors.image  && <div className=" z-[100] absolute top-[23%] right-[32%] right p-4 w-[400px]  max-w-lg  ">
+                        <div className=" bg-lavender relative p-4  rounded-lg drop-shadow-md  md:p-8 flex flex-col items-center justify-center">
+
+                        
+                          {errors.image &&  <div className="h-[100px] w-[80%] flex justify-center items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
+                            <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                            </svg>
+                            <span className="sr-only">Info</span>
+                            <div>
+                                {errors.image }
+                                <IoMdClose onClick={(e:any)=> dispatch({ type : 'ERRORS' , payload : {} })} className='hover:cursor-pointer absolute top-[10px] right-[10px] text-[25px]' />
+
+                            </div>
+                        </div>}
+
+
+
+
+                        
                         </div>
                     </div>}
                     {loading && <div className=" z-[100] absolute top-[23%] right-[32%] right p-4 w-[400px]  max-w-lg ">

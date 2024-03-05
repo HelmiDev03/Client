@@ -16,6 +16,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
     "@mui/x-data-grid": "^6.19.6",
     "axios": "^1.6.7",
+    "cloudinary-build-url": "^0.2.4",
     "compressorjs": "^1.2.1",
     "flowbite-react": "^0.7.2",
     "framer-motion": "^11.0.8",
