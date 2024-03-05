@@ -76,7 +76,7 @@ const Header= () => {
       style={{ borderColor: '#A2A1A833' }}
     >
         
-   <Image  style={{ borderRadius: '8px', marginRight: '4px'  , width : '40px' , height:'40px' }} src="/profilepic.png" width={40} height={40}
+   <Image  style={{ borderRadius: '8px', marginRight: '4px'  , width : '40px' , height:'40px' }} src={auth.user.profilepicture ? auth.user.profilepicture: '/defaultprofilepicture.png'} width={40} height={40}
         alt="Profile" />
       <div>
         <p className="font-lexend text-body-1 font-bold text- [#16151C] text-base leading-6 tracking-normal text-left ">{auth.user.firstname } {auth.user.lastname} </p>
