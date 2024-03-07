@@ -42,13 +42,16 @@ const Header= () => {
 
   setTitle1(pathParts[1])
   setTitle2(pathParts[2])
+  if ( pathname ==='/employees') {
+    setTitle2('All Employees Information')
+  }
   }, [pathname])
 
 
     return     (
 
 
-        <header  className=" fixed z-[999] top-[-6px] w-[82%]   h-[82px]  flex items-center justify-between px-8 bg-[#ffffff] mb-10 ml-2  ">
+        <header  className={` ${pathname==='/packages' ? 'hidden' : 'block'}         fixed z-[999] top-[-6px] w-[82%]   h-[82px]  flex items-center justify-between px-8 bg-[#ffffff] mb-10 ml-2 `}>
 
 
             <div className= " h-[52px]flex  flex-row items-center">

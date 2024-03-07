@@ -9,7 +9,7 @@ const Sidebar=()=> {
   const pathname = usePathname();
   
   return (
-    <div className="w-[280px] h-[97%] rounded-[15px]   ml-[10px] bg-blue-100     translate-y-[15px]           "  >
+    <div className={`  ${pathname==='/packages' ? 'hidden' : 'block'}           w-[280px] h-[97%] rounded-[15px]   ml-[10px] bg-blue-100     translate-y-[15px]`}  >
       <div className="w-[132px] h-[40px] leading-10 font-semibold header-nav flex translate-x-16 translate-y-3  ">
         <Link  className="mr-[5px]"   href="/">
           <Image
