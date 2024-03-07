@@ -63,6 +63,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     axios
       .put("http://localhost:5000/api/update/profilepicture", { image: base64 })
       .then((res) => {
+        
         setUrl(res.data);
         dispatch({ type : 'ERRORS' , payload : {} });
         setLoading(false) ;

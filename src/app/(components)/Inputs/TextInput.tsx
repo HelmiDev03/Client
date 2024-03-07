@@ -3,22 +3,31 @@
 
 
 const Input = (props: any) => {
-    const { placeholder } = props
-    const { type } = props
-    const { onChange } = props
+    const { placeholder, type, onChange } = props;
 
+    // Check if the input type is 'date'
+    const isDateType = type === 'date';
+    const label = props.label;
 
+    // Format the placeholder text accordingly
+    const formattedPlaceholder = isDateType ? 'YYYY-MM-DD' : placeholder;
 
     return (
-        <input placeholder={placeholder} type={type} onChange={onChange} className="w-[510px] h-[56px] p-[16px] md:p-[16px] lg:p-[20px]
-                                                                                                                                                                                        xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
-                                                                                                                                                                                        border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors 
-                                                                                                                                                                                        duration-300 ease-in-out" />
-    )
-        ;
-
+        <div className="relative">
+        <label className="absolute font-lexend  top-0 left-0 px-2 pt-1 font-light text-[11px] leading-[16px] text-indigo-600 ">{label}</label>
+        <input 
+            placeholder={formattedPlaceholder} 
+          
+            type={type} 
+            onChange={onChange} 
+            className="w-[510px] h-[56px] p-[16px] md:p-[16px] lg:p-[20px] xl:p-[16px] mb-2 
+                       border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
+                       border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 
+                       transition-colors duration-300 ease-in-out" 
+        />
+        </div>
+    );
 }
-
 const Input2 = (props: any) => {
     const { placeholder } = props
     const { type } = props

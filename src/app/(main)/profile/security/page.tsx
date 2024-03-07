@@ -68,7 +68,7 @@ const Security = () => {
       </Modal>
 
             
-            <div className="flex flex-row w-[720px] h-[185px] mb-[300px]  ">
+            <div className="flex flex-row w-[720px] h-[185px] mb-[400px]  ">
 
                 <div className="flex flex-col w-[40%] mr-6  mt-2  ">
                     <IoFingerPrint className='text-[20px] text-[#7152F3] mb-2' />

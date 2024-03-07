@@ -45,7 +45,7 @@ const Authprovider = ({ children }: { children: React.ReactNode }) => {
         
     }
     
-    }, [router , auth.isConnected]);
+    }, [router , auth.isConnected , ]);
 
     return <main    > {children}</main>;
 };

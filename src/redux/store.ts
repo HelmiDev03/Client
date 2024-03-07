@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import {
     persistReducer,
     FLUSH,
@@ -33,7 +33,9 @@ const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }),
-        devTools: true
+        devTools: true,
+        //redux thunk
+        
         
 });
 

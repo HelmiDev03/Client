@@ -13,6 +13,7 @@ export const LoginAction = (data: UserData ) => (dispatch: Dispatch<any>) => {
     .then(res => {
         const { token } = res.data;
         const {refreshToken} = res.data;
+        const {company} = res.data;
         localStorage.setItem('jwt', token);
         localStorage.setItem('refreshToken', refreshToken);
         const decodedToken = jwtDecode(token);
@@ -21,6 +22,11 @@ export const LoginAction = (data: UserData ) => (dispatch: Dispatch<any>) => {
         dispatch({
             type: 'SET_USER',
             payload: decodedToken
+        });
+
+        dispatch({
+            type: 'SET_COMPANY',
+            payload: company
         });
         window.location.href='/dashboard';
 

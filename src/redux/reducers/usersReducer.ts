@@ -10,16 +10,16 @@ const initialState: UsersState = [{}];
 
 // Define the action types
 interface SetUsersAction {
-    type: "SET_USERS";
+    type: "SET_EMPLOYEES";
     payload: UsersState; // Adjust the type according to your payload data type
 }
 
 interface DeleteUserAction {
-    type: "DELETE_USER";
+    type: "DELETE_EMPLOYEE";
     payload: UsersState; // Adjust the type according to your payload data type
 }
 interface AddUserAction {
-    type: "ADD_USERS";
+    type: "ADD_EMPLOYEE";
     payload: UsersState; // Adjust the type according to your payload data type
 }
 
@@ -29,9 +29,9 @@ type UsersActionTypes = SetUsersAction | DeleteUserAction  | AddUserAction;
 // Define the reducer function
 const usersReducer = (state: UsersState = initialState, action: UsersActionTypes): UsersState => {
     switch (action.type) {
-        case "SET_USERS":
-        case "DELETE_USER":
-        case "ADD_USERS":
+        case "SET_EMPLOYEES":
+        case "DELETE_EMPLOYEE":
+        case "ADD_EMPLOYEE":
             return action.payload ? action.payload : state;
         default:
             return state;

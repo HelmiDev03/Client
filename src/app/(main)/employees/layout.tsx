@@ -3,6 +3,9 @@
 import { Metadata } from 'next';
 
 
+
+
+
 export const metadata: Metadata = {
   title:  'Employees',
   description: 'novencia Employees page',
@@ -13,18 +16,10 @@ export default function RootLayout({
   }: Readonly<{
     children: React.ReactNode;
   }>) {
-    
     return (
-      
-     
-      
-
-    <>{children }</>
-
-      
-      
-      
-      
-      );
+      <>
+        {children}
+      </>
+    );
   }
   

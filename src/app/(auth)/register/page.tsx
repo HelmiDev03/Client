@@ -29,7 +29,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { ImSpinner8 } from 'react-icons/im';
-import { error } from 'console';
+
 
 
 
@@ -655,7 +655,7 @@ const Register = () => {
 
 
 
-            <div className={`  ${Page === "signup4" ? "block" : "hidden"}    w-[90%] h-[90%]   flex  justify-center items-center `} >
+            <div className={`  ${Page === "signup4" ? "block" : "hidden"}    w-[90%] h-screen   flex  justify-center items-center `} >
 
                 <div onClick={(e: any) => { setPage(`signup${parseInt(Page.replace('signup', '')) - 1}`) }}> <IoArrowBackCircleSharp className={`  ${Page != "signup4" ? "hidden" : "block"}    absolute top-[132px] right-[77%] text-[30px] text-[#7152F3] hover:cursor-pointer`} /></div>
 
@@ -726,17 +726,18 @@ const Register = () => {
 
                     </div>
 
-
-                    <div className='mb-8 w-[61px] mt-[90px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
+              
+                    <div className='mb-8 w-[61px] mt-[60px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
                         <ButtonSubmit timing={500} text={loading ? <><ImSpinner8 className="animate-spin  text-[20px]" /> Loading...</> : <FaArrowRight className='text-white text-[20px]' />} fct={() => handleNext(Page)} />
                     </div>
-                    <div className=" ml-6 flex flex-row  justify-center items-center w-[155px] h-[17px]  ">
+                    <div className="translate-y-[10px]  ml-6 flex flex-row  justify-center items-center w-[155px] h-[17px]  ">
                         <div className={`${styles.cercle} ${Page === 'signup1' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup2' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup3' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup4' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
 
                     </div>
+                    
 
 
 

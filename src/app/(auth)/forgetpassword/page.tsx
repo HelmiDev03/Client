@@ -21,6 +21,7 @@ const ForgetPassword = () => {
     const dispatch = useDispatch<AppDispatch>();
     const router = useRouter()
     const errors = useSelector((state: any) => state.errors);
+    
     const [email, setEmail] = useState('');
 
     const [loading, setLoading] = useState(false);
@@ -34,9 +35,9 @@ const ForgetPassword = () => {
 
     const sendOtp = async () => {
         dispatch({ type: 'ERRORS', payload: {} });
-        
-            
-            axios.post('http://localhost:5000/api/forgetpassword/sendotp', { email: email })
+             
+
+            await axios.post('http://localhost:5000/api/forgetpassword/sendotp', { email: email })
                 .then((res) => {
                   
                     
@@ -44,7 +45,10 @@ const ForgetPassword = () => {
                 })
                 .catch((err) => {
                     console.log(err.response.data);
-                    dispatch({ type: 'ERRORS', payload: err.response?.data });
+                    dispatch({
+                        type: 'ERRORS',
+                        payload: err.response ? err.response.data : {}
+                    });
                 });
                  
 

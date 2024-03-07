@@ -67,7 +67,7 @@ const Verify = () => {
             return () => {
                 clearInterval(timer); // Clean up the timer when the component unmounts
             };
-    }, []);
+    },[]);
     const minutes = Math.floor(time / 60).toString().padStart(2, '0');
     const seconds = (time % 60).toString().padStart(2, '0');
 
@@ -79,7 +79,7 @@ const Verify = () => {
             .then((res) => {
                 router.push('/forgetpassword/verify/resetpassword?email=' + email + '&token=' + tokenid);
             })
-            .catch((err) => {
+            .catch((err:any) => {
                 console.log(err.response.data);
                 dispatch({ type: 'ERRORS', payload: err.response?.data });
             });

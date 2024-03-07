@@ -14,7 +14,7 @@ import axios from 'axios'
 
 import { FaCheckCircle } from "react-icons/fa";
 
-const resetPassword = () => {
+const ResetPassword = () => {
 
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
@@ -219,4 +219,4 @@ const resetPassword = () => {
     )
 }
 
-export default resetPassword
+export default ResetPassword

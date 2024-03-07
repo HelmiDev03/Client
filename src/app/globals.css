@@ -58,3 +58,20 @@ input:not([type='checkbox']):focus {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.MuiDataGrid-cellContent{
+
+  font-family: Lexend;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+
+  color: #16151C;
+}
+.MuiDataGrid-columnHeaderTitle css-t89xny-MuiDataGrid-columnHeaderTitle{
+  font-family: Lexend;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  color: #A2A1A8;
+}
