@@ -11,6 +11,7 @@ export default function ButtonSubmit(props :any) {
     const spincol = props.spincol
     const [loading, setLoading] = useState(false);
 
+
     const handleClick = () => {
         setLoading(true); // Show spinner when button is clicked
         setTimeout(() => {
