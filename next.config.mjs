@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
+      experimental: {
         forceSwcTransforms: true,
       },
+      swcMinify: true,
       images: {
         domains: ['res.cloudinary.com']
       },
+    
    
   };
   

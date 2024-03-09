@@ -314,7 +314,7 @@ const Register = () => {
 
 
 
-                <div className="w-[50%] mr-3   flex flex-col justify-center items-center  mb-3">
+                <div className="w-[50%] mr-2   flex flex-col justify-center items-center  mb-3">
 
                     <div onClick={(e: any) => { setPage(`signup${parseInt(Page.replace('signup', '')) - 1}`) }}> <IoArrowBackCircleSharp className={`  ${Page === "signup1" ? "hidden" : "block"}    absolute top-[132px] right-[37%] text-[30px] text-[#7152F3] hover:cursor-pointer`} /></div>
 
@@ -341,8 +341,8 @@ const Register = () => {
 
 
                     {/*Dynamic Layout of Singup 1*/}
-                    <div className={` ${Page === 'signup1' ? "block" : "hidden"} signup-section flex flex-col mt-8 mb-4  justify-center items-center  h-[200px] bg-white-500 justify-center items-center rounded-[10px] pt-[5px] `}>
-                        <form className='mb-12'>
+                    <div className={` ${Page === 'signup1' ? "block" : "hidden"}  signup-section flex flex-col mt-8 mb-4  justify-center items-center  h-[200px] bg-white-500 justify-center items-center rounded-[10px] pt-[5px] `}>
+                        <form className='mb-12 mr-[35px]  '>
                             <div className={styles.InputContainer} >
 
 
@@ -602,7 +602,7 @@ const Register = () => {
 
 
 
-                    <div className='mb-8 w-[61px] mt-[90px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
+                    <div className='mb-8 w-[61px] mt-[80px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
                         <ButtonSubmit timing={500} text={loading ? <><ImSpinner8 className="animate-spin  text-[20px]" /> Loading...</> : <FaArrowRight className='text-white text-[20px]' />} fct={() => handleNext(Page)} />
                     </div>
 
@@ -727,7 +727,7 @@ const Register = () => {
                     </div>
 
               
-                    <div className='mb-8 w-[61px] mt-[60px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
+                    <div className='mb-8 w-[61px] mt-[34px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
                         <ButtonSubmit timing={500} text={loading ? <><ImSpinner8 className="animate-spin  text-[20px]" /> Loading...</> : <FaArrowRight className='text-white text-[20px]' />} fct={() => handleNext(Page)} />
                     </div>
                     <div className="translate-y-[10px]  ml-6 flex flex-row  justify-center items-center w-[155px] h-[17px]  ">

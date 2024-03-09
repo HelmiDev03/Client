@@ -163,17 +163,17 @@ const AddNewEmployee = () => {
     setMobileError('');
     setCinError('');
     setBirthdateError('');
-
-    const nameRegex = /^[a-zA-Z]{4,}$/
+    //name must conatin at least 3 characters , uuper or lower
+    const nameRegex  = /^[a-zA-Z]{3,}$/;
     const cinRegex = /^\d{8}$/;
     const phoneNumberRegex = /^\+\d{2,4}\d{8,}$/
 
     if (!nameRegex.test(firstName)) {
-      setFirstNameError('First Name must contain at least 4 characters');
+      setFirstNameError('First Name must contain at least 3 characters');
       return;
     }
     if (!nameRegex.test(lastName)) {
-      setLastNameError('Last Name must contain at least 4 characters');
+      setLastNameError('Last Name must contain at least 3 characters');
       return;
     }
     if (!phoneNumberRegex.test(mobile)) {

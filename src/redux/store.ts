@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
-import thunk from 'redux-thunk';
 import {
     persistReducer,
     FLUSH,
