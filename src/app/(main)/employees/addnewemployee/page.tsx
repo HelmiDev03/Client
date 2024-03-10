@@ -80,6 +80,8 @@ const AddNewEmployee = () => {
   const handleFileChange = async (event: any) => {
     setFileError('');
     const file = event.target.files[0];
+   console.log(file);
+   
     setBase64(await convertBase64(file));
     let filename = file.name;
     // Take only the first 10 characters of the file name
@@ -156,7 +158,7 @@ const AddNewEmployee = () => {
   };
 
 
-  const checkFlow1 = () => {
+  const checkFlow1 =async () => {
    
     setLastNameError('');
     setFirstNameError('');
@@ -207,8 +209,8 @@ const AddNewEmployee = () => {
       return;
     }
     if (fileName === '') {
-      setFileError('Please select a profile picture');
-      return;
+          setFileError('Please select a profile picture');
+            return ;
     }
 
     setPage(2);

@@ -5,7 +5,8 @@ import {useEffect, useState } from "react";
 import DropDown from "./DropDown";
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
+import { title } from "process";
 
 
 
@@ -25,7 +26,7 @@ const Header= () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const auth = useSelector((state: any) => state.auth);
-
+  const { employeeId } = useParams()
 
   const pathname = usePathname();
   useEffect(() => {
@@ -42,8 +43,17 @@ const Header= () => {
 
   setTitle1(pathParts[1])
   setTitle2(pathParts[2])
-  if ( pathname ==='/employees') {
+  if ( pathname ==='/employees'  ) {
     setTitle2('All Employees Information')
+  }
+  if(pathParts[2]=='Personalinformation'){
+    setTitle2('Personal Information')
+  }
+  if(pathParts[2]=='ProfessionelInformation'){
+    setTitle2('Professionel Information')
+  }
+  if (employeeId){
+    setTitle2('Employee Profile')
   }
   }, [pathname])
 
@@ -81,7 +91,7 @@ const Header= () => {
         
    <Image  style={{ borderRadius: '8px', marginRight: '4px'  , width : '40px' , height:'40px' }} src={auth.user.profilepicture ? auth.user.profilepicture: '/defaultprofilepicture.png'} width={40} height={40}
         alt="Profile" />
-      <div>
+      <div className="mr-2">
         <p className="font-lexend text-body-1 font-bold text- [#16151C] text-base leading-6 tracking-normal text-left ">{auth.user.firstname } {auth.user.lastname} </p>
         <p className="font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal ">{auth.user.role}</p>
       </div>

@@ -1,5 +1,7 @@
 'use client'
 import { useEffect } from 'react'
+
+
 import { jwtDecode } from "jwt-decode";
 
 import { store, persistore } from "../redux/store";
@@ -9,6 +11,7 @@ import { Provider as ReduxProvider, useDispatch, useSelector } from "react-redux
 import { PersistGate } from "redux-persist/integration/react";
 
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -23,6 +26,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (localStorage.jwt) {
       const decodedToken = jwtDecode(localStorage.jwt);
+      console.log(decodedToken);  
 
       const currentTime = Date.now() / 1000; // Convert to seconds
       if (decodedToken.exp && decodedToken.exp < currentTime) {
@@ -48,9 +52,11 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         });
         setAuth(localStorage.jwt);
       }
-
+     
 
     }
+
+    
 
 
 
@@ -58,12 +64,12 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
 
 
-  }, []);
+  }, []);  
 
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistore}>
-
+   
         {children}
 
 

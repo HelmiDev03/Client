@@ -69,9 +69,12 @@ const Employees = () => {
             
             }
            else{ 
-            const publicId = extractPublicId(
+            let publicId = ""
+            if (employeeImage !== '/defaultprofilepicture.png') {
+              publicId = extractPublicId(
                 employeeImage
               )
+            }
             dispatch(Deleteemployee(employeeId , publicId))
         }
         }
@@ -96,7 +99,7 @@ const Employees = () => {
         return (
        
           <div>  <button onClick={()=>router.push(`/employees/${row.userid }`)} type="submit"    ><FiEye className=' font-lexend font-light  leading-[24px] text-[#7152F3] text-[20px] mr-2' /></button>
-          <button  onClick={()=>{setOpenPopupDelete(true);setEmployeeSelected(row.fullname) ;setEmployeeId(row.userid);setEmployeeImage(row.profilepicture)}}            type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button></div>
+          <button  onClick={()=>{setPopupDeletePage(1);setOpenPopupDelete(true);setEmployeeSelected(row.fullname) ;setEmployeeId(row.userid);setEmployeeImage(row.profilepicture )}}            type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button></div>
           
         );
       };
@@ -202,7 +205,7 @@ return (
       
         <div className="bg-[#eee]  relative  rounded-lg shadow dark:bg-gray-700">
            
-            <div className=" bg-[#f6f8fa] flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+            <div className=" bg-[#eee] flex items-center justify-between p-4 md:p-5 border-b border-red-200 rounded-t">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Delete {employeeSelected}
                 </h3>
