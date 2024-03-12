@@ -98,12 +98,12 @@ const Security = () => {
 
     const disabeltfa = () => {
         axios.put('http://localhost:5000/api/tfa/disable')
-        .then(res => {
-            localStorage.setItem('jwt', res.data.token);
-            setAuth(res.data.token);
-        })
+            .then(res => {
+                localStorage.setItem('jwt', res.data.token);
+                setAuth(res.data.token);
+            })
         window.location.reload()
-         
+
 
     }
 
@@ -276,10 +276,9 @@ const Security = () => {
 
             <div className={` ${Page === 2 || Page === 21 ? 'block' : 'hidden'}         flex flex-col justify-center items-center `} >
 
-                <div className="mb-4 flex flex-row justify-center h-[80px]">
-                    <img src='/phone.png' width={160} height={160} />
-                    <img src='/logo.png' width={60} height={60} />
-                    <img src='/phone2.png' width={160} height={160} />
+                <div className="mb-4 flex flex-row justify-center h-[150px]">
+                    <img src='/tfa.png' width={560} />
+
                 </div>
 
                 <div className={` ${Page != 21 ? 'block' : 'hidden'}         mt-4 `} >

@@ -54,7 +54,7 @@ export const NavItems = [
         {
           itemname: 'Settings',
           icon: <IoSettingsOutline className="text-[24px]"/>,
-          path: '#'
+          path: '/settings'
         }
    
 ]

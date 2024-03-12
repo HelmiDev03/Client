@@ -128,4 +128,43 @@ export const SelectInput5 = (props: any) => {
 
 
 
+export const SelectInput6 = (props: any) => {
+  const { placeholder, options , isDisabled , name ,onChange , label } = props;
+
+  // Filter out the placeholder value from the options array
+  const filteredOptions = options.filter((option: string) => option !== placeholder);
+
+  return (
+      <div className="relative" >
+          <select
+               onChange={onChange}
+               disabled={isDisabled}
+               name = {name}
+              defaultValue={placeholder}
+              className="w-[300px] h-[56px]  p-[16px] md:p-[16px] lg:p-[20px]  font-lexend font-light  text-[16px] leading-[24px] text-[#16151C] 
+              xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
+              border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors 
+              duration-300 ease-in-out"
+          >
+              {/* Render placeholder option */}
+              <option value={placeholder}>
+                  {placeholder}
+              </option>
+
+              {/* Render filtered options */}
+              {filteredOptions.map((option: string, index: number) => (
+                  <option key={index} value={option}>
+                      {option}
+                  </option>
+              ))}
+          </select>
+          <label className="absolute top-0 left-0 px-2 pt-1 text-[11px] leading-[16px] text-indigo-600 font-light">{label}</label>
+         
+      </div>
+  );
+};
+
+
+
+
   

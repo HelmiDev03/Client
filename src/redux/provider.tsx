@@ -26,7 +26,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (localStorage.jwt) {
       const decodedToken = jwtDecode(localStorage.jwt);
-      console.log(decodedToken);  
+
 
       const currentTime = Date.now() / 1000; // Convert to seconds
       if (decodedToken.exp && decodedToken.exp < currentTime) {

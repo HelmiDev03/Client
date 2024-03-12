@@ -28,6 +28,22 @@ export const LoginAction = (data: UserData ) => (dispatch: Dispatch<any>) => {
             type: 'SET_COMPANY',
             payload: company
         });
+
+
+        axios.get('http://localhost:5000/api/company')
+        .then(res => {
+            console.log(res.data.company);
+            dispatch({
+                type: 'SET_COMPANY',
+                payload: res.data.company
+            });
+        })
+
+
+
+
+
+
         window.location.href='/dashboard';
 
         

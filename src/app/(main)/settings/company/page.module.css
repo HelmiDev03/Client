@@ -1,0 +1,22 @@
+.InputContainer {
+   
+    display: flex;
+    flex-direction: column;
+    width: 374px;
+    height: 61px;
+    margin-right: 8px;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 65px;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 98%;
+    margin-left: 37px;
+    margin-bottom: 1.5rem;
+  }
+  
