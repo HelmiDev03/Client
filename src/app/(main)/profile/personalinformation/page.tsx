@@ -13,7 +13,6 @@ import {  Modal } from 'flowbite-react';
 import { MdSecurityUpdateGood } from 'react-icons/md'
 
 const Personnel = () => {
-    const [openModal, setOpenModal] = useState(false);
     const dispatch = useDispatch<AppDispatch>()
     const closeModel = () => {
         dispatch({

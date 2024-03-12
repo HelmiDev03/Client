@@ -81,8 +81,8 @@ const AddNewEmployee = () => {
     setFileError('');
     const file = event.target.files[0];
    console.log(file);
-   
-    setBase64(await convertBase64(file));
+   setBase64(await convertBase64(file));
+    
     let filename = file.name;
     // Take only the first 10 characters of the file name
     if (file.name.length > 10) {
@@ -208,10 +208,7 @@ const AddNewEmployee = () => {
       setBirthdateError('Please enter birth day');
       return;
     }
-    if (fileName === '') {
-          setFileError('Please select a profile picture');
-            return ;
-    }
+    
 
     setPage(2);
 
@@ -268,7 +265,7 @@ const AddNewEmployee = () => {
       role : EmployeeRole,
       email : Email,
       password : Password,
-      profilepicture  : base64
+      profilepicture  : fileName!="" ? base64 : "" ,
     };
     dispatch(Addnewemployee(data,router));
     

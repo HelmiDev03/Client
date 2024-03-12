@@ -1,15 +1,23 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './page.module.css'
 import { IoCameraOutline } from 'react-icons/io5'
 import { FaPen } from "react-icons/fa";
 import { IoMdSettings } from 'react-icons/io';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Input5 } from '@/app/(components)/Inputs/TextInput';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SelectInput6 } from '@/app/(components)/Inputs/SelectInput';
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
+import {  Modal } from 'flowbite-react';
+import { MdSecurityUpdateGood } from 'react-icons/md'
+import { AppDispatch } from '@/redux/store';
+import {UpdateCompany} from '@/redux/actions/companyActions/updateCompany'
+
+
+
 const CompanySettings = () => {
+    const dispatch = useDispatch<AppDispatch>()
     const [fileName, setFileName] = useState('');
     const [base64, setBase64] = useState('' as any); // State to store the base64 string of the selected file
     const [fileError, setFileError] = useState('');
@@ -28,6 +36,13 @@ const CompanySettings = () => {
     const [city, setCity] = useState(company.city);
     const [zip, setZip] = useState(company.zip);
     const [country, setCountry] = useState(company.country);
+    const success = useSelector((state: any) => state.success)
+    const closeModel = () => {
+        dispatch({
+            type: 'SUCCESS',
+            payload: ''
+        });
+    }
     const convertBase64 = (file: any) => {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -71,8 +86,36 @@ const CompanySettings = () => {
 
         }
     };
+
+
+
+   const update = () => {
+    dispatch(UpdateCompany({ name, phonenumber:number, domaine:industry, anniversaire:anniversary,adress,city, country, zip, logo: fileName ? base64 : ""}));
+   }
+
+   
+
+
+
+
+
     return (
         <div className={styles.container}>
+            <Modal className ='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
+        <Modal.Header />
+        <Modal.Body className='bg-lavender '>
+          <div className="text-center">
+            <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
+            <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
+                        Successfully Updated
+            </h3>
+            <div className="flex justify-center gap-4">
+            
+            </div>
+          
+          </div>
+        </Modal.Body>
+      </Modal>
 
             <div className='flex flex-row justify-between mb-[30px]'>
                 <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#dedede] rounded-[36px] hover:cursor-pointer'>
@@ -104,7 +147,7 @@ const CompanySettings = () => {
                 <div className="border-[#7152F3] p-4 flex flex-col      translate-x-[-160px]  w-[350px]  flex justify-center items-center rounded-[36px] border-[1px] ">
 
                     <div className={styles.inputContainer}>
-                        <Input5  value={name} label="Comany Name" type="text" />
+                        <Input5  onChange={(e:any) => {setName(e.target.value)}}  value={name} label="Comany Name" type="text" />
                         {errors.name && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                             <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
@@ -116,14 +159,14 @@ const CompanySettings = () => {
                         </div>}
                     </div>
                     <div className={styles.inputContainer}>
-                        <Input5  value={number} label="Comany Phone Number" type="text" />
-                        {errors.number && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
+                        <Input5  onChange={(e:any) => {setNumber(e.target.value)}}  value={number} label="Comany Phone Number" type="text" />
+                        {errors.phonenumber && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                             <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                             </svg>
                             <span className="sr-only">Info</span>
                             <div>
-                                {errors.number}
+                                {errors.phonenumber}
                             </div>
                         </div>}
                     </div>
@@ -131,6 +174,7 @@ const CompanySettings = () => {
 
                     <div className={styles.inputContainer}>
                         <SelectInput6
+                         onChange={(e:any) => {setIndustry(e.target.value)}}
                             label="Industry"
                             placeholder={industry}
                             options={[
@@ -181,7 +225,7 @@ const CompanySettings = () => {
 
                     <div className={styles.inputContainer}>
 
-                        <Input5 value={anniversary} label="Anniversary" type="date" />
+                        <Input5  onChange={(e:any) => {setAnniversary(e.target.value)}} value={anniversary} label="Anniversary" type="date" />
 
                     </div>
 
@@ -217,7 +261,8 @@ const CompanySettings = () => {
                 <div className="border-[#7152F3] p-4 flex flex-col      translate-x-[-160px]  w-[350px]  flex justify-center items-center rounded-[36px] border-[1px] ">
 
                     <div className={styles.inputContainer}>
-                        <Input5 value={company.adress? company.adress  :'not mentionned'} label="Adress" type="text" />
+                        <Input5  onChange={(e:any) => {setAdress(e.target.value)}} value={company.adress} label="Adress" type="text" />
+                    
                         {errors.adress && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                             <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
@@ -231,7 +276,7 @@ const CompanySettings = () => {
 
 
                     <div className={styles.inputContainer}>
-                        <Input5 value={company.city? company.city  :'not mentionned'} label="City" type="text" />
+                        <Input5   onChange={(e:any) => {setCity(e.target.value)}} value={company.city} label="City" type="text" />
                         {errors.city && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                             <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
@@ -244,7 +289,7 @@ const CompanySettings = () => {
                     </div>
 
                     <div className={styles.inputContainer}>
-                        <Input5 value={company.zip? company.zip  :'not mentionned'} label="Zip Code" type="text" />
+                        <Input5  onChange={(e:any) => {setZip(e.target.value)}} value={company.zip} label="Zip Code" type="text" />
                         {errors.zip && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                             <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
@@ -256,7 +301,7 @@ const CompanySettings = () => {
                         </div>}
                     </div>
                     <div className={styles.inputContainer}>
-                        <Input5 value={company.country? company.country  :'not mentionned'} label="Country" type="text" />
+                        <Input5  onChange={(e:any) => {setCountry(e.target.value)}} value={company.country} label="Country" type="text" />
                         {errors.country && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                             <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
@@ -288,7 +333,7 @@ const CompanySettings = () => {
 
 
             <div className=' translate-x-[1050px]   w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-                <ButtonSubmit timing={200} text="Update"  />
+                <ButtonSubmit timing={200} text="Update" fct={update}  />
             </div> 
 
 

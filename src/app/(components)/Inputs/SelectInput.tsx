@@ -140,6 +140,7 @@ export const SelectInput6 = (props: any) => {
                onChange={onChange}
                disabled={isDisabled}
                name = {name}
+               
               defaultValue={placeholder}
               className="w-[300px] h-[56px]  p-[16px] md:p-[16px] lg:p-[20px]  font-lexend font-light  text-[16px] leading-[24px] text-[#16151C] 
               xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
@@ -165,6 +166,3 @@ export const SelectInput6 = (props: any) => {
 };
 
 
-
-
-  

@@ -70,12 +70,13 @@ const Employees = () => {
             }
            else{ 
             let publicId = ""
-            if (employeeImage !== '/defaultprofilepicture.png') {
+            if (employeeImage !== 'defaultprofilepicture.png') {
               publicId = extractPublicId(
                 employeeImage
               )
             }
-            dispatch(Deleteemployee(employeeId , publicId))
+            
+            dispatch(Deleteemployee(employeeId , publicId !=='/defaultprofilepicture.png' ? publicId  :"error"))
         }
         }
 

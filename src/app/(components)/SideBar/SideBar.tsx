@@ -4,10 +4,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { NavItems } from "./NavItems";
 import Image from 'next/image';
+import { useSelector } from "react-redux";
 
 const Sidebar=()=> {
   const pathname = usePathname();
-  
+  const company = useSelector((state: any) => state.company);
   return (
     <div className={`  ${pathname==='/packages' ? 'hidden' : 'block'}           w-[280px] h-[97%] rounded-[15px]   ml-[10px] bg-blue-100     translate-y-[15px]`}  >
       <div className="w-[132px] h-[40px] leading-10 font-semibold header-nav flex translate-x-16 translate-y-3  ">
@@ -17,11 +18,11 @@ const Sidebar=()=> {
             width={40}
             height={40}
             
-            src="/logo.png"
+            src={company.logo ?  company.logo :"/logo.png" }
             alt=""
           />
         </Link>
-        <p className="font-lexend">NRH </p>
+        <p className="font-lexend"> {company.name}</p>
       </div>
 
       <aside  className="flex items-center justify-center mt-8 ">
