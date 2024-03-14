@@ -182,7 +182,7 @@ return (
 
     <div className={styles.EmployeesContainer}>
          {/*in case employee added*/}
-         <Modal className='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
+         <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[180px]  center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
         <Modal.Header />
         <Modal.Body className='bg-lavender'>
           <div className="text-center">
