@@ -44,7 +44,7 @@ export const NavItems = [
         {
           itemname: 'Leaves',
           icon: <HiOutlineUserRemove  className="text-[24px]" />,
-          path: '#'
+          path: '/leaves'
         },
         {
           itemname: 'Holidays',

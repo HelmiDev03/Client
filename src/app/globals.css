@@ -42,11 +42,14 @@ select option {
 input:not([type='checkbox']):focus {
   outline: none;
   border-color: #4F46E5; /* Indigo 600 */
-  box-shadow: 0 0 0 2px #4F46E5; /* Indigo 600 */
+
 }
- option:hover{
-  background-color: #7152F3;
- }
+.custom-today .p-datepicker td span {
+  background-color: #4F46E5 /* Replace 'yourColor' with the desired background color */
+}
+
+
+
 
 .react-international-phone-country-selector{
    transform: translateX(52px);
@@ -75,3 +78,18 @@ input:not([type='checkbox']):focus {
   line-height: 24px;
   color: #A2A1A8;
 }
+/* Example CSS for customizing the checkbox */
+input[type="checkbox"] {
+ 
+  width: 16px;
+  height: 16px;
+  border: 2px solid #7152F3; /* Customize the border color */
+  border-radius: 4px; /* Round the corners */
+  cursor: pointer; /* Change cursor on hover */
+  margin-right: 3px;
+  background-color: #7152F3; /* Customize the background color */
+ 
+}
+
+
+

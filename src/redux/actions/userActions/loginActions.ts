@@ -39,6 +39,14 @@ export const LoginAction = (data: UserData ) => (dispatch: Dispatch<any>) => {
             });
         })
 
+        axios.get('http://localhost:5000/api/policy')
+        .then(res => {
+            dispatch({
+                type: 'SET_POLICIES',
+                payload: res.data.policies
+            });
+        })
+
 
 
 

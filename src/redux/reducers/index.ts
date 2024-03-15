@@ -4,13 +4,15 @@ import usersReducer from './usersReducer';
 import errorsReducer from "./errorsReducer";
 import successReducer from "./successReducer";
 import companyReducer from "./companyReducer";
+import policiesReducer from "./policyReducer";
 
 const rootReducer = combineReducers({
     auth: userReducer,
     users: usersReducer,
     company: companyReducer,
     errors: errorsReducer,
-    success: successReducer
+    success: successReducer,
+    policies: policiesReducer,
 
 });
 

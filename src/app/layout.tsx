@@ -4,7 +4,6 @@ import "./globals.css";
 import StoreProvider from "@/redux/provider";
 import NextTopLoader from 'nextjs-toploader';
 
-
 export const metadata: Metadata = {
   title: "SignIn",
   description: "novencia SignIn page",

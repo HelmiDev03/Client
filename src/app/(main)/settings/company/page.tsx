@@ -7,7 +7,7 @@ import { IoMdSettings } from 'react-icons/io';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Input5 } from '@/app/(components)/Inputs/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { SelectInput6 } from '@/app/(components)/Inputs/SelectInput';
+import { SelectInput7 } from '@/app/(components)/Inputs/SelectInput';
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import {  Modal } from 'flowbite-react';
 import { MdSecurityUpdateGood } from 'react-icons/md'
@@ -173,7 +173,7 @@ const CompanySettings = () => {
 
 
                     <div className={styles.inputContainer}>
-                        <SelectInput6
+                        <SelectInput7
                          onChange={(e:any) => {setIndustry(e.target.value)}}
                             label="Industry"
                             placeholder={industry}
