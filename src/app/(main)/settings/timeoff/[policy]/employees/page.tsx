@@ -8,17 +8,61 @@ import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { FaArrowRight } from "react-icons/fa6";
+import axios from 'axios';
+import { HiDotsVertical } from "react-icons/hi";
+import { useParams } from 'next/navigation';
+import {  SelectInput8 } from '@/app/(components)/Inputs/SelectInput';
+
 const Employees = () => {
+    const [Name, setName] = React.useState('')
+    const [employeeName , setemployeeName] = React.useState('')
+    const [employeeId , setemployeeId] = React.useState('')
+    const policies = useSelector((state: any) => state.policies)
     const users = useSelector((state: any) => state.users)
     const dispatch = useDispatch<AppDispatch>()
     const [inputseacrh, setinputseacrh] = React.useState('')
+    const { policy } = useParams()
+    const [PolicyEmployees, setPolicyEmployees] = React.useState<any[]>([])
+    const [filteredUsers, setfilteredUsers] = React.useState<any[]>([])
+   
 
-    const resultsearchjsx = users.filter((user: any) => user.firstname?.includes(inputseacrh) || user.lastname?.includes(inputseacrh)).map((user: any) => (
+
+    useEffect(() => {
+        dispatch(GetAllEmployees());
+        axios.get(`http://localhost:5000/api/policy/get/${policy}`)
+            .then((res: any) => {
+                setPolicyEmployees(res.data.policy.employees)
+                setName(res.data.policy.name)
+                setfilteredUsers(users.filter((user: any) => !res.data.policy.employees.some((employee: any) => employee._id === user._id)));
+                 
+
+            })
+     
+          
+          
+             
+                
+               
+               
+           
+        
+
+    }, [policy]);
+    
+   
+
+
+
+
+
+
+
+    const resultsearchjsx = filteredUsers.filter((user: any) => user.firstname?.includes(inputseacrh) || user.lastname?.includes(inputseacrh)).map((user: any) => (
         <tr key={user.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                 <span className="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                    <img src={user.profilepicture} alt={`${user.firstname} ${user.lastname}`} />
+                    <img src={user.profilepicture ? user.profilepicture : '/defaultprofilepicture.png'} alt={`${user.firstname} ${user.lastname}`} />
                 </span>
             </td>
             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{user.firstname} {user.lastname}</td>
@@ -45,8 +89,9 @@ const Employees = () => {
 
         return (
 
-            <div>
-                <button type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button></div>
+            <div onClick = {()=>{setPopupAssignPolicy(!PopupAssignPolicy) ; setemployeeName(row.fullname) ; setemployeeId(row.userid)}} className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
+                <button type="submit"      ><HiDotsVertical className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button>
+                </div>
 
         );
     };
@@ -97,14 +142,45 @@ const Employees = () => {
         },
 
     ];
-    const rows = users.map((user: any, index: number) => ({
+    const rows = PolicyEmployees.map((user: any, index: number) => ({
         id: index + 1, // You can use the index as an id
+        userid: user._id,
         fullname: user.firstname + ' ' + user.lastname,
         profilepicture: user.profilepicture ? user.profilepicture : '/defaultprofilepicture.png',
     }));
     const [PopupAddEmployee, setPopupAddEmployee] = React.useState(false)
+    const [PopupAssignPolicy, setPopupAssignPolicy] = React.useState(false)
+    const [newPolicy, setnewPolicy] = React.useState('')
+
+   const AssignNewPolicy = () => {
+    if (newPolicy) {
+        axios.put(`http://localhost:5000/api/policy/updateemployeepolicy/${employeeId}`, {
+            name: newPolicy
+        }).then((res: any) => {
+            console.log(res.data.policies)
+            dispatch({
+                type: 'SET_POLICIES',
+                payload: res.data.policies
+            });
+        })
+        setPopupAssignPolicy(false)
+        window.location.reload()
+    }
+    else{
+        return ;
+    }
+   }
+
+
+
+
+
+
+
+
     return (
         <div>
+            {/* popup add employee to policy*/}
             <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddEmployee ? 'block' : 'hidden'}             p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => setPopupAddEmployee(!PopupAddEmployee)} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
@@ -162,23 +238,30 @@ const Employees = () => {
                                                 resultsearchjsx
                                             )
                                         ) : (
-                                            users.slice(0, 2).map((user: any) => (
-                                                <tr key={user.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                                        <span className="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
-                                                            <img src={user.profilepicture} alt={`${user.firstname} ${user.lastname}`} />
-                                                        </span>
-                                                    </td>
-                                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{user.firstname} {user.lastname}</td>
-                                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{user.role}</td>
-                                                    {/*checkbox*/}
-                                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                                        <input type="checkbox" className="rounded-md border-gray-300 text-primary-500 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" />
-                                                    </td>
+                                            filteredUsers.length > 0 ? (
+                                                filteredUsers.slice(0, 3).map((user: any) => (
+                                                    <tr key={user.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                                        <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                            <span className="relative flex shrink-0 overflow-hidden rounded-full h-8 w-8">
+                                                                <img src={user.profilepicture ? user.profilepicture : '/defaultprofilepicture.png'} alt={`${user.firstname} ${user.lastname}`} />
+                                                            </span>
+                                                        </td>
+                                                        <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{user.firstname} {user.lastname}</td>
+                                                        <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{user.role}</td>
+                                                        {/*checkbox*/}
+                                                        <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                                                            <input type="checkbox" className="rounded-md border-gray-300 text-primary-500 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" />
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={4} className="text-center py-4">No users available</td>
                                                 </tr>
-                                            ))
+                                            )
                                         )}
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -192,6 +275,42 @@ const Employees = () => {
                     </div>
                 </div>
             </div>
+
+            {/* popup add employee to policy*/}
+
+              {/* popup assign different policy*/}
+              <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${ PopupAssignPolicy? 'block' : 'hidden'}  h-[300px]           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
+                <IoMdClose onClick={() => setPopupAssignPolicy(!PopupAssignPolicy)} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
+                <div className="w-[90vw] max-w-md">
+                    <div className='mb-3'>
+                        <div className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Assign to different Policy</div>
+                        <div className='mb-3 font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Choose the new time off policy for {employeeName}.</div>
+                    </div>
+                    <div className='mb-6 flex flex-row justify-evenly'>
+                    <div className='translate-x-[-80px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Current Policy</div>
+                    <div className=' font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>New Policy</div>
+                    </div>
+                    <div className="mb-[60px] flex flex-row justify-evenly">
+                    <div className='translate-x-[-10px] translate-y-[10px]  mb-3 font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>{Name}</div>
+                <div className='translate-x-[40px] flex' > <FaArrowRight className='translate-y-[10px] translate-x-[-10px] text-gray-500' style={{fontSize: '20px'}} />  <SelectInput8
+                    label='New Policy'
+                    placeholder='Select new Policy'
+                    options={policies.map((policy: any) => policy.name).filter((name: any) => name !== Name)}
+                    value={newPolicy}
+                    onChange={(e:any) => {setnewPolicy(e.target.value)}}
+                     /></div>
+                    </div>
+                    <div>
+                        <div className=' bg-white-500 border-[2px] translate-x-[200px] flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
+                            <ButtonSubmit fct={AssignNewPolicy} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Save</h3>} />
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* end popup assign different policy*/}
 
 
 

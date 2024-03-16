@@ -16,6 +16,10 @@ export const Addnewemployee = (data:any , router:any) => (dispatch: Dispatch<any
                 type: 'SUCCESS',
                 payload: res.data.message
             });
+            dispatch({
+                type: 'SET_POLICIES',
+                payload: res.data.policies
+              })
 
             router.push('/employees');
         })

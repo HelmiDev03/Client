@@ -5,8 +5,9 @@ import {useEffect, useState } from "react";
 import DropDown from "./DropDown";
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname,useRouter } from "next/navigation";
 import { title } from "process";
+import { IoArrowBackCircleSharp } from "react-icons/io5"
 
 
 
@@ -27,7 +28,7 @@ const Header= () => {
 
   const auth = useSelector((state: any) => state.auth);
   const { employeeId } = useParams()
-
+  const router = useRouter();
   const pathname = usePathname();
   useEffect(() => {
   const pathParts = pathname.split('/');
@@ -63,7 +64,7 @@ const Header= () => {
 
         <header  className={` ${pathname==='/packages' ? 'hidden' : 'block'}         fixed z-[999] top-[-6px] w-[82%]   h-[82px]  flex items-center justify-between px-8 bg-[#ffffff] mb-10 ml-2 `}>
 
-
+<IoArrowBackCircleSharp onClick={()=>router.back()} className="  absolute top-[17px] right-[98%] text-[30px] text-[#7152F3] hover:cursor-pointer" />
             <div className= " h-[52px]flex  flex-row items-center">
 
             <p className="text-lg font-bold font-lexend    text-[#16151C]   ">{Title1}</p>

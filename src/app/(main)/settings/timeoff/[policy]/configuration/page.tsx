@@ -1,27 +1,111 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useParams } from 'next/navigation';
 import { FaPen } from "react-icons/fa6";
 import { IoTimerSharp } from "react-icons/io5";
 import styles from '../../../company/page.module.css'
 import { Input5 } from '@/app/(components)/Inputs/TextInput';
-import { useSelector } from 'react-redux';
-import { SelectInput6, SelectInput7 } from '@/app/(components)/Inputs/SelectInput';
-import {  CheckboxGroup } from '@/app/(components)/Inputs/checkbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { SelectInput6, SelectInput7, SelectInput8 } from '@/app/(components)/Inputs/SelectInput';
+import { CheckboxGroup } from '@/app/(components)/Inputs/checkbox';
 import { FaCalendarDays } from "react-icons/fa6";
+import axios from 'axios';
+import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
+import { Modal } from 'flowbite-react';
+import { MdSecurityUpdateGood } from 'react-icons/md'
 const Config = () => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [StartMonth, setStartMonth] = React.useState('');
   const [duration, setDuration] = React.useState('');
-  const [Abscence, setAbsence] = React.useState('');
-  const [workingDays, setWorkingDays] = React.useState('');
-  const [timeOffDays, setTimeOffDays] = React.useState('');
-  const [maxTimeOffDays, setMaxTimeOffDays] = React.useState('');
+  const [absence, setAbsence] = React.useState<string[]>(['']);
+  const [workingDays, setWorkingDays] = React.useState<number>(0);
+  const [timeOffDays, setTimeOffDays] = React.useState<number>(0);
+  const [maxTimeOffDays, setMaxTimeOffDays] = React.useState<number>(0);
   const [bankHoliday, setBankHoliday] = React.useState('');
-  const [canbeused  , setCanbeused] = React.useState('');
+  const [canbeused, setCanbeused] = React.useState('');
   const errors = useSelector((state: any) => state.errors);
+  const { policy } = useParams();
+  const success = useSelector((state: any) => state.success);
+  const dispatch = useDispatch();
+  const closeModel = () => {
+    dispatch({
+      type: 'SUCCESS',
+      payload: ''
+    });
+    window.location.reload();
+  }
+  const updatePolicy = () => {
+    const data = {
+      name,
+      description,
+      startMonth: StartMonth,
+      duration,
+      absences: absence,
+      workingDays,
+      TimeOffDaysPerWorkingDays: timeOffDays,
+      maxTimeOffDays,
+      nationaldays: bankHoliday === "do not count is as absence day" ? true : false,
+      timeofflastforever: canbeused === "in the same cycle they has been acquired" ? false : true
+    }
+
+
+    axios.put(`http://localhost:5000/api/policy/update/${policy}`, data)
+      .then(res => {
+        dispatch({
+          type: 'SUCCESS',
+          payload: 'updated'
+        });
+        dispatch({
+          type: 'SET_POLICIES',
+          payload: res.data.policies
+        })
+      })
+
+  }
+
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/policy/get/${policy}`)
+      .then((res: any) => {
+        setName(res.data.policy.name);
+        setDescription(res.data.policy.description);
+        setStartMonth(res.data.policy.startMonth);
+        setDuration(res.data.policy.duration);
+        setWorkingDays(res.data.policy.workingDays);
+        setAbsence(res.data.policy.absences);
+        setTimeOffDays(res.data.policy.TimeOffDaysPerWorkingDays);
+        setMaxTimeOffDays(res.data.policy.MaxTimeOffDays);
+        setBankHoliday(res.data.policy.nationaldays ? "do not count is as absence day" : "count it as absence day");
+        setCanbeused(!res.data.policy.timeofflastforever ? "in the same cycle they has been acquired" : "anytime after they has been acquired");
+
+      })
+
+  }, [policy]);
+  console.log(bankHoliday)
+  console.log(canbeused)
   return (
     <div>
+      <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+        <ButtonSubmit fct={updatePolicy} timing={100} text="Edit Policy" />
+      </div>
+
+
+      <Modal className='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
+        <Modal.Header />
+        <Modal.Body className='bg-lavender '>
+          <div className="text-center">
+            <MdSecurityUpdateGood className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
+            <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
+              Successfully Updated
+            </h3>
+            <div className="flex justify-center gap-4">
+
+            </div>
+
+          </div>
+        </Modal.Body>
+      </Modal>
       <div className='flex flex-row justify-between mb-[30px]'>
         <div className='flex flex-col justify-center items-start h-[150px] w-[350px]   rounded-[36px] hover:cursor-pointer'>
           <FaPen className='text-[24px] text-[#7152F3] mb-4' />
@@ -47,7 +131,7 @@ const Config = () => {
             <Input5 onChange={(e: any) => { setDescription(e.target.value) }} value={description} label="Policy description (optional)" type="text" />
 
           </div>
-          <div style={{marginRight : '100px'}} className={styles.inputContainer}>
+          <div style={{ marginRight: '100px' }} className={styles.inputContainer}>
             <CheckboxGroup
               options={[
                 'Holidays',
@@ -55,8 +139,9 @@ const Config = () => {
                 'Compassionate leave',
                 'Parental leave',
               ]}
+              value={absence} // Provide the selected absences
               name="absenceTypes" // Provide a unique name for the checkbox group
-              onChange={(e:any)=>setAbsence(e.target)} // Pass the handler function to update the selected absences
+              onChange={(selectedOptions: string[]) => setAbsence(selectedOptions)} // Pass the selected options directly
               label="Absence types"
             />
           </div>
@@ -83,37 +168,33 @@ const Config = () => {
 
         <div className=" flex flex-col      translate-x-[-160px]  w-[350px]  flex justify-center items-center rounded-[36px]  ">
 
+          <SelectInput8
+            onChange={(e: any) => { setStartMonth(e.target.value) }}
+            placeholder={StartMonth}
+            label="Cycle begin on"
+            value={StartMonth}
+            options={[
+              'January',
+              'February',
+              'March',
+              'April',
+              'May',
+              'June',
+              'July',
+              'August',
+              'September',
+              'October',
+              'November',
+              'December'
+            ]}
+          />
+
           <div className={styles.inputContainer}>
-            <SelectInput7
-              onChange={(e: any) => { setStartMonth(e.target.value) }}
-              value={StartMonth}
-              label="Cycle begin on"
-              placeholder='Choose Start month'
-
-              options={[
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December',
-
-              ]}
-
-
-            />
-          </div>
-          <div className={styles.inputContainer}>
-            <SelectInput7
+            <SelectInput8
               onChange={(e: any) => { setDuration(e.target.value) }}
               value={duration}
-              placeholder='Choose duration'
+              placeholder={duration}
+
 
               label="Cycle duration"
               options={[
@@ -150,10 +231,10 @@ const Config = () => {
           <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Set up how this policy will be measured and earned.</p>
         </div>
 
-        
+
         <div className=" flex flex-col      translate-x-[-160px]  w-[350px]  flex justify-center items-center rounded-[36px]  ">
 
-        <div className={styles.inputContainer}>
+          <div className={styles.inputContainer}>
             <Input5 onChange={(e: any) => { setWorkingDays(e.target.value) }} value={workingDays} label="Working Days" type="text" />
             {errors.name && <div className=" h-[30px] mb-4  w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
               <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -179,11 +260,12 @@ const Config = () => {
               onChange={(e: any) => { setBankHoliday(e.target.value) }}
               value={bankHoliday}
               label="If a bank holiday falls on the absence"
-              placeholder='Choose'
+
 
               options={[
-               "dont't count is as absence day",
-                "count it as absence day",
+
+                bankHoliday === "do not count is as absence day" ? "do not count is as absence day" : "count it as absence day",
+                bankHoliday === "count it as absence day" ? "do not count is as absence day" : "count it as absence day",
 
               ]}
 
@@ -195,11 +277,11 @@ const Config = () => {
               onChange={(e: any) => { setCanbeused(e.target.value) }}
               value={canbeused}
               label="When timeoff days can they be used?"
-              placeholder='Choose'
+
 
               options={[
-               "in the same cycle they has been acquired",
-                "anytime after they has been acquired",
+                canbeused === "in the same cycle they has been acquired" ? "in the same cycle they has been acquired" : "anytime after they has been acquired",
+                canbeused === "anytime after they has been acquired" ? "in the same cycle they has been acquired" : "anytime after they has been acquired",
 
               ]}
 
@@ -219,7 +301,7 @@ const Config = () => {
 
 
       </div>
-      
+
 
 
     </div>
