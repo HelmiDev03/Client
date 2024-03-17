@@ -25,8 +25,36 @@ const Employees = () => {
     const { policy } = useParams()
     const [PolicyEmployees, setPolicyEmployees] = React.useState<any[]>([])
     const [filteredUsers, setfilteredUsers] = React.useState<any[]>([])
-   
+    const [selectedUserIds, setSelectedUserIds] = React.useState<string[]>([]);
+    const handleCheckboxChange = (userId:string) => {
+        
+       
+         if (selectedUserIds.includes(userId)) 
+            setSelectedUserIds(selectedUserIds.filter((id) => id !== userId));
+          else
+            setSelectedUserIds((prev) => [...prev, userId]);
 
+
+       
+         
+        };
+
+    const AddNewEmployeeToPolicy = async ()=>{
+       
+        if (selectedUserIds.length === 0) {
+            return;
+        }
+        axios.put(`http://localhost:5000/api/policy/addemployeestopolicy/${policy}`, {employeesId: selectedUserIds})
+        .then((res: any) => {
+            dispatch({
+                type: 'SET_POLICIES',
+                payload: res.data.policies
+            });
+            window.location.reload()
+        })
+    }    
+        
+ 
 
     useEffect(() => {
         dispatch(GetAllEmployees());
@@ -69,7 +97,7 @@ const Employees = () => {
             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{user.role}</td>
             {/*checkbox*/}
             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                <input type="checkbox" className="rounded-md border-gray-300 text-primary-500 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" />
+                <input  onChange={() => handleCheckboxChange( user._id)}   type="checkbox" className="rounded-md border-gray-300 text-primary-500 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" />
             </td>
         </tr>
     ));
@@ -250,7 +278,7 @@ const Employees = () => {
                                                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{user.role}</td>
                                                         {/*checkbox*/}
                                                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                                            <input type="checkbox" className="rounded-md border-gray-300 text-primary-500 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" />
+                                                            <input  onChange={() => handleCheckboxChange(user._id)}  type="checkbox" className="rounded-md border-gray-300 text-primary-500 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" />
                                                         </td>
                                                     </tr>
                                                 ))
@@ -268,7 +296,7 @@ const Employees = () => {
                     </div>
                     <div>
                         <div className=' bg-white-500 border-[2px] translate-x-[200px] flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                            <ButtonSubmit spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add Employee</h3>} />
+                            <ButtonSubmit fct={AddNewEmployeeToPolicy} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add Employees</h3>} />
 
 
                         </div>
@@ -276,7 +304,7 @@ const Employees = () => {
                 </div>
             </div>
 
-            {/* popup add employee to policy*/}
+            {/* end popup add employee to policy*/}
 
               {/* popup assign different policy*/}
               <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${ PopupAssignPolicy? 'block' : 'hidden'}  h-[300px]           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
