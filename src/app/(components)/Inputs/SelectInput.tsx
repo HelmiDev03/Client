@@ -25,6 +25,32 @@ export const SelectInput = (props: any) => {
     </div>
   );
 };
+export const SelectInputt = (props: any) => {
+  const { placeholder, options, onChange, label, isDisabled } = props;
+
+  // Create a new array with the placeholder as the first option followed by the rest of the options
+  const updatedOptions = [placeholder, ...options];
+
+  return (
+    <div className="relative">
+      <select
+        onChange={onChange}
+        defaultValue={placeholder}
+        disabled={isDisabled}
+
+        className=" select-box w-[300px] h-[56px] p-[16px] md:p-[16px] lg:p-[20px] xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors duration-300 ease-in-out"
+      >
+        {updatedOptions.map((option: string, index: number) => (
+          <option key={index} value={option} disabled={index === 0} className={index === 0 ? 'text-gray-400 italic' : ''}>
+            {option}
+          </option>
+        ))}
+      </select>
+      <label className="absolute top-0 left-0 px-2 pt-1 text-[11px] leading-[16px] text-indigo-600 font-light">{label}</label>
+    </div>
+  );
+};
+
 
 
 
