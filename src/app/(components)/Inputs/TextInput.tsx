@@ -117,6 +117,7 @@ const Input5 = (props: any) => {
     const { type } = props
     const { onChange } = props
     const value = props.value
+    const isdisabled = props.isDisabled
    
 
 
@@ -128,6 +129,7 @@ const Input5 = (props: any) => {
                 value={value}
                 placeholder={placeholder}
                 type={type}
+                disabled={isdisabled}
                 onChange={onChange}
                 className="w-[300px] h-[56px] p-[16px] md:p-[16px] lg:p-[20px] 
                                                                                                                     xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 

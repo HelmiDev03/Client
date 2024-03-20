@@ -6,8 +6,9 @@ import DropDown from "./DropDown";
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { useParams, usePathname,useRouter } from "next/navigation";
-import { title } from "process";
 import { IoArrowBackCircleSharp } from "react-icons/io5"
+
+import io from 'socket.io-client';
 
 
 
@@ -21,6 +22,29 @@ import { IoArrowBackCircleSharp } from "react-icons/io5"
 
 
 const Header= () => {
+
+  const [notifCounter, setNotifCounter] = useState(0);
+  const socket = io("http://localhost:5000");
+  
+  useEffect(() => {
+    
+    socket.on('notificationCountUpdated', (count:any) => {
+      console.log('Notification count updated:', count);
+        setNotifCounter(count);
+    });
+
+    socket.on('connect_error', (error:any) => {
+        console.error('Socket.IO connection error:', error);
+    });
+
+    socket.on('connect_timeout', (timeout:any) => {
+        console.error('Socket.IO connection timeout:', timeout);
+    });
+
+    return () => {
+        socket.disconnect();
+    };
+}, [notifCounter]);
   
   const [Title1, setTitle1] = useState("");
   const [Title2, setTitle2] = useState("");
@@ -30,6 +54,7 @@ const Header= () => {
   const { employeeId } = useParams()
   const router = useRouter();
   const pathname = usePathname();
+
   useEffect(() => {
   const pathParts = pathname.split('/');
   pathParts.forEach((part, index) => {
@@ -81,7 +106,8 @@ const Header= () => {
      
 
            <div className=" mr-[18px] w-[40px] h-[40px] flex justify-center items-centernded-[10px]  bg-gray-100 rou">
-            <IoIosNotificationsOutline  className="w-[24px] h-[24px]" />
+            <IoIosNotificationsOutline  className="relative w-[24px] h-[24px] bg-[#eee] hover:cursor-pointer" />
+            <div className=" absolute bottom-[26px] w-[20px] h-[20px] bg-red-500 rounded-full flex justify-center items-center"><span className="text-[#fff]">{notifCounter}</span></div>
 
                  </div>
 
