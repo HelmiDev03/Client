@@ -74,10 +74,7 @@ const TimeOff = () => {
         setPopupAddDay(false)
         if (Name && Day) {
 
-
-            const dayvalue = new Date(Day);
-            const dayString = dayvalue.toISOString().split('T')[0];
-            axios.put('http://localhost:5000/api/company/updateNationalDays', { name: Name, day: dayString })
+            axios.put('http://localhost:5000/api/company/updateNationalDays', { name: Name, day:Day })
                 .then(res => {
                     dispatch({
                         type: 'UPDATE_COMPANY',

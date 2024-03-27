@@ -13,7 +13,8 @@ import {  Modal } from 'flowbite-react';
 import { MdSecurityUpdateGood } from 'react-icons/md'
 import { AppDispatch } from '@/redux/store';
 import {UpdateCompany} from '@/redux/actions/companyActions/updateCompany'
-
+import { IoTodaySharp } from "react-icons/io5";
+import { CheckboxGroup } from '@/app/(components)/Inputs/checkbox';
 
 
 const CompanySettings = () => {
@@ -21,11 +22,12 @@ const CompanySettings = () => {
     const [fileName, setFileName] = useState('');
     const [base64, setBase64] = useState('' as any); // State to store the base64 string of the selected file
     const [fileError, setFileError] = useState('');
-
+    
     const errors = useSelector((state: any) => state.errors);
 
 
     const company = useSelector((state: any) => state.company);
+    const [workingDays, setWorkingDays] = useState(company.workingdays);
     const [name, setName] = useState(company.name);
     const [number, setNumber] = useState(company.phonenumber);
     const [industry, setIndustry] = useState(company.domaine);
@@ -90,7 +92,7 @@ const CompanySettings = () => {
 
 
    const update = () => {
-    dispatch(UpdateCompany({ name, phonenumber:number, domaine:industry, anniversaire:anniversary,adress,city, country, zip, logo: fileName ? base64 : ""}));
+    dispatch(UpdateCompany({ workingdays:workingDays,name, phonenumber:number, domaine:industry, anniversaire:anniversary,adress,city, country, zip, logo: fileName ? base64 : ""}));
    }
 
    
@@ -327,12 +329,55 @@ const CompanySettings = () => {
 
 
             </div>
+            <div className='flex flex-row justify-between mb-[30px]'>
+
+
+                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#dedede] rounded-[36px] hover:cursor-pointer'>
+                    <IoTodaySharp  className='text-[24px] text-[#7152F3] mb-4' />
+                    <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Working Days</h2>
+                    <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Put your company working days</p>
+                </div>
+
+                <div className="border-[#7152F3] p-4 flex flex-col      translate-x-[-160px]  w-[350px]  flex justify-center items-center rounded-[36px] border-[1px] ">
+
+                    
+                <div style={{ marginRight: '100px' }} className={styles.inputContainer}>
+            <CheckboxGroup
+              options={[
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday',
+              ]}
+              value={workingDays} // Provide the selected absences
+              name="workingdays" // Provide a unique name for the checkbox group
+              onChange={(selectedOptions: string[]) => setWorkingDays(selectedOptions)} // Pass the selected options directly
+              label="Working Days"
+            />
+          </div>
 
 
 
 
 
-            <div className=' translate-x-[1050px]   w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+                </div>
+
+
+
+
+              
+
+
+            </div>
+
+
+
+
+
+            <div className=' translate-x-[1090px] translate-y-[-1080px]   w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit timing={200} text="Update" fct={update}  />
             </div> 
 

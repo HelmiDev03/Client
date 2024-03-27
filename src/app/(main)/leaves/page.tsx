@@ -23,6 +23,7 @@ const Leaves = () => {
     const [absenceType, setAbsenceType] = useState([]);
     const [description, setDescription] = useState('');
     const [policyName , setPolicyName] = useState('Default')
+
     const auth = useSelector((state: any) => state.auth);
     function dateTemplate(date: any) {
         if (date.day > 10 && date.day < 14) {
@@ -37,9 +38,9 @@ const Leaves = () => {
     const fetchDataAndUpdatePolicy = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/policy/calculate');
-            const { daysSinceStartExcludingSundays, accruedDays,userStartDate,endDate } = response.data;
+            const { daysSinceStartExcludingOffDays, accruedDays,userStartDate,endDate } = response.data;
             console.log(response.data);
-            setWorkingDays(daysSinceStartExcludingSundays);
+            setWorkingDays(daysSinceStartExcludingOffDays);
             setAccrued(accruedDays);
             setUserStartDate(userStartDate);
             setEndDate(endDate);
@@ -64,9 +65,12 @@ const Leaves = () => {
     const [selecteddescription, setSelectedDescription] = useState('')
     const [selectedstartdate, setSelectedStartDate] = useState('')
     const [selectedenddate, setSelectedEndDate] = useState('')
+    const [etat, setEtat] = useState('')
+    const [supervisor, setSupervisor] = useState({firstname:'',lastname:'',profilepicture:''})
+    const [response, setResponse] = useState('')
 
     const AddNewTimeOff = () => {
-        axios.post('http://localhost:5000/getcongee', {
+        axios.post('http://localhost:5000/api/policy/createtimeoff', {
             type: absence,
             description,
             daterange: dates
@@ -280,9 +284,12 @@ const Leaves = () => {
                                     const endDateMonth = getMonthName(endDate.getMonth());
                                     const endDateDay = endDate.getDate() -1;
                                     const isSameDay = startDate.toDateString() === endDate.toDateString();
+                                    
+                                    
+                                    
 
                                     return (
-                                        <div onClick={() => {setPopupViewTimeOff(true) ; setSelectedType(timeoff.type) ; setSelectedDescription(timeoff.description);setSelectedStartDate(startDateString);setSelectedEndDate(endDateString)}} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div onClick={() => {setResponse(timeoff.response);setSupervisor({ firstname : timeoff.supervisor?.firstname , lastname : timeoff.supervisor?.lastname,profilepicture:timeoff.supervisor?.profilepicture});setPopupViewTimeOff(true) ; setSelectedType(timeoff.type) ;setEtat(timeoff.etat); setSelectedDescription(timeoff.description);setSelectedStartDate(startDateString);setSelectedEndDate(endDateString)}} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -315,7 +322,7 @@ const Leaves = () => {
 
 
                         {/*popup to view timeoff */}
-                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-150px] center rounded-[25px] `}>
+                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-150px] center rounded-[25px] `}>
                             <IoMdClose onClick={() => { setPopupViewTimeOff(!PopupViewTimeOff); dispatch({ type: 'ERRORS', payload: {} }); }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                             <div className="w-[90vw] max-w-md">
 
@@ -348,13 +355,22 @@ const Leaves = () => {
 
 
 
-                                    <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
+                                  {etat==='Approved'&& <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#3FC28A]">Approved</p>
-                                    </div>
+                                        <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
+                                        <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture'/>
+                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]  absolute top-[82%]' >Response : {response}</p>
+                                    </div>}
 
-                                    <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
-                                        <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#F45B69]">Rejected</p>
-                                    </div>
+                                   {etat==='Rejected' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                        <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-red-500">Rejected</p>
+                                        <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
+                                        <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture'/>
+                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]   absolute top-[82%]' >Response : {response}</p>
+                                    </div>}
+                                    {etat==='Pending' && <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                        <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#ffab70]">Pending</p>
+                                    </div>}
 
 
 
