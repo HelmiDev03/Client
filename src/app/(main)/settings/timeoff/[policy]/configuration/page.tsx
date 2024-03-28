@@ -24,6 +24,7 @@ const Config = () => {
   const [maxTimeOffDays, setMaxTimeOffDays] = React.useState<number>(0);
   const [bankHoliday, setBankHoliday] = React.useState('');
   const [canbeused, setCanbeused] = React.useState('');
+  const [includerest, setIncluderest] = React.useState('');
   const errors = useSelector((state: any) => state.errors);
   const { policy } = useParams();
   const success = useSelector((state: any) => state.success);
@@ -46,9 +47,10 @@ const Config = () => {
       TimeOffDaysPerWorkingDays: timeOffDays,
       maxTimeOffDays,
       nationaldays: bankHoliday === "do not count is as absence day" ? true : false,
-      timeofflastforever: canbeused === "in the same cycle they has been acquired" ? false : true
+      timeofflastforever: canbeused === "in the same cycle they has been acquired" ? false : true,
+      includerest: includerest === "count only the main day" ? false : true
     }
-
+   
 
     axios.put(`http://localhost:5000/api/policy/update/${policy}`, data)
       .then(res => {
@@ -78,12 +80,12 @@ const Config = () => {
         setMaxTimeOffDays(res.data.policy.MaxTimeOffDays);
         setBankHoliday(res.data.policy.nationaldays ? "do not count is as absence day" : "count it as absence day");
         setCanbeused(!res.data.policy.timeofflastforever ? "in the same cycle they has been acquired" : "anytime after they has been acquired");
-
+        setIncluderest(!res.data.policy.includerest ? "count only the main day" : "count the main day and the rest");
+        
       })
 
   }, [policy]);
-  console.log(bankHoliday)
-  console.log(canbeused)
+
   return (
     <div>
       <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
@@ -282,6 +284,23 @@ const Config = () => {
               options={[
                 canbeused === "in the same cycle they has been acquired" ? "in the same cycle they has been acquired" : "anytime after they has been acquired",
                 canbeused === "anytime after they has been acquired" ? "in the same cycle they has been acquired" : "anytime after they has been acquired",
+
+              ]}
+
+
+            />
+          </div>
+
+          <div className={styles.inputContainer}>
+            <SelectInput7
+              onChange={(e: any) => { setIncluderest(e.target.value)}}
+              value={includerest}
+              label="If an absence occurs on the last day "
+
+
+              options={[
+                includerest === "count only the main day" ? "count only the main day" : "count the main day and the rest",
+                includerest === "count the main day and the rest" ? "count only the main day" : "count the main day and the rest",
 
               ]}
 

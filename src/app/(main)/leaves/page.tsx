@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Calendar } from 'primereact/calendar';
 import styles from '@/app/(main)/page.module.css';
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
@@ -15,33 +15,55 @@ const Leaves = () => {
     const [date, setDate] = useState(null);
     const [workingDays, setWorkingDays] = useState(0);
     const [accrued, setAccrued] = useState(0);
+    const [used, setUsed] = useState(0);
     const [available, setAvailable] = useState(0);
-    const [userStartDate , setUserStartDate] = useState()
-    const [enddate , setEndDate] = useState()
-    const [dates, setDates] = useState(null);
+    const [timeoffapproved, setTimeOffApproved] = useState([]);
+    const [userStartDate, setUserStartDate] = useState()
+    const [enddate, setEndDate] = useState()
+    const [dates, setDates] = useState([]);
     const [absence, setAbcense] = useState('');
     const [absenceType, setAbsenceType] = useState([]);
     const [description, setDescription] = useState('');
-    const [policyName , setPolicyName] = useState('Default')
+    const [policyName, setPolicyName] = useState('Default')
+    const [PopupViewTimeoffFromCalendar  , setPopupViewTimeoffFromCalendar] =useState(false)
+    const [popupDate,setpopupDate] = useState('')
+    const [popupDateHlidayType,setpopupDateHlidayType]=useState('')
+    const [popupDays , setpopupDays ] = useState(0)
 
     const auth = useSelector((state: any) => state.auth);
-    function dateTemplate(date: any) {
-        if (date.day > 10 && date.day < 14) {
-            return (
-                <div style={{ backgroundColor: '#7152F3', color: '#ffffff', display: 'flex', justifyContent: 'center', borderRadius: '50%', width: '2em', height: '2em', lineHeight: '2em', padding: 0 }}>{date.day}</div>
-            );
+    function dateTemplate(date: any, arr: any[]) {
+        const currentDate = new Date(date.year, date.month, date.day + 1).toISOString()// Convert provided date to ISO string format // Creating a Date object from the provided date
+
+        for (let i = 0; i < arr.length; i++) {
+            const startDate = arr[i][0] // Start date from the array
+            const endDate = arr[i][1]   // End date from the array
+
+            if (currentDate >= startDate && currentDate <= endDate) {
+
+                return (
+                    <div onClick={()=>{setPopupViewTimeoffFromCalendar(true);setpopupDate(currentDate);setpopupDateHlidayType(arr[i][3]);setpopupDays(arr[i][2])}} style={{backgroundColor: '#7152F3', color: '#ffffff', display: 'flex', justifyContent: 'center', borderRadius: '50%', width: '2em', height: '2em', lineHeight: '2em', padding: 0 }}>
+                        {date.day}
+                        
+                        </div>
+                );
+            }
         }
-        else {
-            return date.day;
-        }
+
+        return date.day; // If the date is not within any range, return the day as is
     }
+
     const fetchDataAndUpdatePolicy = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/policy/calculate');
-            const { daysSinceStartExcludingOffDays, accruedDays,userStartDate,endDate } = response.data;
+            const { daysSinceStartExcludingOffDays, accruedDays, used, available, timeoffapproved, userStartDate, endDate } = response.data;
             console.log(response.data);
             setWorkingDays(daysSinceStartExcludingOffDays);
             setAccrued(accruedDays);
+            setUsed(used);
+            setAvailable(available);
+            setTimeOffApproved(timeoffapproved);
+            console.log(timeoffapproved);
+
             setUserStartDate(userStartDate);
             setEndDate(endDate);
 
@@ -66,10 +88,11 @@ const Leaves = () => {
     const [selectedstartdate, setSelectedStartDate] = useState('')
     const [selectedenddate, setSelectedEndDate] = useState('')
     const [etat, setEtat] = useState('')
-    const [supervisor, setSupervisor] = useState({firstname:'',lastname:'',profilepicture:''})
+    const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
 
     const AddNewTimeOff = () => {
+
         axios.post('http://localhost:5000/api/policy/createtimeoff', {
             type: absence,
             description,
@@ -133,6 +156,23 @@ const Leaves = () => {
 
     return (
         <div className={styles.container}>
+            {/*popup to view timeoff in calendar */}
+
+
+
+             {PopupViewTimeoffFromCalendar &&  <div className='      p-12 rounded-[10px] w-[300px] h-[70px] absolute right-[7%] top-[350px] z-50 bg-[#515164] flex flex-col justify-center items-center '>
+               <IoMdClose onClick={() => { setPopupViewTimeoffFromCalendar(!setPopupViewTimeoffFromCalendar); }} className='absolute right-[5%] top-[5%]  text-[#ffffff]  text-[24px] hover:cursor-pointer' />
+                <h1 className='mb-[8px] text-[#ffffff]'>{popupDate.slice(0,10)}</h1>
+                <div className='flex flex-row justify-between items-center'>
+                    <div className='p-2 rounded-[5px] mr-8 bg-[#07a2ad]'><h1 className='text-[#ffffff]'>{popupDateHlidayType}</h1></div>
+                    <h1 className='text-[#ffffff]'>{popupDays > 1 ?popupDays +' Days' :popupDays + ' Day'}</h1>
+                </div>
+                </div> }
+
+
+            {/*end popup to view timeoff */}
+
+            {/*end popup to view time off */}
             {/*popup to add new leave */}
             <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddTimeOff ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => { setPopupAddTimeOff(!PopupAddTimeOff); dispatch({ type: 'ERRORS', payload: {} }); }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
@@ -178,19 +218,27 @@ const Leaves = () => {
                                 value={dates}
                                 onChange={(e: any) => {
                                     setDates(e.value);
+                                    console.log(e.value);
                                     if (e.value && e.value.length === 2) {
-                                        const startDate = e.value[0];
-                                        const endDate = e.value[1];
+                                        let startDate = e.value[0];
+
+                                        
+                                        //increse days by 1
+
+                                        let endDate = e.value[1];
+                                    
                                         const diffDays = Math.ceil(Math.abs(endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
                                         setDiffDays(diffDays);
+                     
                                     } else {
                                         setDiffDays(0); // Or any default value you prefer if no range is selected
                                     }
                                 }}
                                 selectionMode="range"
                                 readOnlyInput
-                            />
-                            {errors.daterange && <div className=" h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
+                            />  
+
+                            {errors.daterange && <div className="absolute top-[60px] h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                                 <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                                 </svg>
@@ -216,6 +264,21 @@ const Leaves = () => {
             </div>
             {/*end popup to add new leave */}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div className=' absolute right-[2%] top-[12%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit fct={() => setPopupAddTimeOff(true)} timing={200} text="Add Time Off" />
             </div>
@@ -227,7 +290,7 @@ const Leaves = () => {
 
                         <div className='p-2 rounded-[5px]  flex flex-col   border-b border-b-gray-300 justify-center items-center'>
                             <h1 className=' font-lexend font-light text-[18px] leading-[30px]'>Time Off Policy : {policyName}</h1>
-                            <h1 className=' font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>From {userStartDate?.slice(0,10)}  to  {enddate?.slice(0,10)}</h1>
+                            <h1 className=' font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>From {userStartDate?.slice(0, 10)}  to  {enddate?.slice(0, 10)}</h1>
                         </div>
 
 
@@ -244,11 +307,11 @@ const Leaves = () => {
                                 <h1 className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>Accrued</h1>
                             </div>
                             <div className='flex flex-col ml-4 justify-center items-center  mr-2'>
-                                <h1 className='font-lexend font-semibold text-[30px] leading-[40px]'>10</h1>
+                                <h1 className='font-lexend font-semibold text-[30px] leading-[40px]'>{available}</h1>
                                 <h1 className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>Available</h1>
                             </div>
                             <div className='flex flex-col ml-4 justify-center items-center mr-2 '>
-                                <h1 className='font-lexend font-semibold text-[30px] leading-[40px]'>10</h1>
+                                <h1 className='font-lexend font-semibold text-[30px] leading-[40px]'>{used}</h1>
                                 <h1 className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>Used</h1>
 
 
@@ -273,23 +336,40 @@ const Leaves = () => {
                             {timeOffs.map((timeoff: any) => {
                                 // Check if daterange is available before accessing it
                                 if (timeoff.daterange && Array.isArray(timeoff.daterange) && timeoff.daterange.length > 0) {
-                                    const startDate = new Date(timeoff.daterange[0]);
-                                    const startdatevalue =  startDate ? new Date( startDate) : null;
-                                    const startDateString = startdatevalue ? startdatevalue.toISOString().split('T')[0] : '';
-                                    const endDate = new Date(timeoff.daterange[1]);
-                                    const endDateString = endDate.toISOString().split('T')[0];
+                                    const differenceMs = new Date(timeoff.daterange[1]).getTime() -new Date(timeoff.daterange[0]).getTime();
+                                    const differenceDays = Math.round(differenceMs / (1000 * 60 * 60 * 24))+1;
 
-                                    const startDateMonth = getMonthName(startDate.getMonth());
-                                    const startDateDay = startDate.getDate() -1;
-                                    const endDateMonth = getMonthName(endDate.getMonth());
-                                    const endDateDay = endDate.getDate() -1;
-                                    const isSameDay = startDate.toDateString() === endDate.toDateString();
+
+                                    const startDate = timeoff.daterange[0];
+                                    const startdatevalue = startDate ? new Date(startDate) : null;
+                                    const startDateString = startdatevalue ? startdatevalue.toISOString().split('T')[0] : '';
+                                    const endDate = timeoff.daterange[1];
+                                    const enddatevalue = endDate ? new Date(endDate) : null;
+                                    const endDateString = enddatevalue ? enddatevalue.toISOString().split('T')[0] : '';
                                     
-                                    
-                                    
+                                
+                                    let startDateMonth, startDateDay;
+                                    if (startDate[5] === '0') {
+                                        startDateMonth = getMonthName(parseInt(startDate[6])-1);
+                                    } else {
+                                        startDateMonth = getMonthName(parseInt(startDate.slice(5, 7))-1);
+                                    }
+                                    startDateDay = parseInt(startDate.slice(8, 10)) ;
+                                  
+                                
+                                    let endDateMonth, endDateDay;
+                                    if (endDate[5] === '0') {
+                                        endDateMonth = getMonthName(parseInt(endDate[6])-1);
+                                    } else {
+                                        endDateMonth = getMonthName(parseInt(endDate.slice(5, 7))-1);
+                                    }
+                                    endDateDay = parseInt(endDate.slice(8, 10)) ;
+                                
+                                    const isSameDay =timeoff.daterange[0] === timeoff.daterange[1];
+                                  
 
                                     return (
-                                        <div onClick={() => {setResponse(timeoff.response);setSupervisor({ firstname : timeoff.supervisor?.firstname , lastname : timeoff.supervisor?.lastname,profilepicture:timeoff.supervisor?.profilepicture});setPopupViewTimeOff(true) ; setSelectedType(timeoff.type) ;setEtat(timeoff.etat); setSelectedDescription(timeoff.description);setSelectedStartDate(startDateString);setSelectedEndDate(endDateString)}} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString) }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -306,7 +386,7 @@ const Leaves = () => {
                                             <div className='flex flex-col '>
                                                 <h1 className='font-lexend font-semibold mb-3 text-[16px] leading-[20px]'>{timeoff.type}</h1>
                                                 <h1 className='font-lexend font-light text-[14px] leading-[20px]'>
-                                                    {isSameDay ? `1 Day` : `${Math.abs(endDateDay - startDateDay)} Days`}
+                                                    {isSameDay ? `1 Day` : `${differenceDays} Days`}
                                                 </h1>
                                             </div>
                                         </div>
@@ -355,20 +435,20 @@ const Leaves = () => {
 
 
 
-                                  {etat==='Approved'&& <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
+                                    {etat === 'Approved' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#3FC28A]">Approved</p>
                                         <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
-                                        <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture'/>
-                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]  absolute top-[82%]' >Response : {response}</p>
+                                        <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture' />
+                                        <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]  absolute top-[82%]' >Response : {response}</p>
                                     </div>}
 
-                                   {etat==='Rejected' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                    {etat === 'Rejected' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-red-500">Rejected</p>
                                         <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
-                                        <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture'/>
-                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]   absolute top-[82%]' >Response : {response}</p>
+                                        <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture' />
+                                        <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]   absolute top-[82%]' >Response : {response}</p>
                                     </div>}
-                                    {etat==='Pending' && <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                    {etat === 'Pending' && <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#ffab70]">Pending</p>
                                     </div>}
 
@@ -402,7 +482,7 @@ const Leaves = () => {
                         selectionMode="single"
                         readOnlyInput={true}
 
-                        dateTemplate={dateTemplate}
+                        dateTemplate={(date) => dateTemplate(date, timeoffapproved)}
                     />
                 </div>
             </div>
