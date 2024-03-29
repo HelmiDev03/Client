@@ -16,6 +16,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import axios from 'axios';
 import { setAuth } from '@/redux/utils/setAuth';
+import { jwtDecode } from 'jwt-decode';
 const Security = () => {
     const [openPopupDelete, setOpenPopupDelete] = useState(false);
     const [popupDeletePage, setPopupDeletePage] = useState(1);
@@ -80,6 +81,11 @@ const Security = () => {
                             type: 'SUCCESS',
                             payload: res.data.message
                         });
+                        const decodedToken = jwtDecode(res.data.token);
+                        dispatch({
+                            type: 'SET_USER',
+                            payload: decodedToken
+                        });
                         localStorage.setItem('jwt', res.data.token);
                         setAuth(res.data.token);
                     }
@@ -99,6 +105,11 @@ const Security = () => {
     const disabeltfa = () => {
         axios.put('http://localhost:5000/api/tfa/disable')
             .then(res => {
+                const decodedToken = jwtDecode(res.data.token);
+                        dispatch({
+                            type: 'SET_USER',
+                            payload: decodedToken
+                        });
                 localStorage.setItem('jwt', res.data.token);
                 setAuth(res.data.token);
             })
