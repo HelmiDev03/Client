@@ -1,4 +1,5 @@
 'use client'
+import { MdOutlineHourglassEmpty } from "react-icons/md";
 import styles from './page.module.css'
 import { IoIosCalendar, IoMdClose } from "react-icons/io";
 import { CiTimer } from "react-icons/ci";
@@ -71,6 +72,11 @@ const Notifications = () => {
         </div>
           ))
         )}
+
+        {notifications.length === 0 &&
+           <div className='flex text-gray-500 justify-center items-center flex-col mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
+         <MdOutlineHourglassEmpty className="text-[20px] text-[#7152F3] mb-3"/>   No notifications yet
+            </div> }
 
 
       </div>

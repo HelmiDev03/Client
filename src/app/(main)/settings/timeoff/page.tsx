@@ -50,6 +50,7 @@ const TimeOff = () => {
                     
                     })
                     
+                    return res.data.policies
                 })
                 .catch((err:any) => {
                     dispatch({
@@ -58,11 +59,50 @@ const TimeOff = () => {
                     
                     })
                 })
+                .then((newdata)=>{
+                    setIsHidden(new Array(newdata.length).fill(false))
+                })
                 
         }
         else {
             return;
         }
+    }
+
+
+    const deletePolicy = (id: string) => () => {
+        axios.delete(`http://localhost:5000/api/policy/delete/${id}`)
+            .then(res => {
+                dispatch({
+                    type: 'SET_POLICIES',
+                    payload: res.data.policies
+                });
+                return res.data.policies
+                
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            .then((newdata)=>{
+                setIsHidden(new Array(newdata?.length).fill(false))
+            })
+    }
+    const setnewdefaultpolicy = (id: string) => () => {
+        axios.put(`http://localhost:5000/api/policy/setnewdefaultpolicy/${id}`)
+            .then(res => {
+                dispatch({
+                    type: 'SET_POLICIES',
+                    payload: res.data.policies
+                });
+                setIsHidden(isHidden.map(() => false))
+                return res.data.policies
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            .then((newdata)=>{
+                setIsHidden(new Array(newdata?.length).fill(false))
+            })
     }
 
    
@@ -201,7 +241,7 @@ const TimeOff = () => {
                 
 
                 {policies.map((policy: any, index: any) => (
-                    <div key={policy.name} className='relative w-[550px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
+                    <div key={policy.name} className='relative w-[550px] rounded-[10px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
                         <FaSquarePen className='absolute right-[50%] top-[-10%] text-[30px] text-gray-600 ' />
                         <div className='flex flex-row justify-between'>
                             <div className='rounded-[5px] h-[30px] flex justify-center items-center bg-[#7152F3]'>
@@ -209,17 +249,17 @@ const TimeOff = () => {
                             </div>
                             <IoMdSettings onClick={() => toggleVisibility(index)} className='relative text-[24px] text-[#7152F3] hover:cursor-pointer mb-4' />
                             {isHidden[index] && (
-                                <div className="absolute flex flex-col top-[20%] bg-white shadow-md p-6 right-[-11%] right-[10%]">
+                                <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.3)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
                                     {!policy.isdefault && (
                                         <>
-                                            <h3 className='hover:cursor-pointer mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Set as Default</h3>
-                                            <h3 className='hover:cursor-pointer text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>
+                                            <h3 onClick={setnewdefaultpolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Set as Default</h3>
+                                            <h3 onClick={deletePolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>
                                         </>
                                     )}
                                     {policy.isdefault && (
-                                        <div className='w-[150px]' >
-                                            <h3 className='hover:cursor-pointer mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>
-                                            <h3 className='hover:cursor-pointer text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>You cannot remove the main policy. Please select another policy as the main policy first.</h3>
+                                        <div className='w-[150px] z-50 rounded-[10px] ' >
+                                            <h3 className='hover:cursor-pointer hover:bg-gray-200 p-3  mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>
+                                            <h3 className='hover:cursor-pointer  text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>You cannot remove the main policy. Please select another policy as the main policy first.</h3>
                                         </div>
                                     )}
                                 </div>
@@ -235,7 +275,7 @@ const TimeOff = () => {
 
                         </div>
                         <div className='flex flex-row justify-center mt-2'>
-                            <h1 onClick={()=>router.push(`/settings/timeoff/${policy._id}`)} className='hover:cursor-pointer text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>View Policy</h1>
+                            <h1 onClick={()=>router.push(`/settings/timeoff/${policy._id}/configuration`)} className='hover:cursor-pointer text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>View Policy</h1>
                         </div>
                     </div>
                 ))}

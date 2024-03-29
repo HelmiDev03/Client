@@ -64,7 +64,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
 
 
-  }, []);  
+ }, []);  
 
   return (
     <ReduxProvider store={store}>

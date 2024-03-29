@@ -5,6 +5,7 @@ import errorsReducer from "./errorsReducer";
 import successReducer from "./successReducer";
 import companyReducer from "./companyReducer";
 import policiesReducer from "./policyReducer";
+import permissionGroupReducer from "./permissionGroupReducer";
 
 const rootReducer = combineReducers({
     auth: userReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     errors: errorsReducer,
     success: successReducer,
     policies: policiesReducer,
+    permissionGroups: permissionGroupReducer
 
 });
 

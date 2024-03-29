@@ -1,5 +1,5 @@
 'use client'
-import React, { useReducer, useState } from 'react'
+import React, { useState } from 'react'
 
 import Image from 'next/image'
 import styles from './page.module.css'
@@ -8,7 +8,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import { ImSpinner8 } from 'react-icons/im';
