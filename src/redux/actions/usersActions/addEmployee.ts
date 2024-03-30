@@ -20,6 +20,10 @@ export const Addnewemployee = (data:any , router:any) => (dispatch: Dispatch<any
                 type: 'SET_POLICIES',
                 payload: res.data.policies
               })
+              dispatch({
+                type: 'SET_PERMISSION_GROUPS',
+                payload: res.data.permissionGroups
+            });
 
             router.push('/employees');
         })

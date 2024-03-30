@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 const TimeOff = () => {
     const company = useSelector((state: any) => state.company)
     const permissionGroups     = useSelector((state: any) => state.permissionGroups)
-    
+    const auth = useSelector((state: any) => state.auth)
     const errors = useSelector((state: any) => state.errors)
     const router = useRouter()
     const dispatch = useDispatch<AppDispatch>()
@@ -27,11 +27,27 @@ const TimeOff = () => {
     const [PopupAddDay, setPopupAddDay] = React.useState(false)
     const [Day, setDay] = React.useState('')
     const [Name, setName] = React.useState('')
+    const [isUserinAdmins , setIsUserinAdmins] = React.useState(false)
     const [isHidden, setIsHidden] = React.useState(new Array(permissionGroups.length).fill(false))
     const toggleVisibility = (index: number) => {
         const newIsHidden = isHidden.map((item, i) => i === index ? !item : false)
         setIsHidden(newIsHidden)
     }
+
+    React.useEffect(() => {
+        
+        const fetchdata = async () => {
+            axios.get(`http://localhost:5000/api/permissions/usergroup`)   
+    
+            .then((res) => {
+              setIsUserinAdmins(res.data.isadministrators)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+        fetchdata()
+    }, [])
     
     
     const AddGroup = () => {
@@ -73,10 +89,10 @@ const TimeOff = () => {
 
 
     const deletegroup = (id: string) => () => {
-        axios.delete(`http://localhost:5000/api/group/delete/${id}`)
+        axios.delete(`http://localhost:5000/api/permissions/delete/${id}`)
             .then(res => {
                 dispatch({
-                    type: 'SET_permissionGroups',
+                    type: 'SET_PERMISSION_GROUPS',
                     payload: res.data.permissionGroups
                 });
                 return res.data.permissionGroups
@@ -185,14 +201,14 @@ const TimeOff = () => {
                 
 
                 {permissionGroups.map((group: any, index: any) => (
-                    <div key={group.name} className='relative w-[550px] rounded-[10px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
+                    <div key={group.name} className='relative w-[550px] rounded-[10px] mb-6 h-[170.4px]  mr-6 flex flex-col border border-gray-300 p-2'>
                         <FaSquarePen className='absolute right-[50%] top-[-10%] text-[30px] text-gray-600 ' />
                             <div className='flex flex-row justify-between'>
                                 <div className='rounded-[5px] h-[30px] flex justify-center items-center bg-[#7152F3]'>
                                    {group.isdefault && <h1 className='text-[#fff] font-lexend font-semibold text-[20px] leading-[30px]'>Default</h1> }
                                    {group.iscustom && <h1 className='text-[#fff] font-lexend font-semibold text-[20px] leading-[30px]'>Custom</h1> }
                                 </div>
-                            {group.iscustom && (
+                            {group.iscustom && isUserinAdmins &&(
                                 <>
                                     <IoMdSettings onClick={() => toggleVisibility(index)} className='relative text-[24px] text-[#7152F3] hover:cursor-pointer mb-4' />
                                     {isHidden[index] && (
@@ -214,9 +230,16 @@ const TimeOff = () => {
                             </p>
 
                         </div>
-                        <div className='flex flex-row justify-center mt-2'>
+                      {(auth.user.permissionGroup === group._id || isUserinAdmins)  && <div className='flex flex-row justify-center mt-2'>
                             <h1 onClick={()=>router.push(`/settings/permissionsgroups/${group._id}/permissions`)} className='hover:cursor-pointer text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>See Group</h1>
-                        </div>
+                        </div> }
+                        {(auth.user.permissionGroup !== group._id && !  isUserinAdmins)  && <div className='flex flex-row justify-center mt-2'>
+                            <h1  className=' text-red-500 font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Access is Restricted</h1>
+                        </div> }
+                        
+
+
+                       
                     </div>
                 ))}
 

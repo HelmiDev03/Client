@@ -184,10 +184,10 @@ return (
          {/*in case employee added*/}
          <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[180px]  center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
         <Modal.Header />
-        <Modal.Body className='bg-lavender'>
+        <Modal.Body className=''>
           <div className="text-center">
             <IoPersonAdd className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
-            <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
+            <h3 className="mb-5 text-lg font-normal  text-[#ffffff] ">
                         Employee Successfully Added
             </h3>
             <div className="flex justify-center gap-4">
@@ -204,14 +204,14 @@ return (
   {openPopupDelete&&    <div id="static-modal" data-modal-backdrop="static" aria-hidden="true" className="bg-[#eee] overflow-y-auto overflow-x-hidden absolute w-[500px] right-[40%] center rounded-[25px]  z-50 justify-center items-center ">
     <div className="bg-[#eee] relative  w-full max-w-2xl max-h-full">
       
-        <div className="bg-[#eee]  relative  rounded-lg shadow dark:bg-gray-700">
+        <div className="bg-[#eee]  relative  rounded-lg shadow ">
            
             <div className=" bg-[#eee] flex items-center justify-between p-4 md:p-5 border-b border-red-200 rounded-t">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-xl font-semibold text-gray-900 ">
                 Delete {employeeSelected}
                 </h3>
                 <div onClick={()=>{setOpenPopupDelete(!openPopupDelete) ;setPopupDeletePage(1)} } >
-                <button  type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
+                <button  type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="static-modal">
                     <svg className="w-3 h-3 text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -221,15 +221,15 @@ return (
             </div>
             
             <div className={`  ${popupDeletePage===1 ? 'block' :'hidden'}        p-4 md:p-5 space-y-4`}>
-                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                <p className="text-base leading-relaxed text-gray-500 ">
                 This action will permanently remove all records related to the {employeeSelected} from our  systems. This includes any documentation, discussions, contributions, packages, confidential information, and any affiliations with other individuals or organizations. Once completed, there will be no way to recover this data. Are you certain you wish to proceed ?
                 </p>
              
             </div>
             <div className={`  ${popupDeletePage===2 ? 'block' :'hidden'}  flex justify-center items-center flex-col      p-4 md:p-5 space-y-4`}>
-                <h3 className="text-xl font-semibold text-gray-500 dark:text-white">To confirm, type "{employeeSelected}" in the box below</h3>
+                <h3 className="text-xl font-semibold text-gray-500">To confirm, type "{employeeSelected}" in the box below</h3>
            <Input2   type="text" width="510px" onChange={handleEmployeeName} />
-            {errors.message && <div className=" h-[30px] w-[350px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+            {errors.message && <div className=" h-[30px] w-[350px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
               <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
               </svg>

@@ -32,5 +32,9 @@ export const LogoutAction = () => (dispatch: Dispatch<any>) => {
         type: 'SET_EMPLOYEES',
         payload: []
     });
+    dispatch({
+        type: 'SET_PERMISSION_GROUPS',
+        payload: []
+    });
     window.location.href='/login'; 
 };
