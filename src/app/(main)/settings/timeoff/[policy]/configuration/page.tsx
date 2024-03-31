@@ -66,7 +66,7 @@ const Config = () => {
 
   }
 
-
+const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
   useEffect(() => {
     axios.get(`http://localhost:5000/api/policy/get/${policy}`)
       .then((res: any) => {
@@ -83,14 +83,26 @@ const Config = () => {
         setIncluderest(!res.data.policy.includerest ? "count only the main day" : "count the main day and the rest");
         
       })
+     
+            axios.get(`http://localhost:5000/api/permissions/usergroup`)   
+    
+            .then((res) => {
+                
+                      setEditpolicyconfig(res.data.group.editpolicyconfig)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+     
+ 
 
   }, [policy]);
 
   return (
     <div>
-      <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+     {editpolicyconfig && <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
         <ButtonSubmit fct={updatePolicy} timing={100} text="Edit Policy" />
-      </div>
+      </div> }
 
 
       <Modal className='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>

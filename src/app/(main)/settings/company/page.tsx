@@ -15,6 +15,7 @@ import { AppDispatch } from '@/redux/store';
 import {UpdateCompany} from '@/redux/actions/companyActions/updateCompany'
 import { IoTodaySharp } from "react-icons/io5";
 import { CheckboxGroup } from '@/app/(components)/Inputs/checkbox';
+import axios from 'axios';
 
 
 const CompanySettings = () => {
@@ -39,6 +40,7 @@ const CompanySettings = () => {
     const [zip, setZip] = useState(company.zip);
     const [country, setCountry] = useState(company.country);
     const success = useSelector((state: any) => state.success)
+    const [editcompanyinfo , setEditCompanyInfo] = useState(false)
     const closeModel = () => {
         dispatch({
             type: 'SUCCESS',
@@ -96,7 +98,16 @@ const CompanySettings = () => {
    }
 
    
+    React.useEffect(() => {
+        axios.get(`http://localhost:5000/api/permissions/usergroup`)
 
+      .then((res) => {
+        setEditCompanyInfo(res.data.group.editcompanyinfo)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }, []);
 
 
 
@@ -105,9 +116,9 @@ const CompanySettings = () => {
         <div className={styles.container}>
             <Modal className ='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
         <Modal.Header />
-        <Modal.Body className='bg-lavender '>
+        <Modal.Body className=' '>
           <div className="text-center">
-            <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
+            <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
             <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
                         Successfully Updated
             </h3>
@@ -377,9 +388,9 @@ const CompanySettings = () => {
 
 
 
-            <div className=' translate-x-[1090px] translate-y-[-1080px]   w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+          {editcompanyinfo &&  <div className=' translate-x-[1090px] translate-y-[-1170px]   w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit timing={200} text="Update" fct={update}  />
-            </div> 
+            </div> }
 
 
                  

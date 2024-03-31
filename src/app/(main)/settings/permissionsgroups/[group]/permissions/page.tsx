@@ -6,7 +6,9 @@ import React from 'react';
 import { HiUsers } from "react-icons/hi2";
 import { IoIosSettings } from "react-icons/io";
 import { IoMdLogOut } from "react-icons/io";
-
+import { useDispatch, useSelector } from 'react-redux';
+import {  Modal } from 'flowbite-react';
+import { MdSecurityUpdateGood } from 'react-icons/md'
 const Permissions = () => {
   const { group } = useParams();
   const [viewemployeespage, setViewEmployeesPage] = React.useState(false)
@@ -34,7 +36,58 @@ const Permissions = () => {
 
   };
 
-  const Update = () => { }
+  const dispatch = useDispatch()
+  const success = useSelector((state: any) => state.success)
+  const closeModel = () => {
+    dispatch({
+        type: 'SUCCESS',
+        payload: ''
+    });
+    window.location.reload()
+}
+  const Update = () => {
+    axios.put(`http://localhost:5000/api/permissions/update/${group}`, {
+      viewallemployees: viewemployeespage,
+      viewemployeedetails: viewemployeedetails,
+      editemployeedetails: editemployeedetails,
+      deleteemployee: deleteemployee,
+      addnewemployee: addemployee,
+      viewcompanydetails: viewcompanysettings,
+      editcompanyinfo: editcompanysettings,
+      answertimeOffrequests: answertimeoffrequest,
+      viewtimeoffpiliciespage: viewtimeoffpoliciespage,
+      viewtimeoffpolicydetails: viewtimeoffpolicydetails,
+      addnewtimeoffpolicy: addnewtimeoffpolicy,
+      removepolicy: removeatimeoffpolicy,
+      setpolicyasdefault: updatethedefaultpolicy,
+      addnationalday: addanationalday,
+      deletenationaldays: deleteanationalday,
+      editpolicyconfig: editpolicyconfiguration,
+      addnewemployeetoapolicy: addanewemployeetoapolicy,
+      changeemployeepolicy: changeemployeepolicy
+    })
+    .then((res) => {
+      dispatch({
+        type: 'SET_permissionGroups',
+        payload: res.data.permissionGroups
+    });
+    dispatch({
+      type: 'SUCCESS',
+      payload: {message:'updated'}
+  });
+    
+    })
+   }
+
+
+
+
+
+
+
+
+
+
 
 
   React.useEffect(() => {
@@ -68,7 +121,7 @@ const Permissions = () => {
     axios.get(`http://localhost:5000/api/permissions/usergroup`)   
     
       .then((res) => {
-        setIsUserinAdmins(res.data.isadministrators)
+        setIsUserinAdmins(res.data.group.isadministrators)
       })
       .catch((err) => {
         console.log(err)
@@ -82,6 +135,21 @@ const Permissions = () => {
 
   return (
     <div className='translate-x-[-10%]'>
+       <Modal className ='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
+        <Modal.Header />
+        <Modal.Body className=''>
+          <div className="text-center">
+            <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
+            <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">
+                        Successfully Updated
+            </h3>
+            <div className="flex justify-center gap-4">
+            
+            </div>
+          
+          </div>
+        </Modal.Body>
+      </Modal>
    {isCustom && isUserinAdmins&&   <div className=' bg-white-500 border-[2px] translate-y-[-80px]  translate-x-[900px] flex justify-center items-center border-[#7152F3] w-[90px] h-[50px] w-[250px] text-white rounded-[10px] p-1  ' >
         <ButtonSubmit fct={Update} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Update</h3>} />
 

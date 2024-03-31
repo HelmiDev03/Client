@@ -90,10 +90,10 @@ const Personnel = () => {
              
             <Modal className ='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
         <Modal.Header />
-        <Modal.Body className='bg-lavender '>
+        <Modal.Body className=''>
           <div className="text-center">
-            <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
-            <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
+            <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
+            <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">
                         Successfully Updated
             </h3>
             <div className="flex justify-center gap-4">

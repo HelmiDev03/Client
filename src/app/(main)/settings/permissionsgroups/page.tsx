@@ -33,6 +33,7 @@ const TimeOff = () => {
         const newIsHidden = isHidden.map((item, i) => i === index ? !item : false)
         setIsHidden(newIsHidden)
     }
+  
 
     React.useEffect(() => {
         
@@ -40,7 +41,7 @@ const TimeOff = () => {
             axios.get(`http://localhost:5000/api/permissions/usergroup`)   
     
             .then((res) => {
-              setIsUserinAdmins(res.data.isadministrators)
+              setIsUserinAdmins(res.data.group.isadministrators)
             })
             .catch((err) => {
               console.log(err)
@@ -134,7 +135,7 @@ const TimeOff = () => {
 
             {/* in case add group */}
             <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddGroup ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
-                <IoMdClose onClick={() =>{ dispatch({type: 'ERRORS',payload: {}}); setPopupAddGroup(!PopupAddGroup)}} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
+                <IoMdClose onClick={() =>{ dispatch({type: 'ERRORS',payload: {}});setGroupName('') ;setPopupAddGroup(!PopupAddGroup)}} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
 
                     <div className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Name the permissions group</div>
@@ -181,7 +182,7 @@ const TimeOff = () => {
                     <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Permission groups</h2>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Manage employees access in NRH</p>
                 </div>
-                <div className=' mb-4 w-[241px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
+             {isUserinAdmins &&   <div className=' mb-4 w-[241px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
                     <ButtonSubmit
                         fct={() => setPopupAddGroup(true)}
                         timing={200}
@@ -192,7 +193,7 @@ const TimeOff = () => {
                         }
 
                     />
-                </div>
+                </div>}
             </div>
 
 

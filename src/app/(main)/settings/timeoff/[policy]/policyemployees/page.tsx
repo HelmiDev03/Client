@@ -55,7 +55,8 @@ const Employees = () => {
     }
 
 
-
+  const [addnewemployeetoapolicy, setaddnewemployeetoapolicy] = React.useState(false)
+  const [changeemployeepolicy , setchangeemployeepolicy] = React.useState(false)
     useEffect(() => {
         dispatch(GetAllEmployees());
         axios.get(`http://localhost:5000/api/policy/get/${policy}`)
@@ -65,6 +66,16 @@ const Employees = () => {
                 setfilteredUsers(users.filter((user: any) => !res.data.policy.employees.some((employee: any) => employee._id === user._id)));
 
 
+            })
+            axios.get(`http://localhost:5000/api/permissions/usergroup`)   
+    
+            .then((res) => {
+                
+                      setaddnewemployeetoapolicy(res.data.group.addnewemployeetoapolicy)
+                        setchangeemployeepolicy(res.data.group.changeemployeepolicy)
+            })
+            .catch((err) => {
+              console.log(err)
             })
 
 
@@ -161,13 +172,13 @@ const Employees = () => {
         },
 
 
-        {
+        changeemployeepolicy?  {
             field: 'Action',
             headerName: 'Action',
             renderCell: (params) => <ActionCellRenderer row={params.row} />,
             width: 100,
 
-        },
+        }:{field: '',},
 
     ];
     const rows = PolicyEmployees.map((user: any, index: number) => ({
@@ -350,9 +361,9 @@ const Employees = () => {
 
 
 
-            <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+          {addnewemployeetoapolicy &&  <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit fct={() => setPopupAddEmployee(!PopupAddEmployee)} timing={200} text="Add Employee" />
-            </div>
+            </div>}
             <IoIosPeople className='text-[25px] text-[#7152F3]' /><h1 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] '>Employees</h1>
             <p className="font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left   ">Here you can assign as many employees as you want to this policy.</p>
 
