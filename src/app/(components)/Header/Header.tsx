@@ -87,7 +87,7 @@ const Header= () => {
 
            <div className=" mr-[18px] w-[40px] h-[40px] flex justify-center items-centernded-[10px]  bg-gray-100 rou">
             <IoIosNotificationsOutline onClick={()=>router.push('/notifications')}  className="hover:cursor-pointer relative w-[24px] h-[24px] bg-[#eee] hover:cursor-pointer" />
-            <div className=" absolute bottom-[26px] w-[20px] h-[20px] bg-red-500 rounded-full flex justify-center items-center"><span className="text-[#fff]">{notifCounter}</span></div>
+           
 
                  </div>
 

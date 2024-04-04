@@ -10,20 +10,25 @@ interface UserData {
 
 export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
 
-    axios.post(process.env.NEXT_PUBLIC_DOMAIN +'/api/login', data)
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/login', data)
         .then(res => {
-            
-            if (res.data.token ) {
-            
+
+            if (res.data.token) {
+
                 dispatch(LoginActionAfterTFA(res));
-                
+
             }
-            
+
             else {
 
-                axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/beforelogin/sendotp', { email: res.data.email })
+                axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/tfa/beforelogin/sendotp', { email: res.data.email })
                     .then(res => {
                         window.location.href = '/login/tfa?email=' + res.data.email + '&token=' + res.data.token + '&expiredAt=' + res.data.expiredAt;
+                    })
+                    .catch(err => {
+                        localStorage.setItem('errorMessage', err.response?.data.message);
+                        window.location.href = '/login';
+                       
                     })
 
             }
@@ -33,6 +38,8 @@ export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
 
             localStorage.setItem('errorMessage', err.response?.data.message);
             window.location.href = '/login';
+            console.log(err.response);
+
 
         });
 
@@ -65,10 +72,10 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
         payload: decodedToken
     });
 
-    
 
 
-    axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/company')
+
+    axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/company')
         .then(res => {
             console.log(res.data.company);
             dispatch({
@@ -77,9 +84,9 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
             });
         })
 
-   
 
-    
+
+
 
 
 
