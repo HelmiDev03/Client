@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   description: "novencia SignIn page",
 };
 
+
+if(process.env.NODE_ENV == "development"){
+  process.env.NEXT_PUBLIC_DOMAIN = 'http://localhost:5000';
+}
+else if (process.env.NODE_ENV == "production"){
+  process.env.NEXT_PUBLIC_DOMAIN = 'https://clinetapi.onrender.com';
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
