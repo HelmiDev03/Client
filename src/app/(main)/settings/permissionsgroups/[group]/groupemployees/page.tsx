@@ -45,7 +45,7 @@ const Employees = () => {
     if (selectedUserIds.length === 0) {
       return;
     }
-    axios.put(`http://localhost:5000/api/permissions/addemployeestopermissiongroup/${group}`, { employeesId: selectedUserIds })
+    axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/addemployeestopermissiongroup/${group}`, { employeesId: selectedUserIds })
       .then((res: any) => {
         dispatch({
           type: 'SET_PERMISSION_GROUPS',
@@ -59,7 +59,7 @@ const Employees = () => {
 
   useEffect(() => {
     dispatch(GetAllEmployees());
-    axios.get(`http://localhost:5000/api/permissions/${group}`)
+    axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/${group}`)
       .then((res: any) => {
         console.log(res.data)
         setgroupEmployees(res.data.permissionGroup.users)
@@ -71,7 +71,7 @@ const Employees = () => {
 
 
 
-    axios.get(`http://localhost:5000/api/permissions/usergroup`)
+    axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
 
       .then((res) => {
         setIsUserinAdmins(res.data.group.isadministrators)
@@ -194,7 +194,7 @@ const Employees = () => {
 
   const AssignNewgroup = () => {
     if (newgroup) {
-      axios.put(`http://localhost:5000/api/permissions/updateemployeegroup/${employeeId}`, {
+      axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/updateemployeegroup/${employeeId}`, {
         name: newgroup
       }).then((res: any) => {
         console.log(res.data.permissionGroups)

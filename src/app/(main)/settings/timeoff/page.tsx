@@ -36,7 +36,7 @@ const TimeOff = () => {
     const AddPolicy = () => {
 
         if (PolicyName) {
-            axios.post('http://localhost:5000/api/policy/create', { name: PolicyName })
+            axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/create', { name: PolicyName })
                 .then(res => {
                     dispatch({
                         type: 'SET_POLICIES',
@@ -72,7 +72,7 @@ const TimeOff = () => {
 
 
     const deletePolicy = (id: string) => () => {
-        axios.delete(`http://localhost:5000/api/policy/delete/${id}`)
+        axios.delete(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/delete/${id}`)
             .then(res => {
                 dispatch({
                     type: 'SET_POLICIES',
@@ -89,7 +89,7 @@ const TimeOff = () => {
             })
     }
     const setnewdefaultpolicy = (id: string) => () => {
-        axios.put(`http://localhost:5000/api/policy/setnewdefaultpolicy/${id}`)
+        axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/setnewdefaultpolicy/${id}`)
             .then(res => {
                 dispatch({
                     type: 'SET_POLICIES',
@@ -115,7 +115,7 @@ const TimeOff = () => {
         setPopupAddDay(false)
         if (Name && Day) {
 
-            axios.put('http://localhost:5000/api/company/updateNationalDays', { name: Name, day: Day })
+            axios.put(process.env.NEXT_PUBLIC_DOMAIN+'/api/company/updateNationalDays', { name: Name, day: Day })
                 .then(res => {
                     dispatch({
                         type: 'UPDATE_COMPANY',
@@ -143,7 +143,7 @@ const TimeOff = () => {
     React.useEffect(() => {
 
         const fetchdata = async () => {
-            axios.get(`http://localhost:5000/api/permissions/usergroup`)
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
 
                 .then((res) => {
                     setviewtimeoffpolicydetails(res.data.group.viewtimeoffpolicydetails)
@@ -156,7 +156,7 @@ const TimeOff = () => {
                 .catch((err) => {
                     console.log(err)
                 })
-            axios.get('http://localhost:5000/api/policy')
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy')
                 .then(res => {
                     dispatch({
                         type: 'SET_POLICIES',
@@ -388,7 +388,7 @@ const TimeOff = () => {
                                         {day.day}
                                     </td>
                                     {deletenationaldays && <td className="px-6 py-4">
-                                        <button onClick={() => axios.put('http://localhost:5000/api/company/deleteNationalDays', { index }).then(res => {
+                                        <button onClick={() => axios.put(process.env.NEXT_PUBLIC_DOMAIN+'/api/company/deleteNationalDays', { index }).then(res => {
                                             dispatch({
                                                 type: 'UPDATE_COMPANY',
                                                 payload: res.data.company

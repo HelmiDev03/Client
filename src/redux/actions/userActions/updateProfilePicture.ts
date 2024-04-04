@@ -7,7 +7,7 @@ import { jwtDecode } from "jwt-decode";
 
 
 export const updateProfilePicture = (ImageUrl: string,publicId:string ,choose:string) => (dispatch: Dispatch<any>) => {
-    axios.post(`http://localhost:5000/api/updateprofilepicture/decison`, {ImageUrl,publicId,choose} )
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/updateprofilepicture/decison`, {ImageUrl,publicId,choose} )
     .then( res => {
         
         const { token } = res.data;

@@ -58,7 +58,7 @@ const Employees = () => {
 
 
         dispatch(GetAllEmployees());
-        axios.get(`http://localhost:5000/api/permissions/usergroup`)
+        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
 
             .then((res) => {
      

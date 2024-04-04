@@ -19,7 +19,7 @@ const Notifications = () => {
 
  React.useEffect(() => {
      const fetchNotifications = async() =>{
-      axios.get('http://localhost:5000/api/notifications')
+      axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/notifications')
       .then((res) => {
          setNotifications(res.data.notifications)
        })
@@ -33,9 +33,9 @@ const Notifications = () => {
 
 
  const UpdateTimeoff = async ()=>{
-  axios.put('http://localhost:5000/api/policy/updatetimeoff/'+timeoffid , {etat : popupText ==='Accept' ? 'Approved':'Rejected' , response})
+  axios.put(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/updatetimeoff/'+timeoffid , {etat : popupText ==='Accept' ? 'Approved':'Rejected' , response})
   .then((res: any)=>{
-    axios.delete('http://localhost:5000/api/notifications/delete/'+notif)
+    axios.delete(process.env.NEXT_PUBLIC_DOMAIN+'/api/notifications/delete/'+notif)
     .then(()=>{
       window.location.reload()
     })

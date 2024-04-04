@@ -47,7 +47,7 @@ const TFA= () => {
             router.push('/login');
         }
 
-        axios.post('http://localhost:5000/api/tfa/verifytokenexist', { tokenid })
+        axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/verifytokenexist', { tokenid })
             .catch((err) => {
                 router.push('/login');
             });
@@ -77,7 +77,7 @@ const TFA= () => {
 
     const verify = async () => {
         dispatch({ type: 'ERRORS', payload: {} });
-        await axios.post('http://localhost:5000/api/tfa/beforelogin/verifyotp', { email: email, otp: otp })
+        await axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/beforelogin/verifyotp', { email: email, otp: otp })
             .then((res) => {
                 dispatch(LoginActionAfterTFA(res))
             })

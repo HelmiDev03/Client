@@ -30,7 +30,7 @@ const Prof = () => {
     const Update = () => { 
         
         
-        axios.put(`http://localhost:5000/api/employees/updatemanager/${employeeId}/${newmanagerid}`)
+        axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/employees/updatemanager/${employeeId}/${newmanagerid}`)
         .then((res) => {
             
             dispatch({
@@ -49,18 +49,18 @@ const Prof = () => {
 
     const fetchdata = async () => {
        
-        await axios.get(`http://localhost:5000/api/permissions/managers`)
+        await axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/managers`)
         .then((res) => {
             setAllManagers(res.data.managers)
             console.log(res.data.managers)
         })
-        axios.get(`http://localhost:5000/api/employees/employee/${employeeId}`)
+        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/employees/employee/${employeeId}`)
         .then((res) => {
 
             setEmail(res.data.employee.email)
             setRole(res.data.employee.role)
             setMatricule(res.data.employee.matricule)
-             axios.get(`http://localhost:5000/api/employees/employee/${res.data.employee.manager}`)
+             axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/employees/employee/${res.data.employee.manager}`)
             .then((res) => {
                
                 setManager({firstname: res.data.employee.firstname, lastname: res.data.employee.lastname, profilepicture: res.data.employee.profilepicture})

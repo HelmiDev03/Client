@@ -11,7 +11,7 @@ interface UserData {
 
 
 export const EditPersonalInformation =  (data: UserData) => (dispatch: Dispatch<any>) => {
-    axios.put("http://localhost:5000/api/update/personalinformation", data)
+    axios.put(process.env.NEXT_PUBLIC_DOMAIN+"/api/update/personalinformation", data)
     .then( res => {
         
         const token = res.data.token;

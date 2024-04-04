@@ -46,7 +46,7 @@ const Verify = () => {
             router.push('/login');
         }
 
-        axios.post('http://localhost:5000/api/forgetpassword/verifytokenixist', { tokenid })
+        axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/forgetpassword/verifytokenixist', { tokenid })
             .catch((err) => {
                 router.push('/login');
             });
@@ -75,7 +75,7 @@ const Verify = () => {
 
     const verify = async () => {
         dispatch({ type: 'ERRORS', payload: {} });
-        await axios.post('http://localhost:5000/api/forgetpassword/verifyotp', { email: email, token: otp })
+        await axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/forgetpassword/verifyotp', { email: email, token: otp })
             .then((res) => {
                 router.push('/forgetpassword/verify/resetpassword?email=' + email + '&token=' + tokenid);
             })

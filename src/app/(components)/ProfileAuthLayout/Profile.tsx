@@ -33,7 +33,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:5000/api/employees/employee/${employeeId}`).then((res) => {
+        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/employees/employee/${employeeId}`).then((res) => {
             
             setFirstname(res.data.employee.firstname)
             setLastname(res.data.employee.lastname)

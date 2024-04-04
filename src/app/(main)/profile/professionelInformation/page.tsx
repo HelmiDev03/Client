@@ -26,7 +26,7 @@ const Prof = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/employees/employee/${auth.user.manager}`)
+        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/employees/employee/${auth.user.manager}`)
             .then((res:any) => {
                
                 setManager({firstname: res.data.employee.firstname, lastname: res.data.employee.lastname, profilepicture: res.data.employee.profilepicture})

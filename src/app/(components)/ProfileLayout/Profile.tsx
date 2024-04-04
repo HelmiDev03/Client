@@ -61,7 +61,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     function uploadSingleImage(base64:any) {
     setLoading(true);
     axios
-      .put("http://localhost:5000/api/update/profilepicture", { image: base64 })
+      .put(process.env.NEXT_PUBLIC_DOMAIN+"/api/update/profilepicture", { image: base64 })
       .then((res) => {
         
         setUrl(res.data);

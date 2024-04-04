@@ -20,7 +20,7 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     const verifyEmail = async () => {
-        await axios.get(`http://localhost:5000/api/confirm-email/${userId}/${token}`).then((res) => {
+        await axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/confirm-email/${userId}/${token}`).then((res) => {
             setVerificationResult(res.data.message);
         }
         ).catch((error) => {

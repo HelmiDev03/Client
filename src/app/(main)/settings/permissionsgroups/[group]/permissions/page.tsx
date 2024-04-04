@@ -46,7 +46,7 @@ const Permissions = () => {
     window.location.reload()
 }
   const Update = () => {
-    axios.put(`http://localhost:5000/api/permissions/update/${group}`, {
+    axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/update/${group}`, {
       viewallemployees: viewemployeespage,
       viewemployeedetails: viewemployeedetails,
       editemployeedetails: editemployeedetails,
@@ -92,7 +92,7 @@ const Permissions = () => {
 
   React.useEffect(() => {
     const fetchdata = () => {
-      axios.get(`http://localhost:5000/api/permissions/${group}`)
+      axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/${group}`)
         .then((res) => {
           setIsCustom(res.data.permissionGroup.iscustom)
           setViewEmployeesPage(res.data.permissionGroup.viewallemployees)
@@ -118,7 +118,7 @@ const Permissions = () => {
 
 
         })
-    axios.get(`http://localhost:5000/api/permissions/usergroup`)   
+    axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)   
     
       .then((res) => {
         setIsUserinAdmins(res.data.group.isadministrators)

@@ -10,7 +10,7 @@ import axios from 'axios';
 
 
 export const Addnewemployee = (data:any , router:any) => (dispatch: Dispatch<any>) => {
-    axios.post('http://localhost:5000/api/employees/addnewemployee' , data)
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/employees/addnewemployee' , data)
         .then(res => {
             dispatch({
                 type: 'SUCCESS',

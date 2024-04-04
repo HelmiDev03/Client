@@ -10,7 +10,7 @@ import axios from 'axios';
 
 
 export const Deleteemployee = (id: any, publicId: any) => (dispatch: Dispatch<any>) => {
-    axios.delete(`http://localhost:5000/api/employees/deleteemployee/${id}/${publicId}` )
+    axios.delete(process.env.NEXT_PUBLIC_DOMAIN+`/api/employees/deleteemployee/${id}/${publicId}` )
         .then(res => {
             dispatch({
                 type: 'SET_POLICIES',

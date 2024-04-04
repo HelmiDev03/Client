@@ -60,7 +60,7 @@ const Security = () => {
     const handleSubmit = () => {
         if (Page === 2) {
             //ap//tfa/sendotp
-            axios.post('http://localhost:5000/api/tfa/sendotp')
+            axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/sendotp')
                 .catch(err => {
                     alert(err.response ? err.response.data.message : {});
                     window.location.reload()
@@ -73,7 +73,7 @@ const Security = () => {
         }
         else if (Page === 21) {
             //api//tfa/verifyotp
-            axios.post('http://localhost:5000/api/tfa/verifyotp', { token: otp })
+            axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/verifyotp', { token: otp })
                 .then(
                     res => {
                         setPage(1)
@@ -103,7 +103,7 @@ const Security = () => {
 
 
     const disabeltfa = () => {
-        axios.put('http://localhost:5000/api/tfa/disable')
+        axios.put(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/disable')
             .then(res => {
                 const decodedToken = jwtDecode(res.data.token);
                         dispatch({
@@ -124,10 +124,10 @@ const Security = () => {
             <div className={` ${Page === 1 ? 'block' : 'hidden'}         flex flex-col  ml-4 justify-center items-center `} >
                 <Modal className='absolute w-[400px] translate-x-[520px] center rounded-[25px]' show={success.message != ''} onClose={closeModel} size="md" popup>
                     <Modal.Header />
-                    <Modal.Body className='bg-lavender'>
+                    <Modal.Body >
                         <div className="text-center">
-                            <RiLockPasswordLine className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
-                            <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
+                            <RiLockPasswordLine className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
+                            <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">
                                 {success.message}
                             </h3>
                             <div className="flex justify-center gap-4">
@@ -158,7 +158,7 @@ const Security = () => {
                             <button className="absolute top-[58%] right-[16%]" type="button" onClick={toggleShowPassword}>
                                 {showPassword ? <FaEye /> : <FaEyeSlash />}
                             </button>
-                            {errors.password && <div className=" h-[30px] w-[200px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                            {errors.password && <div className=" h-[30px] w-[200px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
                                 <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                                 </svg>
@@ -224,12 +224,12 @@ const Security = () => {
 
 
                                 {openPopupDelete && <div id="static-modal" data-modal-backdrop="static" aria-hidden="true" className="bg-[#eee] overflow-y-auto overflow-x-hidden absolute w-[500px] top-[80%] right-[40%] center rounded-[25px]  z-50 justify-center items-center ">
-                                    <div className="bg-[#eee] relative  w-full max-w-2xl max-h-full">
+                                    <div  className="bg-[#eee] relative  w-full max-w-2xl max-h-full">
 
-                                        <div className="bg-[#eee]  relative  rounded-lg shadow dark:bg-gray-700">
+                                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }}  className="bg-[#eee]  relative  rounded-lg shadow ">
 
                                             <div className=" bg-[#eee] flex items-center justify-between p-4 md:p-5 border-b border-red-200 rounded-t">
-                                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                                <h3 className="text-xl font-semibold text-gray-900 ">
                                                     Disable 2 Factor Verification
                                                 </h3>
                                                 <div onClick={() => { setOpenPopupDelete(!openPopupDelete); }} >

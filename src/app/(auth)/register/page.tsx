@@ -159,7 +159,7 @@ const Register = () => {
     
         try {
             if (emailPattern.test(email)) {
-                await axios.post(`http://localhost:5000/api/verifyemail`, { email: email });
+                await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyemail`, { email: email });
                 setPage("signup2");
             }
         } catch (err: any) {
@@ -191,7 +191,7 @@ const Register = () => {
             return;
         }
         try {
-            await axios.post(`http://localhost:5000/api/verifycin`, { cin: CIN });
+            await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifycin`, { cin: CIN });
             setPage("signup3");
         } catch (err: any) {
             console.log(err.response?.data);
@@ -224,7 +224,7 @@ const Register = () => {
         }
         try {
 
-            await axios.post(`http://localhost:5000/api/verifyphone`, { phonenumber: phoneNumber.trim() });
+            await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyphone`, { phonenumber: phoneNumber.trim() });
             setPage("signup4");
         } catch (err: any) {
             console.log(err.response?.data);

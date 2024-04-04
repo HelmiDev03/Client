@@ -54,7 +54,7 @@ const Config = () => {
     }
    
 
-    axios.put(`http://localhost:5000/api/policy/update/${policy}`, data)
+    axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/update/${policy}`, data)
       .then(res => {
         dispatch({
           type: 'SUCCESS',
@@ -70,7 +70,7 @@ const Config = () => {
 
 const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/policy/get/${policy}`)
+    axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/get/${policy}`)
       .then((res: any) => {
         setName(res.data.policy.name);
         setDescription(res.data.policy.description);
@@ -87,7 +87,7 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
         
       })
      
-            axios.get(`http://localhost:5000/api/permissions/usergroup`)   
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)   
     
             .then((res) => {
                 

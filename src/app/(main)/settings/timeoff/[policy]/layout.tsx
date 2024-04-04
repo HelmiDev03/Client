@@ -16,7 +16,7 @@ export default function RootLayout({
     const [name,setName] = useState('');
     useEffect(() => {
         console.log(policy);
-       axios.get(`http://localhost:5000/api/policy/get/${policy}`)
+       axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/get/${policy}`)
          .then(res => {
               setName(res.data.policy.name);
          })

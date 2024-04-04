@@ -44,7 +44,7 @@ const Employees = () => {
         if (selectedUserIds.length === 0) {
             return;
         }
-        axios.put(`http://localhost:5000/api/policy/addemployeestopolicy/${policy}`, { employeesId: selectedUserIds })
+        axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/addemployeestopolicy/${policy}`, { employeesId: selectedUserIds })
             .then((res: any) => {
                 dispatch({
                     type: 'SET_POLICIES',
@@ -59,7 +59,7 @@ const Employees = () => {
   const [changeemployeepolicy , setchangeemployeepolicy] = React.useState(false)
     useEffect(() => {
         dispatch(GetAllEmployees());
-        axios.get(`http://localhost:5000/api/policy/get/${policy}`)
+        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/get/${policy}`)
             .then((res: any) => {
                 setPolicyEmployees(res.data.policy.employees)
                 setName(res.data.policy.name)
@@ -67,7 +67,7 @@ const Employees = () => {
 
 
             })
-            axios.get(`http://localhost:5000/api/permissions/usergroup`)   
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)   
     
             .then((res) => {
                 
@@ -193,7 +193,7 @@ const Employees = () => {
 
     const AssignNewPolicy = () => {
         if (newPolicy) {
-            axios.put(`http://localhost:5000/api/policy/updateemployeepolicy/${employeeId}`, {
+            axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/updateemployeepolicy/${employeeId}`, {
                 name: newPolicy
             }).then((res: any) => {
                 console.log(res.data.policies)

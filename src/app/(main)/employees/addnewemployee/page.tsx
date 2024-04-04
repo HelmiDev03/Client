@@ -184,7 +184,7 @@ const AddNewEmployee = () => {
     }
 
 
-      axios.post(`http://localhost:5000/api/verifyuserphone`, { phonenumber:mobile })
+      axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyuserphone`, { phonenumber:mobile })
       .catch(() => {
         setMobileError('this phone number is used by someone else');
         return;
@@ -197,7 +197,7 @@ const AddNewEmployee = () => {
       return;
     }
 
-    axios.post(`http://localhost:5000/api/verifycin`, { cin })
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifycin`, { cin })
       .catch(() => {
         setCinError('this CIN is used by someone else');
         return;
@@ -238,7 +238,7 @@ const AddNewEmployee = () => {
     }
 
     try {
-      await axios.post(`http://localhost:5000/api/verifyemail`, { email: Email });
+      await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyemail`, { email: Email });
     } catch (error) {
       setEmailError('This email is used by someone else');
       return;

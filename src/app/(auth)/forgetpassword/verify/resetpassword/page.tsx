@@ -53,7 +53,7 @@ const ResetPassword = () => {
             return;
         }
       
-        axios.post('http://localhost:5000/api/forgetpassword/changepassword', { email, password: password1 })
+        axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/forgetpassword/changepassword', { email, password: password1 })
             .then((res) => {
                 dispatch({
                     type: 'SUCCESS',
@@ -80,7 +80,7 @@ const ResetPassword = () => {
             router.push('/login');
         }
 
-        axios.post('http://localhost:5000/api/forgetpassword/verifytokenixist', { tokenid })
+        axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/forgetpassword/verifytokenixist', { tokenid })
             .catch((err) => {
                 router.push('/login');
             });

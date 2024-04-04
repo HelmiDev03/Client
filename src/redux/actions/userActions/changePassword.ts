@@ -8,7 +8,7 @@ import { setAuth } from '@/redux/utils/setAuth';
 
 
 export const ChangePassword =  (data: any) => (dispatch: Dispatch<any>) => {
-    axios.put("http://localhost:5000/api/update/password", data)
+    axios.put(process.env.NEXT_PUBLIC_DOMAIN+"/api/update/password", data)
     .then( res => {
         
         

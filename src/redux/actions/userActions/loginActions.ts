@@ -10,7 +10,7 @@ interface UserData {
 
 export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
 
-    axios.post('http://localhost:5000/api/login', data)
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN +'/api/login', data)
         .then(res => {
             
             if (res.data.token ) {
@@ -21,7 +21,7 @@ export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
             
             else {
 
-                axios.post('http://localhost:5000/api/tfa/beforelogin/sendotp', { email: res.data.email })
+                axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/beforelogin/sendotp', { email: res.data.email })
                     .then(res => {
                         window.location.href = '/login/tfa?email=' + res.data.email + '&token=' + res.data.token + '&expiredAt=' + res.data.expiredAt;
                     })
@@ -68,7 +68,7 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
     
 
 
-    axios.get('http://localhost:5000/api/company')
+    axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/company')
         .then(res => {
             console.log(res.data.company);
             dispatch({

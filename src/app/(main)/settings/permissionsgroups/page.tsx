@@ -38,7 +38,7 @@ const TimeOff = () => {
     React.useEffect(() => {
 
         const fetchdata = async () => {
-            axios.get(`http://localhost:5000/api/permissions/usergroup`)
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
 
                 .then((res) => {
                     setIsUserinAdmins(res.data.group.isadministrators)
@@ -47,7 +47,7 @@ const TimeOff = () => {
                     console.log(err)
                 })
 
-            axios.get('http://localhost:5000/api/permissions')
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/permissions')
                 .then(res => {
                     dispatch({
                         type: 'SET_PERMISSION_GROUPS',
@@ -62,7 +62,7 @@ const TimeOff = () => {
     const AddGroup = () => {
 
         if (GroupName) {
-            axios.post('http://localhost:5000/api/permissions/create', { name: GroupName })
+            axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/permissions/create', { name: GroupName })
                 .then(res => {
                     dispatch({
                         type: 'SET_PERMISSION_GROUPS',
@@ -98,7 +98,7 @@ const TimeOff = () => {
 
 
     const deletegroup = (id: string) => () => {
-        axios.delete(`http://localhost:5000/api/permissions/delete/${id}`)
+        axios.delete(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/delete/${id}`)
             .then(res => {
                 dispatch({
                     type: 'SET_PERMISSION_GROUPS',
@@ -115,7 +115,7 @@ const TimeOff = () => {
             })
     }
     const setnewdefaultgroup = (id: string) => () => {
-        axios.put(`http://localhost:5000/api/group/setnewdefaultgroup/${id}`)
+        axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/group/setnewdefaultgroup/${id}`)
             .then(res => {
                 dispatch({
                     type: 'SET_permissionGroups',

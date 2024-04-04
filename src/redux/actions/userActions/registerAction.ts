@@ -5,7 +5,7 @@ interface UserData {
 }
 
 export const Registration = (data: UserData ) => (dispatch: Dispatch<any>) => {
-    axios.post('http://localhost:5000/api/register', data)
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/register', data)
     .then(res => {
     
         dispatch({

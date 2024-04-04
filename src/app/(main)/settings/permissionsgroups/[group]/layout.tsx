@@ -16,7 +16,7 @@ export default function RootLayout({
     const [name,setName] = useState('');
     useEffect(() => {
         console.log(group);
-       axios.get(`http://localhost:5000/api/permissions/${group}`)
+       axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/${group}`)
          .then(res => {
               setName(res.data.permissionGroup.name);
          })

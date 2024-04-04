@@ -32,7 +32,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       if (decodedToken.exp && decodedToken.exp < currentTime) {
         // Token is expired,
         console.log('Token is expired');
-        axios.post('http://localhost:5000/api/refreshToken', { refreshToken: localStorage.refreshToken })
+        axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/refreshToken', { refreshToken: localStorage.refreshToken })
           .then(res => {
             const token = res.data.token;
             localStorage.setItem('jwt', token);

@@ -78,7 +78,7 @@ const Leaves = () => {
 
     const fetchDataAndUpdatePolicy = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/policy/calculate');
+            const response = await axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/calculate');
             const { daysSinceStartExcludingOffDays, accruedDays, used, available, timeoffapproved, userStartDate, endDate } = response.data;
             console.log(response.data);
             setWorkingDays(daysSinceStartExcludingOffDays);
@@ -119,7 +119,7 @@ const Leaves = () => {
 
     const AddNewTimeOff = () => {
 
-        axios.post('http://localhost:5000/api/policy/createtimeoff', {
+        axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/createtimeoff', {
             type: absence,
             description,
             daterange: dates
@@ -137,7 +137,7 @@ const Leaves = () => {
     useEffect(() => {
         const fetchPolicy = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/policy/get/${auth.user.policy}`);
+                const res = await axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/get/${auth.user.policy}`);
                 setAbsenceType(res.data.policy.absences);
                 setPolicyName(res.data.policy.name);
                 setmaxcounter(res.data.policy.maxcounter)
@@ -148,7 +148,7 @@ const Leaves = () => {
         };
 
         const gettimeoffs = async () => {
-            axios.get('http://localhost:5000/api/policy/gettimeoff')
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/gettimeoff')
                 .then((response) => {
                     setTimeOffs(response.data.timeoffs);
                     console.log(timeOffs.map((timeoff: any) => timeoff.daterange[0]));

@@ -99,7 +99,7 @@ const CompanySettings = () => {
 
    
     React.useEffect(() => {
-        axios.get(`http://localhost:5000/api/permissions/usergroup`)
+        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
 
       .then((res) => {
         setEditCompanyInfo(res.data.group.editcompanyinfo)

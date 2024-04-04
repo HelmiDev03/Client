@@ -37,7 +37,7 @@ const ForgetPassword = () => {
         dispatch({ type: 'ERRORS', payload: {} });
              
 
-            await axios.post('http://localhost:5000/api/forgetpassword/sendotp', { email: email })
+            await axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/forgetpassword/sendotp', { email: email })
                 .then((res) => {
                   
                     
