@@ -92,6 +92,75 @@ export const SelectInput2 = (props: any) => {
     </div>
   );
 };
+export const SelectInput22 = (props: any) => {
+  const { placeholder, options, isDisabled, name, onChange } = props;
+
+  // Filter out the selected value from the options array
+  console.log(options)
+  console.log(placeholder)
+  const filteredOptions = options.filter((option: {label:{firstname : string , lastname:string}}) => option.label !== placeholder);
+
+  return (
+    <div>
+      <select
+        onChange={onChange}
+        disabled={isDisabled}
+        name={name}
+        value={placeholder} // Set value to placeholder
+        className="w-[330px] h-[56px]  p-[16px] md:p-[16px] lg:p-[20px]  font-lexend font-light  text-[16px] leading-[24px] text-[#16151C] 
+                xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
+                border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors 
+                duration-300 ease-in-out"
+      >
+        {/* Render placeholder option only if it is not disabled */}
+        {!isDisabled && (
+          <option value={placeholder}>
+            {placeholder}
+          </option>
+        )}
+
+        {/* Render filtered options */}
+        {filteredOptions.map((option: any, index: number) => (
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+export const SelectInput222 = (props: any) => {
+  const { placeholder, options, isDisabled, name, onChange } = props;
+
+  // Filter out the selected value from the options array
+
+
+  return (
+    <div>
+      <select
+        onChange={onChange}
+        disabled={isDisabled}
+        name={name}
+        value={placeholder} // Set value to placeholder
+        className="w-[330px] h-[56px]  p-[16px] md:p-[16px] lg:p-[20px]  font-lexend font-light  text-[16px] leading-[24px] text-[#16151C] 
+                xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
+                border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors 
+                duration-300 ease-in-out"
+      >
+        {/* Render placeholder option only if it is not disabled */}
+        {!isDisabled && (
+          <option value={placeholder}>
+            {placeholder}
+          </option>
+        )}
+
+        {/* Render filtered options */}
+       
+      </select>
+    </div>
+  );
+};
+
 
 
 export const SelectInput3 = (props: any) => {

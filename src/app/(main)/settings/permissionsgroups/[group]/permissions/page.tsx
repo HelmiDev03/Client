@@ -18,7 +18,7 @@ const Permissions = () => {
   const [addemployee, setAddEmployee] = React.useState(false)
   const [viewcompanysettings, setViewCompanySettings] = React.useState(false)
   const [editcompanysettings, setEditCompanySettings] = React.useState(false)
-  const [answertimeoffrequest, setAnswerTimeOffRequest] = React.useState(false)
+  const [canbemanager, setcanbemanager] = React.useState(false)
   const [viewtimeoffpoliciespage, setViewTimeOffPoliciesPage] = React.useState(false)
   const [viewtimeoffpolicydetails, setViewTimeOffPolicyDetails] = React.useState(false)
   const [addnewtimeoffpolicy, setAddNewTimeOffPolicy] = React.useState(false)
@@ -54,7 +54,7 @@ const Permissions = () => {
       addnewemployee: addemployee,
       viewcompanydetails: viewcompanysettings,
       editcompanyinfo: editcompanysettings,
-      answertimeOffrequests: answertimeoffrequest,
+      canbemanager: canbemanager,
       viewtimeoffpiliciespage: viewtimeoffpoliciespage,
       viewtimeoffpolicydetails: viewtimeoffpolicydetails,
       addnewtimeoffpolicy: addnewtimeoffpolicy,
@@ -102,7 +102,7 @@ const Permissions = () => {
           setAddEmployee(res.data.permissionGroup.addnewemployee)
           setViewCompanySettings(res.data.permissionGroup.viewcompanydetails)
           setEditCompanySettings(res.data.permissionGroup.editcompanyinfo)
-          setAnswerTimeOffRequest(res.data.permissionGroup.answertimeOffrequests)
+          setcanbemanager(res.data.permissionGroup.canbemanager)
           setViewTimeOffPoliciesPage(res.data.permissionGroup.viewtimeoffpiliciespage)
           setViewTimeOffPolicyDetails(res.data.permissionGroup.viewtimeoffpolicydetails)
           setAddNewTimeOffPolicy(res.data.permissionGroup.addnewtimeoffpolicy)
@@ -122,6 +122,7 @@ const Permissions = () => {
     
       .then((res) => {
         setIsUserinAdmins(res.data.group.isadministrators)
+        console.log(res.data.group)
       })
       .catch((err) => {
         console.log(err)
@@ -287,7 +288,7 @@ const Permissions = () => {
       <div className='flex flex-col justify-center items-center mb-12 '>
         <div className='flex flex-row mb-3 '>
           < IoIosSettings className='text-[24px] text-[#7152F3] mr-3 mt-[1px]' />
-          <h1 className='text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px]'>Time Off</h1>
+          <h1 className='text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px]'>Management</h1>
         </div>
 
 
@@ -297,12 +298,12 @@ const Permissions = () => {
             <div className='mb-3 ml-3 flex flex-col   '>
               <div className='flex flex-row '>
                 <div className='flex flex-col '>
-                  <h1 className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Answer A time Off Request</h1>
+                  <h1 className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Manage other employees</h1>
                   <p className='text-gray-500  font-lexend font-light text-[14px] leading-[22px] mb-4'>
-                    Allow employees to accept or reject a time off request
+                    Allow employees to manage other employees
                   </p>
                 </div>
-                <input onChange={() => handleCheckboxChange(setAnswerTimeOffRequest)} checked={answertimeoffrequest} type='checkbox' className='ml-auto mt-2' />
+                <input onChange={() => handleCheckboxChange(setcanbemanager)} checked={canbemanager} type='checkbox' className='ml-auto mt-2' />
               </div>
             </div>
 

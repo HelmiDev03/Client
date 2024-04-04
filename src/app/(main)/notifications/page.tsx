@@ -54,7 +54,7 @@ const Notifications = () => {
           notif.content.reason === 'Time off request' && (
             <div className='flex justify-between items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
           <div className='w-[60px] h-[60px] rounded-[50% ] mr-3'>
-            <img src={notif.content.user.profilepicture} alt='profile' className='rounded-[50%]' />
+            <img src={notif.content.user.profilepicture ?notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%]' />
           </div> 
           <div className='flex justify-between flex-col mr-12 '>
             <p className='mb-2 font-lexend text-body-1 font-bold text-[#16151C] text-base leading-6 tracking-normal text-left '>{notif.content.user.firstname} {notif.content.user.lastname}  <span className='font-lexend text-caption font-light text-[#A2A1A8] text-sm leading-5 tracking-normal '>time off request is pending</span></p>

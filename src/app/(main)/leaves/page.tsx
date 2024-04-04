@@ -12,23 +12,24 @@ import { SelectInput, SelectInputt } from "@/app/(components)/Inputs/SelectInput
 import { IoCalendar } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
 const Leaves = () => {
+    const [maxcounter, setmaxcounter] = useState(0)
     const [date, setDate] = useState(null);
     const [workingDays, setWorkingDays] = useState(0);
     const [accrued, setAccrued] = useState(0);
     const [used, setUsed] = useState(0);
     const [available, setAvailable] = useState(0);
     const [timeoffapproved, setTimeOffApproved] = useState([]);
-    const [userStartDate, setUserStartDate] = useState()
-    const [enddate, setEndDate] = useState()
+    const [userStartDate, setUserStartDate] = useState("")
+    const [enddate, setEndDate] = useState("")
     const [dates, setDates] = useState([]);
     const [absence, setAbcense] = useState('');
     const [absenceType, setAbsenceType] = useState([]);
     const [description, setDescription] = useState('');
     const [policyName, setPolicyName] = useState('Default')
-    const [PopupViewTimeoffFromCalendar  , setPopupViewTimeoffFromCalendar] =useState(false)
-    const [popupDate,setpopupDate] = useState('')
-    const [popupDateHlidayType,setpopupDateHlidayType]=useState('')
-    const [popupDays , setpopupDays ] = useState(0)
+    const [PopupViewTimeoffFromCalendar, setPopupViewTimeoffFromCalendar] = useState(false)
+    const [popupDate, setpopupDate] = useState('')
+    const [popupDateHlidayType, setpopupDateHlidayType] = useState('')
+    const [popupDays, setpopupDays] = useState(0)
 
     const auth = useSelector((state: any) => state.auth);
     function dateTemplate(date: any, arr: any[]) {
@@ -41,16 +42,38 @@ const Leaves = () => {
             if (currentDate >= startDate && currentDate <= endDate) {
 
                 return (
-                    <div onClick={()=>{setPopupViewTimeoffFromCalendar(true);setpopupDate(currentDate);setpopupDateHlidayType(arr[i][3]);setpopupDays(arr[i][2])}} style={{backgroundColor: '#7152F3', color: '#ffffff', display: 'flex', justifyContent: 'center', borderRadius: '50%', width: '2em', height: '2em', lineHeight: '2em', padding: 0 }}>
+                    <div onClick={() => { setPopupViewTimeoffFromCalendar(true); setpopupDate(currentDate); setpopupDateHlidayType(arr[i][3]); setpopupDays(arr[i][2]) }} style={{ backgroundColor: '#7152F3', color: '#ffffff', display: 'flex', justifyContent: 'center', borderRadius: '50%', width: '2em', height: '2em', lineHeight: '2em', padding: 0 }}>
                         {date.day}
-                        
-                        </div>
+
+                    </div>
                 );
             }
         }
 
         return date.day; // If the date is not within any range, return the day as is
     }
+
+    const disabledDates = timeoffapproved.flatMap(([start, end]) => {
+        const disabledRange = [];
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+         endDate.setDate(endDate.getDate() - 1);
+    
+        // Loop through the range of dates and add them to the disabledRange array
+       
+        let currentDate = new Date(startDate);
+        currentDate.setDate(currentDate.getDate() - 1);
+
+        while (currentDate < endDate) { // Adjust condition to exclude end date
+            disabledRange.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+        }
+    
+        // Add end date to the disabled range
+        disabledRange.push(new Date(endDate));
+    
+        return disabledRange;
+    });
 
     const fetchDataAndUpdatePolicy = async () => {
         try {
@@ -90,6 +113,8 @@ const Leaves = () => {
     const [etat, setEtat] = useState('')
     const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
+    
+
 
     const AddNewTimeOff = () => {
 
@@ -114,6 +139,7 @@ const Leaves = () => {
                 const res = await axios.get(`http://localhost:5000/api/policy/get/${auth.user.policy}`);
                 setAbsenceType(res.data.policy.absences);
                 setPolicyName(res.data.policy.name);
+                setmaxcounter(res.data.policy.maxcounter)
             } catch (error) {
                 // Handle error
                 console.error("Error fetching policy:", error);
@@ -160,14 +186,14 @@ const Leaves = () => {
 
 
 
-             {PopupViewTimeoffFromCalendar &&  <div className='      p-12 rounded-[10px] w-[300px] h-[70px] absolute right-[7%] top-[350px] z-50 bg-[#515164] flex flex-col justify-center items-center '>
-               <IoMdClose onClick={() => { setPopupViewTimeoffFromCalendar(!setPopupViewTimeoffFromCalendar); }} className='absolute right-[5%] top-[5%]  text-[#ffffff]  text-[24px] hover:cursor-pointer' />
-                <h1 className='mb-[8px] text-[#ffffff]'>{popupDate.slice(0,10)}</h1>
+            {PopupViewTimeoffFromCalendar && <div className='      p-12 rounded-[10px] w-[300px] h-[70px] absolute right-[7%] top-[350px] z-50 bg-[#515164] flex flex-col justify-center items-center '>
+                <IoMdClose onClick={() => { setPopupViewTimeoffFromCalendar(!setPopupViewTimeoffFromCalendar); }} className='absolute right-[5%] top-[5%]  text-[#ffffff]  text-[24px] hover:cursor-pointer' />
+                <h1 className='mb-[8px] text-[#ffffff]'>{popupDate.slice(0, 10)}</h1>
                 <div className='flex flex-row justify-between items-center'>
                     <div className='p-2 rounded-[5px] mr-8 bg-[#07a2ad]'><h1 className='text-[#ffffff]'>{popupDateHlidayType}</h1></div>
-                    <h1 className='text-[#ffffff]'>{popupDays > 1 ?popupDays +' Days' :popupDays + ' Day'}</h1>
+                    <h1 className='text-[#ffffff]'>{popupDays > 1 ? popupDays + ' Days' : popupDays + ' Day'}</h1>
                 </div>
-                </div> }
+            </div>}
 
 
             {/*end popup to view timeoff */}
@@ -222,21 +248,24 @@ const Leaves = () => {
                                     if (e.value && e.value.length === 2) {
                                         let startDate = e.value[0];
 
-                                        
+
                                         //increse days by 1
 
                                         let endDate = e.value[1];
-                                    
+
                                         const diffDays = Math.ceil(Math.abs(endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
                                         setDiffDays(diffDays);
-                     
+
                                     } else {
                                         setDiffDays(0); // Or any default value you prefer if no range is selected
                                     }
                                 }}
                                 selectionMode="range"
                                 readOnlyInput
-                            />  
+                                minDate={new Date()} // Set minimum date to today
+                                   disabledDates={disabledDates} // Disable dates inside the timeoffapproved array
+                                
+                            />
 
                             {errors.daterange && <div className="absolute top-[60px] h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
                                 <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -307,8 +336,9 @@ const Leaves = () => {
                                 <h1 className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>Accrued</h1>
                             </div>
                             <div className='flex flex-col ml-4 justify-center items-center  mr-2'>
-                                <h1 className='font-lexend font-semibold text-[30px] leading-[40px]'>{available}</h1>
-                                <h1 className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>Available</h1>
+                            <h1 className={` ${maxcounter > 0 ? (available >= maxcounter ? "text-red-500" : "") : (available <= maxcounter ? "text-red-500" : "")} font-lexend font-semibold text-[30px] leading-[40px]`} >{available}</h1>
+
+                                <h1 className={`     font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left `}>{maxcounter > 0 ? (available >= maxcounter ? "Negative Counter" : "Available") : (available <= maxcounter ? "Negative Counter" : "Available")} </h1>
                             </div>
                             <div className='flex flex-col ml-4 justify-center items-center mr-2 '>
                                 <h1 className='font-lexend font-semibold text-[30px] leading-[40px]'>{used}</h1>
@@ -336,8 +366,8 @@ const Leaves = () => {
                             {timeOffs.map((timeoff: any) => {
                                 // Check if daterange is available before accessing it
                                 if (timeoff.daterange && Array.isArray(timeoff.daterange) && timeoff.daterange.length > 0) {
-                                    const differenceMs = new Date(timeoff.daterange[1]).getTime() -new Date(timeoff.daterange[0]).getTime();
-                                    const differenceDays = Math.round(differenceMs / (1000 * 60 * 60 * 24))+1;
+                                    const differenceMs = new Date(timeoff.daterange[1]).getTime() - new Date(timeoff.daterange[0]).getTime();
+                                    const differenceDays = Math.round(differenceMs / (1000 * 60 * 60 * 24)) + 1;
 
 
                                     const startDate = timeoff.daterange[0];
@@ -346,27 +376,27 @@ const Leaves = () => {
                                     const endDate = timeoff.daterange[1];
                                     const enddatevalue = endDate ? new Date(endDate) : null;
                                     const endDateString = enddatevalue ? enddatevalue.toISOString().split('T')[0] : '';
-                                    
-                                
+
+
                                     let startDateMonth, startDateDay;
                                     if (startDate[5] === '0') {
-                                        startDateMonth = getMonthName(parseInt(startDate[6])-1);
+                                        startDateMonth = getMonthName(parseInt(startDate[6]) - 1);
                                     } else {
-                                        startDateMonth = getMonthName(parseInt(startDate.slice(5, 7))-1);
+                                        startDateMonth = getMonthName(parseInt(startDate.slice(5, 7)) - 1);
                                     }
-                                    startDateDay = parseInt(startDate.slice(8, 10)) ;
-                                  
-                                
+                                    startDateDay = parseInt(startDate.slice(8, 10));
+
+
                                     let endDateMonth, endDateDay;
                                     if (endDate[5] === '0') {
-                                        endDateMonth = getMonthName(parseInt(endDate[6])-1);
+                                        endDateMonth = getMonthName(parseInt(endDate[6]) - 1);
                                     } else {
-                                        endDateMonth = getMonthName(parseInt(endDate.slice(5, 7))-1);
+                                        endDateMonth = getMonthName(parseInt(endDate.slice(5, 7)) - 1);
                                     }
-                                    endDateDay = parseInt(endDate.slice(8, 10)) ;
-                                
-                                    const isSameDay =timeoff.daterange[0] === timeoff.daterange[1];
-                                  
+                                    endDateDay = parseInt(endDate.slice(8, 10));
+
+                                    const isSameDay = timeoff.daterange[0] === timeoff.daterange[1];
+
 
                                     return (
                                         <div onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString) }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>

@@ -65,10 +65,7 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
         payload: decodedToken
     });
 
-    dispatch({
-        type: 'SET_COMPANY',
-        payload: company
-    });
+    
 
 
     axios.get('http://localhost:5000/api/company')
@@ -80,21 +77,9 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
             });
         })
 
-    axios.get('http://localhost:5000/api/policy')
-        .then(res => {
-            dispatch({
-                type: 'SET_POLICIES',
-                payload: res.data.policies
-            });
-        })
+   
 
-    axios.get('http://localhost:5000/api/permissions')
-        .then(res => {
-            dispatch({
-                type: 'SET_PERMISSION_GROUPS',
-                payload: res.data.permissionGroups
-            });
-        })    
+    
 
 
 

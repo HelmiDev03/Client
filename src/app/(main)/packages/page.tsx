@@ -67,7 +67,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
                             </li>
                             <li className="flex space-x-3">
                                 <svg
@@ -82,7 +82,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">
+                                <span className="text-base font-normal leading-tight  text-white ">
                                     evoices messages anywhere
                                 </span>
                             </li>
@@ -99,7 +99,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
                             </li>
 
 
@@ -136,7 +136,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
                             </li>
                             <li className="flex space-x-3">
                                 <svg
@@ -151,7 +151,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">
+                                <span className="text-base font-normal leading-tight  text-white ">
                                     evoices messages anywhere
                                 </span>
                             </li>
@@ -168,7 +168,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
                             </li>
 
 
@@ -203,7 +203,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
                             </li>
                             <li className="flex space-x-3">
                                 <svg
@@ -218,7 +218,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">
+                                <span className="text-base font-normal leading-tight  text-white ">
                                     evoices messages anywhere
                                 </span>
                             </li>
@@ -235,7 +235,7 @@ const Packages = () => {
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white dark:text-gray-400">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
                             </li>
 
 

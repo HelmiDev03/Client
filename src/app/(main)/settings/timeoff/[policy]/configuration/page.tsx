@@ -25,6 +25,7 @@ const Config = () => {
   const [bankHoliday, setBankHoliday] = React.useState('');
   const [canbeused, setCanbeused] = React.useState('');
   const [includerest, setIncluderest] = React.useState('');
+  const [maxcounter, setmaxcounter] = React.useState(0);
   const errors = useSelector((state: any) => state.errors);
   const { policy } = useParams();
   const success = useSelector((state: any) => state.success);
@@ -46,6 +47,7 @@ const Config = () => {
       workingDays,
       TimeOffDaysPerWorkingDays: timeOffDays,
       maxTimeOffDays,
+      maxcounter,
       nationaldays: bankHoliday === "do not count is as absence day" ? true : false,
       timeofflastforever: canbeused === "in the same cycle they has been acquired" ? false : true,
       includerest: includerest === "count only the main day" ? false : true
@@ -78,6 +80,7 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
         setAbsence(res.data.policy.absences);
         setTimeOffDays(res.data.policy.TimeOffDaysPerWorkingDays);
         setMaxTimeOffDays(res.data.policy.MaxTimeOffDays);
+        setmaxcounter(res.data.policy.maxcounter);
         setBankHoliday(res.data.policy.nationaldays ? "do not count is as absence day" : "count it as absence day");
         setCanbeused(!res.data.policy.timeofflastforever ? "in the same cycle they has been acquired" : "anytime after they has been acquired");
         setIncluderest(!res.data.policy.includerest ? "count only the main day" : "count the main day and the rest");
@@ -107,10 +110,10 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
 
       <Modal className='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
         <Modal.Header />
-        <Modal.Body className='bg-lavender '>
+        <Modal.Body >
           <div className="text-center">
-            <MdSecurityUpdateGood className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
-            <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
+            <MdSecurityUpdateGood className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
+            <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">
               Successfully Updated
             </h3>
             <div className="flex justify-center gap-4">
@@ -269,6 +272,11 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
             <Input5 onChange={(e: any) => { setMaxTimeOffDays(e.target.value) }} value={maxTimeOffDays} label="Max TimeOff Days" type="text" />
 
           </div>
+          <div className={styles.inputContainer}>
+            <Input5 onChange={(e: any) => { setmaxcounter(e.target.value) }} value={maxcounter} label="Maximum Counter" type="text" />
+            </div>
+
+
           <div className={styles.inputContainer}>
             <SelectInput7
               onChange={(e: any) => { setBankHoliday(e.target.value) }}

@@ -32,9 +32,9 @@ const TimeOff = () => {
         const newIsHidden = isHidden.map((item, i) => i === index ? !item : false)
         setIsHidden(newIsHidden)
     }
-    
+
     const AddPolicy = () => {
-        
+
         if (PolicyName) {
             axios.post('http://localhost:5000/api/policy/create', { name: PolicyName })
                 .then(res => {
@@ -43,27 +43,27 @@ const TimeOff = () => {
                         payload: res.data.policies
                     });
                     setPolicyName('')
-                    
+
                     setPopupAddPolicy(false)
                     dispatch({
                         type: 'ERRORS',
                         payload: {}
-                    
+
                     })
-                    
+
                     return res.data.policies
                 })
-                .catch((err:any) => {
+                .catch((err: any) => {
                     dispatch({
                         type: 'ERRORS',
                         payload: err.response.data
-                    
+
                     })
                 })
-                .then((newdata)=>{
+                .then((newdata) => {
                     setIsHidden(new Array(newdata.length).fill(false))
                 })
-                
+
         }
         else {
             return;
@@ -79,12 +79,12 @@ const TimeOff = () => {
                     payload: res.data.policies
                 });
                 return res.data.policies
-                
+
             })
             .catch(err => {
                 console.log(err)
             })
-            .then((newdata)=>{
+            .then((newdata) => {
                 setIsHidden(new Array(newdata?.length).fill(false))
             })
     }
@@ -101,12 +101,12 @@ const TimeOff = () => {
             .catch(err => {
                 console.log(err)
             })
-            .then((newdata)=>{
+            .then((newdata) => {
                 setIsHidden(new Array(newdata?.length).fill(false))
             })
     }
 
-   
+
 
 
 
@@ -115,7 +115,7 @@ const TimeOff = () => {
         setPopupAddDay(false)
         if (Name && Day) {
 
-            axios.put('http://localhost:5000/api/company/updateNationalDays', { name: Name, day:Day })
+            axios.put('http://localhost:5000/api/company/updateNationalDays', { name: Name, day: Day })
                 .then(res => {
                     dispatch({
                         type: 'UPDATE_COMPANY',
@@ -135,37 +135,44 @@ const TimeOff = () => {
 
 
     const [viewtimeoffpolicydetails, setviewtimeoffpolicydetails] = React.useState(false)
-    const [addnewtimeoffpolicy , setaddnewtimeoffpolicy] = React.useState(false)
-    const [removepolicy , setremovepolicy] = React.useState(false)
-    const [setpolicyasdefault , setsetpolicyasdefault] = React.useState(false)
-    const [addnationalday , setaddnationalday] = React.useState(false)
+    const [addnewtimeoffpolicy, setaddnewtimeoffpolicy] = React.useState(false)
+    const [removepolicy, setremovepolicy] = React.useState(false)
+    const [setpolicyasdefault, setsetpolicyasdefault] = React.useState(false)
+    const [addnationalday, setaddnationalday] = React.useState(false)
     const [deletenationaldays, setdeletenationaldays] = React.useState(false)
     React.useEffect(() => {
-        
+
         const fetchdata = async () => {
-            axios.get(`http://localhost:5000/api/permissions/usergroup`)   
-    
-            .then((res) => {
-                setviewtimeoffpolicydetails(res.data.group.viewtimeoffpolicydetails)
-                setaddnewtimeoffpolicy(res.data.group.addnewtimeoffpolicy)
-                setremovepolicy(res.data.group.removepolicy)
-                setsetpolicyasdefault(res.data.group.setpolicyasdefault)
-                setaddnationalday(res.data.group.addnationalday)
-                setdeletenationaldays(res.data.group.deletenationaldays)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
+            axios.get(`http://localhost:5000/api/permissions/usergroup`)
+
+                .then((res) => {
+                    setviewtimeoffpolicydetails(res.data.group.viewtimeoffpolicydetails)
+                    setaddnewtimeoffpolicy(res.data.group.addnewtimeoffpolicy)
+                    setremovepolicy(res.data.group.removepolicy)
+                    setsetpolicyasdefault(res.data.group.setpolicyasdefault)
+                    setaddnationalday(res.data.group.addnationalday)
+                    setdeletenationaldays(res.data.group.deletenationaldays)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            axios.get('http://localhost:5000/api/policy')
+                .then(res => {
+                    dispatch({
+                        type: 'SET_POLICIES',
+                        payload: res.data.policies
+                    });
+                })
         }
         fetchdata()
     }, [])
-    
+
     return (
         <div className={styles.container}>
 
             {/* in case add policy */}
             <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddPolicy ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
-                <IoMdClose onClick={() =>{ dispatch({type: 'ERRORS',payload: {}}); setPopupAddPolicy(!PopupAddPolicy)}} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
+                <IoMdClose onClick={() => { dispatch({ type: 'ERRORS', payload: {} }); setPopupAddPolicy(!PopupAddPolicy) }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
 
                     <div className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Add new time off policy</div>
@@ -176,14 +183,14 @@ const TimeOff = () => {
                         <div className={styles.inputContainer}>
                             <Input5 onChange={(e: any) => { setPolicyName(e.target.value) }} value={PolicyName} label="Policy Name" type="text" />
                             {errors.name && <div className=" h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
-                            <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span className="sr-only">Info</span>
-                            <div>
-                                       {errors.name}
-                            </div>
-                        </div>}
+                                <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                </svg>
+                                <span className="sr-only">Info</span>
+                                <div>
+                                    {errors.name}
+                                </div>
+                            </div>}
                         </div>
 
 
@@ -250,7 +257,7 @@ const TimeOff = () => {
                     <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Time off policies</h2>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Create, configure and assign time off policies to your employees.</p>
                 </div>
-             { addnewtimeoffpolicy&&  <div className=' mb-4 w-[221px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
+                {addnewtimeoffpolicy && <div className=' mb-4 w-[221px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
                     <ButtonSubmit
                         fct={() => setPopupAddPolicy(true)}
                         timing={200}
@@ -267,22 +274,22 @@ const TimeOff = () => {
 
             {/* available policies*/}
             <div className='flex flex-wrap flex-row mb-[30px]'>
-                
+
 
                 {policies.map((policy: any, index: any) => (
                     <div key={policy.name} className='relative w-[550px] rounded-[10px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
                         <FaSquarePen className='absolute right-[50%] top-[-10%] text-[30px] text-gray-600 ' />
                         <div className='flex flex-row justify-between'>
                             <div className='rounded-[5px] h-[30px] flex justify-center items-center bg-[#7152F3]'>
-                               {policy.isdefault && <h1 className='text-[#fff] font-lexend font-semibold text-[20px] leading-[30px]'>Default</h1> }
+                                {policy.isdefault && <h1 className='text-[#fff] font-lexend font-semibold text-[20px] leading-[30px]'>Default</h1>}
                             </div>
-                          {(removepolicy||setpolicyasdefault)&&   <IoMdSettings onClick={() => toggleVisibility(index)} className='relative text-[24px] text-[#7152F3] hover:cursor-pointer mb-4' />}
+                            {(removepolicy || setpolicyasdefault) && <IoMdSettings onClick={() => toggleVisibility(index)} className='relative text-[24px] text-[#7152F3] hover:cursor-pointer mb-4' />}
                             {isHidden[index] && (
                                 <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.3)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
                                     {!policy.isdefault && (
                                         <>
-                                    {setpolicyasdefault &&        <h3 onClick={setnewdefaultpolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Set as Default</h3>}
-                                    {removepolicy &&      <h3 onClick={deletePolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>}
+                                            {setpolicyasdefault && <h3 onClick={setnewdefaultpolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Set as Default</h3>}
+                                            {removepolicy && <h3 onClick={deletePolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>}
                                         </>
                                     )}
                                     {policy.isdefault && (
@@ -299,13 +306,13 @@ const TimeOff = () => {
                             <h1 className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>{policy.name}</h1>
 
                             <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px] mb-4'>
-                                {Object.keys(policy.employees).length !=1 ? Object.keys(policy.employees).length + " employees  assigned to this policy": Object.keys(policy.employees).length +" employee  assigned to this policy" } 
+                                {Object.keys(policy.employees).length != 1 ? Object.keys(policy.employees).length + " employees  assigned to this policy" : Object.keys(policy.employees).length + " employee  assigned to this policy"}
                             </p>
 
                         </div>
                         <div className='flex flex-row justify-center mt-2'>
-                         {(viewtimeoffpolicydetails  ||  auth.user.policy=== policy._id )      &&   <h1 onClick={()=>router.push(`/settings/timeoff/${policy._id}/configuration`)} className='hover:cursor-pointer text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>View Policy</h1>}
-                         {(!viewtimeoffpolicydetails && auth.user.policy!== policy._id )     && <h1  className=' text-red-500 font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Access is Restricted</h1> }
+                            {(viewtimeoffpolicydetails || auth.user.policy === policy._id) && <h1 onClick={() => router.push(`/settings/timeoff/${policy._id}/configuration`)} className='hover:cursor-pointer text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>View Policy</h1>}
+                            {(!viewtimeoffpolicydetails && auth.user.policy !== policy._id) && <h1 className=' text-red-500 font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Access is Restricted</h1>}
                         </div>
                     </div>
                 ))}
@@ -348,7 +355,7 @@ const TimeOff = () => {
                 <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>National Days</h2>
                 <div className='flex flex-row justify-between items-center '>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px] mb-6'>Configure National Days</p>
-                  {addnationalday&&  <div className=' bg-white-500 border-[2px] translate-x-[30px] translate-y-[-10px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px]  text-white rounded-[10px] p-1  ' >
+                    {addnationalday && <div className=' bg-white-500 border-[2px] translate-x-[30px] translate-y-[-10px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px]  text-white rounded-[10px] p-1  ' >
                         <ButtonSubmit fct={() => setPopupAddDay(!PopupAddDay)} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add A Day</h3>} />
 
 
@@ -364,7 +371,7 @@ const TimeOff = () => {
                                 <th scope="col" className="px-6 py-3">
                                     Date
                                 </th>
-                                {deletenationaldays&&     <th scope="col" className="px-6 py-3">
+                                {deletenationaldays && <th scope="col" className="px-6 py-3">
                                     Action
                                 </th>}
 
@@ -380,7 +387,7 @@ const TimeOff = () => {
                                     <td className="px-6 py-4">
                                         {day.day}
                                     </td>
-                               {deletenationaldays&&     <td className="px-6 py-4">
+                                    {deletenationaldays && <td className="px-6 py-4">
                                         <button onClick={() => axios.put('http://localhost:5000/api/company/deleteNationalDays', { index }).then(res => {
                                             dispatch({
                                                 type: 'UPDATE_COMPANY',
