@@ -50,9 +50,9 @@ const Notifications = () => {
        
        
 
-        {notifications.map((notif:any) => (
+        {notifications.map((notif:any ) => (
           notif.content.reason === 'Time off request' && (
-            <div className='flex justify-between items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
+            <div key={notif._id}  className='flex justify-between items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
           <div className='w-[60px] h-[60px] rounded-[50% ] mr-3'>
             <img src={notif.content.user.profilepicture ?notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%]' />
           </div> 
