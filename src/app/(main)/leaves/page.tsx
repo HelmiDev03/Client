@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SelectInput, SelectInputt } from "@/app/(components)/Inputs/SelectInput";
 import { IoCalendar } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
+import { time } from 'console';
 const Leaves = () => {
     const [maxcounter, setmaxcounter] = useState(0)
     const [date, setDate] = useState(null);
@@ -399,7 +400,7 @@ const Leaves = () => {
 
 
                                     return (
-                                        <div onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString) }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString) }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
