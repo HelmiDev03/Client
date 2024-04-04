@@ -58,10 +58,10 @@ const Leaves = () => {
         const disabledRange = [];
         const startDate = new Date(start);
         const endDate = new Date(end);
-         endDate.setDate(endDate.getDate() - 1);
-    
+        endDate.setDate(endDate.getDate() - 1);
+
         // Loop through the range of dates and add them to the disabledRange array
-       
+
         let currentDate = new Date(startDate);
         currentDate.setDate(currentDate.getDate() - 1);
 
@@ -69,16 +69,16 @@ const Leaves = () => {
             disabledRange.push(new Date(currentDate));
             currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
         }
-    
+
         // Add end date to the disabled range
         disabledRange.push(new Date(endDate));
-    
+
         return disabledRange;
     });
 
     const fetchDataAndUpdatePolicy = async () => {
         try {
-            const response = await axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/calculate');
+            const response = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/calculate');
             const { daysSinceStartExcludingOffDays, accruedDays, used, available, timeoffapproved, userStartDate, endDate } = response.data;
             console.log(response.data);
             setWorkingDays(daysSinceStartExcludingOffDays);
@@ -114,12 +114,12 @@ const Leaves = () => {
     const [etat, setEtat] = useState('')
     const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
-    
+
 
 
     const AddNewTimeOff = () => {
 
-        axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/createtimeoff', {
+        axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/createtimeoff', {
             type: absence,
             description,
             daterange: dates
@@ -137,7 +137,7 @@ const Leaves = () => {
     useEffect(() => {
         const fetchPolicy = async () => {
             try {
-                const res = await axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/get/${auth.user.policy}`);
+                const res = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + `/api/policy/get/${auth.user.policy}`);
                 setAbsenceType(res.data.policy.absences);
                 setPolicyName(res.data.policy.name);
                 setmaxcounter(res.data.policy.maxcounter)
@@ -148,7 +148,7 @@ const Leaves = () => {
         };
 
         const gettimeoffs = async () => {
-            axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/policy/gettimeoff')
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/gettimeoff')
                 .then((response) => {
                     setTimeOffs(response.data.timeoffs);
                     console.log(timeOffs.map((timeoff: any) => timeoff.daterange[0]));
@@ -180,9 +180,21 @@ const Leaves = () => {
             default: throw new Error('Invalid month index: ' + monthIndex);
         }
     }
+    const [currentPage, setCurrentPage] = useState(1);
+    const MAX_ENTRIES = 3; // Maximum entries to display at once
+
+    const paginatedTimeOffs = timeOffs.slice((currentPage - 1) * MAX_ENTRIES, currentPage * MAX_ENTRIES);
+
+    const handleNextPage = () => {
+        setCurrentPage(currentPage + 1);
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage(currentPage - 1);
+    };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{ overflowY: 'hidden' }}>
             {/*popup to view timeoff in calendar */}
 
 
@@ -264,8 +276,8 @@ const Leaves = () => {
                                 selectionMode="range"
                                 readOnlyInput
                                 minDate={new Date()} // Set minimum date to today
-                                   disabledDates={disabledDates} // Disable dates inside the timeoffapproved array
-                                
+                                disabledDates={disabledDates} // Disable dates inside the timeoffapproved array
+
                             />
 
                             {errors.daterange && <div className="absolute top-[60px] h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
@@ -337,7 +349,7 @@ const Leaves = () => {
                                 <h1 className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '>Accrued</h1>
                             </div>
                             <div className='flex flex-col ml-4 justify-center items-center  mr-2'>
-                            <h1 className={` ${maxcounter > 0 ? (available >= maxcounter ? "text-red-500" : "") : (available <= maxcounter ? "text-red-500" : "")} font-lexend font-semibold text-[30px] leading-[40px]`} >{available}</h1>
+                                <h1 className={` ${maxcounter > 0 ? (available >= maxcounter ? "text-red-500" : "") : (available <= maxcounter ? "text-red-500" : "")} font-lexend font-semibold text-[30px] leading-[40px]`} >{available}</h1>
 
                                 <h1 className={`     font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left `}>{maxcounter > 0 ? (available >= maxcounter ? "Negative Counter" : "Available") : (available <= maxcounter ? "Negative Counter" : "Available")} </h1>
                             </div>
@@ -354,17 +366,20 @@ const Leaves = () => {
 
                     <div className='flex flex-col  '>
                         <div className='flex justify-start mb-4'>
-                            <IoCalendar className='text-[#7152F3]  text-[24px] mr-3' />
+                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 32 32"
+                                style={{ fill: "#7152f3", marginRight: "15px", marginTop: "-5px" }} >
+                                <path d="M 9 4 L 9 5 L 5 5 L 5 6 L 5 10 L 5 12.34375 C 5 15.884947 4.5874347 18.859831 2.2929688 21.154297 L 2 21.447266 L 2 23 L 5 23 L 5 27 L 27 27 L 27 12.34375 L 27 6 L 27 5 L 23 5 L 23 4 L 21 4 L 21 5 L 11 5 L 11 4 L 9 4 z M 7 7 L 9 7 L 9 8 L 11 8 L 11 7 L 21 7 L 21 8 L 23 8 L 23 7 L 25 7 L 25 9 L 7 9 L 7 7 z M 7 11 L 25 11 L 25 12.34375 C 25 15.745962 24.564015 18.744764 22.509766 21 L 4.8867188 21 C 6.5973984 18.434293 7 15.406839 7 12.34375 L 7 11 z M 9 13 L 9 15 L 11 15 L 11 13 L 9 13 z M 13 13 L 13 15 L 15 15 L 15 13 L 13 13 z M 17 13 L 17 15 L 19 15 L 19 13 L 17 13 z M 21 13 L 21 15 L 23 15 L 23 13 L 21 13 z M 8.6894531 17 L 8 19 L 10 19 L 10.689453 17 L 8.6894531 17 z M 12.689453 17 L 12 19 L 14 19 L 14.689453 17 L 12.689453 17 z M 16.689453 17 L 16 19 L 18 19 L 18.689453 17 L 16.689453 17 z M 25 20.972656 L 25 25 L 7 25 L 7 23 L 23.414062 23 L 23.707031 22.707031 C 24.24315 22.170912 24.621007 21.571262 25 20.972656 z"></path>
+                            </svg>
                             <h1 className='mt-1 font-lexend font-semibold text-[20px] leading-[20px]'>Current & Past time off</h1>
                         </div>
 
 
 
 
-                        <div className='flex flex-col border-gray-600 p-8' >
+                        <div className='flex flex-col border-gray-600 p-8 mt-[-40px]' >
 
 
-                            {timeOffs.map((timeoff: any) => {
+                            {paginatedTimeOffs.map((timeoff: any) => {
                                 // Check if daterange is available before accessing it
                                 if (timeoff.daterange && Array.isArray(timeoff.daterange) && timeoff.daterange.length > 0) {
                                     const differenceMs = new Date(timeoff.daterange[1]).getTime() - new Date(timeoff.daterange[0]).getTime();
@@ -427,17 +442,43 @@ const Leaves = () => {
                                     return null; // Or you can display a placeholder or handle it differently
                                 }
                             })}
+                            {timeOffs.length > MAX_ENTRIES && (
+                                <div className="flex justify-center  mt-[-8px] ">
+                                    <button onClick={handlePrevPage} hidden={currentPage === 1} className="bg-gray-200 text-gray-600 px-4 py-2 mr-[150px] rounded-md">Previous</button>
+                                    <button onClick={handleNextPage} hidden={currentPage * MAX_ENTRIES >= timeOffs.length} className="bg-gray-200 text-gray-600 px-4 py-2 rounded-md">Next</button>
+                                </div>
 
+                            )}
 
                         </div>
 
 
                         {/*popup to view timeoff */}
-                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-150px] center rounded-[25px] `}>
-                            <IoMdClose onClick={() => { setPopupViewTimeOff(!PopupViewTimeOff); dispatch({ type: 'ERRORS', payload: {} }); }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
+                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-200px] center rounded-[25px] `}>
+                            <IoMdClose
+                                onClick={() => {
+                                    setPopupViewTimeOff(!PopupViewTimeOff);
+                                    dispatch({ type: 'ERRORS', payload: {} });
+                                }}
+                                className="hover:cursor-pointer absolute right-[5%] text-[24px] "
+                            />
+
                             <div className="w-[90vw] max-w-md">
 
-                                <div className='mb-2 text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Time off </div>
+                                <div className='mb-2 flex flex-row text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256" style={{ fill: "#7152f3", }}>
+                                        <g fill="#7152f3" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" >
+                                            <g transform="scale(2.56,2.56)">
+                                                <path d="M28,16c-3.85433,0 -7,3.14567 -7,7v54c0,3.85433 3.14567,7 7,7h39c3.85433,0 7,-3.14567 7,-7v-6c0.0051,-0.36064 -0.18438,-0.69608 -0.49587,-0.87789c-0.3115,-0.18181 -0.69676,-0.18181 -1.00825,0c-0.3115,0.18181 -0.50097,0.51725 -0.49587,0.87789v6c0,2.77367 -2.22633,5 -5,5h-39c-2.77367,0 -5,-2.22633 -5,-5v-54c0,-2.77367 2.22633,-5 5,-5h39c2.77367,0 5,2.22633 5,5v6c-0.0051,0.36064 0.18438,0.69608 0.49587,0.87789c0.3115,0.18181 0.69676,0.18181 1.00825,0c0.3115,-0.18181 0.50097,-0.51725 0.49587,-0.87789v-6c0,-3.85433 -3.14567,-7 -7,-7zM31.5,22c-2.47926,0 -4.5,2.02074 -4.5,4.5v47c0,2.47926 2.02074,4.5 4.5,4.5h32c2.47926,0 4.5,-2.02074 4.5,-4.5v-3c0.00255,-0.18032 -0.09219,-0.34804 -0.24794,-0.43894c-0.15575,-0.0909 -0.34838,-0.0909 -0.50413,0c-0.15575,0.0909 -0.25049,0.25863 -0.24794,0.43894v3c0,1.93874 -1.56126,3.5 -3.5,3.5h-32c-1.93874,0 -3.5,-1.56126 -3.5,-3.5v-47c0,-1.93874 1.56126,-3.5 3.5,-3.5h17c0.18032,0.00255 0.34804,-0.09219 0.43894,-0.24794c0.0909,-0.15575 0.0909,-0.34838 0,-0.50413c-0.0909,-0.15575 -0.25863,-0.25049 -0.43894,-0.24794zM50.5,22c-0.18032,-0.00255 -0.34804,0.09219 -0.43894,0.24794c-0.0909,0.15575 -0.0909,0.34838 0,0.50413c0.0909,0.15575 0.25863,0.25049 0.43894,0.24794h4c0.18032,0.00255 0.34804,-0.09219 0.43894,-0.24794c0.0909,-0.15575 0.0909,-0.34838 0,-0.50413c-0.0909,-0.15575 -0.25863,-0.25049 -0.43894,-0.24794zM56.5,22c-0.18032,-0.00255 -0.34804,0.09219 -0.43894,0.24794c-0.0909,0.15575 -0.0909,0.34838 0,0.50413c0.0909,0.15575 0.25863,0.25049 0.43894,0.24794h1c0.18032,0.00255 0.34804,-0.09219 0.43894,-0.24794c0.0909,-0.15575 0.0909,-0.34838 0,-0.50413c-0.0909,-0.15575 -0.25863,-0.25049 -0.43894,-0.24794zM72.98438,34c-0.25977,0.00414 -0.50774,0.10921 -0.69141,0.29297l-5,5c-0.39037,0.39053 -0.39037,1.02353 0,1.41406l4.29297,4.29297h-31.58594c-0.55226,0.00006 -0.99994,0.44774 -1,1v8c0.00006,0.55226 0.44774,0.99994 1,1h31.58594l-4.29297,4.29297c-0.39037,0.39053 -0.39037,1.02353 0,1.41406l5,5c0.39053,0.39037 1.02353,0.39037 1.41406,0l15,-15c0.39037,-0.39053 0.39037,-1.02353 0,-1.41406l-15,-15c-0.19132,-0.19141 -0.45205,-0.29711 -0.72266,-0.29297zM73,36.41406l13.58594,13.58594l-13.58594,13.58594l-3.58594,-3.58594l5.29297,-5.29297c0.28583,-0.28603 0.37129,-0.71604 0.21656,-1.08963c-0.15474,-0.37359 -0.51922,-0.61724 -0.92359,-0.6174h-33v-6h33c0.40437,-0.00016 0.76885,-0.24381 0.92359,-0.6174c0.15474,-0.37359 0.06927,-0.8036 -0.21656,-1.08963l-5.29297,-5.29297z"></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    <span className='translate-y-[30%]'>Time off</span>
+
+
+
+
+                                </div>
 
 
 
