@@ -21,7 +21,9 @@ const Config = () => {
   const [absence, setAbsence] = React.useState<string[]>(['']);
   const [workingDays, setWorkingDays] = React.useState<number>(0);
   const [timeOffDays, setTimeOffDays] = React.useState<number>(0);
-  const [maxTimeOffDays, setMaxTimeOffDays] = React.useState<number>(0);
+  const [ParentalLeaveMaxTimeOffDaysForWomen, setParentalLeaveMaxTimeOffDaysForWomen] = React.useState<number>(0);
+  const [ParentalLeaveMaxTimeOffDaysForMen, setParentalLeaveMaxTimeOffDaysForMen] = React.useState<number>(0);
+  const [SickLeaveMaxTimeOffDays, setSickLeaveMaxTimeOffDays] = React.useState<number>(0);
   const [bankHoliday, setBankHoliday] = React.useState('');
   const [canbeused, setCanbeused] = React.useState('');
   const [includerest, setIncluderest] = React.useState('');
@@ -46,7 +48,9 @@ const Config = () => {
       absences: absence,
       workingDays,
       TimeOffDaysPerWorkingDays: timeOffDays,
-      maxTimeOffDays,
+      ParentalLeaveMaxTimeOffDaysForWomen,
+      ParentalLeaveMaxTimeOffDaysForMen,
+      SickLeaveMaxTimeOffDays,
       maxcounter,
       nationaldays: bankHoliday === "do not count is as absence day" ? true : false,
       timeofflastforever: canbeused === "in the same cycle they has been acquired" ? false : true,
@@ -79,7 +83,9 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
         setWorkingDays(res.data.policy.workingDays);
         setAbsence(res.data.policy.absences);
         setTimeOffDays(res.data.policy.TimeOffDaysPerWorkingDays);
-        setMaxTimeOffDays(res.data.policy.MaxTimeOffDays);
+        setParentalLeaveMaxTimeOffDaysForWomen(res.data.policy.ParentalLeaveMaxTimeOffDaysForWomen);
+        setParentalLeaveMaxTimeOffDaysForMen(res.data.policy.ParentalLeaveMaxTimeOffDaysForMen);
+        setSickLeaveMaxTimeOffDays(res.data.policy.SickLeaveMaxTimeOffDays);
         setmaxcounter(res.data.policy.maxcounter);
         setBankHoliday(res.data.policy.nationaldays ? "do not count is as absence day" : "count it as absence day");
         setCanbeused(!res.data.policy.timeofflastforever ? "in the same cycle they has been acquired" : "anytime after they has been acquired");
@@ -108,7 +114,7 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
       </div> }
 
 
-      <Modal className='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
+      <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[180px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
         <Modal.Header />
         <Modal.Body >
           <div className="text-center">
@@ -268,10 +274,26 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
 
           </div>
 
-          <div className={styles.inputContainer}>
-            <Input5 onChange={(e: any) => { setMaxTimeOffDays(e.target.value) }} value={maxTimeOffDays} label="Max TimeOff Days" type="text" />
+  {absence.includes("Parental leave") && <>  <div className={styles.inputContainer}>
+            <Input5 onChange={(e: any) => { setParentalLeaveMaxTimeOffDaysForWomen(e.target.value) }} value={ParentalLeaveMaxTimeOffDaysForWomen} label="Max TimeOff Days For Parental Leave (Women)" type="text" />
 
           </div>
+          <div className={styles.inputContainer}>
+            <Input5 onChange={(e: any) => { setParentalLeaveMaxTimeOffDaysForMen(e.target.value) }} value={ParentalLeaveMaxTimeOffDaysForMen} label="Max TimeOff Days For Parental Leave (Men)" type="text" />
+
+          </div> 
+          </>
+
+          }
+
+
+
+      {absence.includes("Sick leave") &&    <div className={styles.inputContainer}>
+            <Input5 onChange={(e: any) => { setSickLeaveMaxTimeOffDays(e.target.value) }} value={SickLeaveMaxTimeOffDays} label="Max TimeOff Days For Sick Leave" type="text" />
+            </div>
+
+        }
+
           <div className={styles.inputContainer}>
             <Input5 onChange={(e: any) => { setmaxcounter(e.target.value) }} value={maxcounter} label="Maximum Counter" type="text" />
             </div>

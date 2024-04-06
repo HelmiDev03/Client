@@ -11,8 +11,9 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { FaArrowRight } from "react-icons/fa6";
 import axios from 'axios';
 import { HiDotsVertical } from "react-icons/hi";
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { SelectInput8 } from '@/app/(components)/Inputs/SelectInput';
+import { CiLogout } from 'react-icons/ci';
 
 const Employees = () => {
     const [Name, setName] = React.useState('')
@@ -26,6 +27,7 @@ const Employees = () => {
     const [PolicyEmployees, setPolicyEmployees] = React.useState<any[]>([])
     const [filteredUsers, setfilteredUsers] = React.useState<any[]>([])
     const [selectedUserIds, setSelectedUserIds] = React.useState<string[]>([]);
+    const router = useRouter()
     const handleCheckboxChange = (userId: string) => {
 
 
@@ -127,10 +129,16 @@ const Employees = () => {
 
 
         return (
-
+      <>
+        <div onClick={() => { router.push('/Employeeleaves/?employeeid=' + row.userid + '&policyid=' + policy + '&fullname='+row.fullname  + '&profilepicture='+ row.profilepicture); }} className='p-2 mr-4 ml-[-10px] rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
+            <button type="submit"      ><CiLogout className='  font-lexend font-light  leading-[24px] text-[#7152F3] text-[20px]' /></button>
+        </div>
             <div onClick={() => { setPopupAssignPolicy(!PopupAssignPolicy); setemployeeName(row.fullname); setemployeeId(row.userid) }} className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                 <button type="submit"      ><HiDotsVertical className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button>
             </div>
+          
+
+        </>
 
         );
     };

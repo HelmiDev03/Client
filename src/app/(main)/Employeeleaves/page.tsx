@@ -1,3 +1,4 @@
+
 'use client'
 import React, { use, useEffect, useState } from 'react';
 import { Calendar } from 'primereact/calendar';
@@ -11,12 +12,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SelectInput, SelectInputt } from "@/app/(components)/Inputs/SelectInput";
 import { IoCalendar } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
-import { time } from 'console';
-import { CiLogout } from 'react-icons/ci';
-import { position } from '@chakra-ui/react';
-import PDFViewer from '@/app/(components)/PdfViewer/pdf';
+import { useParams,useSearchParams  } from 'next/navigation';
 
-const Leaves = () => {
+
+
+const Leave = () => {
+    const id = useSearchParams().get('employeeid');
+    const policy = useSearchParams().get('policyid');
+    const employeefullname  = useSearchParams().get('fullname')
+    const employeeprofilepicture =useSearchParams().get('profilepicture')
     const [maxcounter, setmaxcounter] = useState(0)
     const [date, setDate] = useState(null);
     const [workingDays, setWorkingDays] = useState(0);
@@ -27,9 +31,6 @@ const Leaves = () => {
     const [userStartDate, setUserStartDate] = useState("")
     const [enddate, setEndDate] = useState("")
     const [dates, setDates] = useState([]);
-    const [file, setFile] = useState('')
-    const [base64, setBase64] = useState('')
-    const [fileName, setFileName] = useState('')
     const [absence, setAbcense] = useState('');
     const [absenceType, setAbsenceType] = useState([]);
     const [description, setDescription] = useState('');
@@ -38,25 +39,21 @@ const Leaves = () => {
     const [popupDate, setpopupDate] = useState('')
     const [popupDateHlidayType, setpopupDateHlidayType] = useState('')
     const [popupDays, setpopupDays] = useState(0)
+    
+    
+   
 
 
 
-    const convertBase64 = (file: File) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
 
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
 
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        });
-    };
 
-    const auth = useSelector((state: any) => state.auth);
+
+
+
+
+
+    
     function dateTemplate(date: any, arr: any[]) {
         const currentDate = new Date(date.year, date.month, date.day + 1).toISOString()// Convert provided date to ISO string format // Creating a Date object from the provided date
 
@@ -102,7 +99,7 @@ const Leaves = () => {
 
     const fetchDataAndUpdatePolicy = async () => {
         try {
-            const response = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/calculate');
+            const response = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/calculate/auth/'+id,);
             const { daysSinceStartExcludingOffDays, accruedDays, used, available, timeoffapproved, userStartDate, endDate } = response.data;
             console.log(response.data);
             setWorkingDays(daysSinceStartExcludingOffDays);
@@ -135,36 +132,19 @@ const Leaves = () => {
     const [selecteddescription, setSelectedDescription] = useState('')
     const [selectedstartdate, setSelectedStartDate] = useState('')
     const [selectedenddate, setSelectedEndDate] = useState('')
-    const [selectedmedia, setSelectedMedia] = useState('')
-    const [Frame , setFrame] = useState(false)
     const [etat, setEtat] = useState('')
     const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
 
 
 
-    const AddNewTimeOff = () => {
-
-        axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/createtimeoff', {
-            type: absence,
-            description,
-            daterange: dates,
-            file: base64
-        })
-            .then((response) => {
-                dispatch({ type: 'ERRORS', payload: {} });
-                window.location.reload();
-            })
-            .catch((error) => {
-                dispatch({ type: 'ERRORS', payload: error.response.data });
-            });
-    }
+   
 
 
     useEffect(() => {
         const fetchPolicy = async () => {
             try {
-                const res = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + `/api/policy/get/${auth.user.policy}`);
+                const res = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + `/api/policy/get/${policy}`);
                 setAbsenceType(res.data.policy.absences);
                 setPolicyName(res.data.policy.name);
                 setmaxcounter(res.data.policy.maxcounter)
@@ -175,9 +155,9 @@ const Leaves = () => {
         };
 
         const gettimeoffs = async () => {
-            axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/gettimeoff')
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/gettimeoff/auth/'+id)
                 .then((response) => {
-                    console.log(response.data.timeoffs);
+                    console.log(response.data.timeoffs);    
                     setTimeOffs(response.data.timeoffs);
                     console.log(timeOffs.map((timeoff: any) => timeoff.daterange[0]));
                 })
@@ -209,7 +189,7 @@ const Leaves = () => {
         }
     }
     const [currentPage, setCurrentPage] = useState(1);
-    const MAX_ENTRIES = 3; // Maximum entries to display at once
+    const MAX_ENTRIES = 2; // Maximum entries to display at once
 
     const paginatedTimeOffs = timeOffs.slice((currentPage - 1) * MAX_ENTRIES, currentPage * MAX_ENTRIES);
 
@@ -223,6 +203,16 @@ const Leaves = () => {
 
     return (
         <div className={styles.container} style={{ overflowY: 'hidden' }}>
+
+             <div className='absolute  top-[11%] right-[45%] flex flex-row items-center'>
+                <img className='w-[50px] h-[50px] rounded-[50%] mr-4' src={employeeprofilepicture ? employeeprofilepicture : '/defaultprofilepicture.png'} alt='profilepicture' />
+                <h1 className='font-lexend font-semibold text-[24px] leading-[30px] text-[#16151C]'>{employeefullname}</h1>
+                </div>
+
+
+
+
+
             {/*popup to view timeoff in calendar */}
 
 
@@ -237,141 +227,10 @@ const Leaves = () => {
             </div>}
 
 
-            {/*end popup to view timeoff */}
+            {/*end popup to view timeoff in calendar */}
 
-            {/*end popup to view time off */}
-            {/*popup to add new leave */}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddTimeOff ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
-                <IoMdClose onClick={() => { setPopupAddTimeOff(!PopupAddTimeOff); dispatch({ type: 'ERRORS', payload: {} }); }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
-                <div className="w-[90vw] max-w-md">
-
-                    <div className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Add time off </div>
-                    <div className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px] mb-4'>Request time off and select the type of absence</div>
-
-
-                    <div className="space-y-4 mb-12">
-                        <div className={styles.inputContainer}>
-                            <SelectInputt placeholder='choose Type of absence' value={absence} onChange={(e: any) => setAbcense(e.target.value)} label='Type of absence'
-                                options={absenceType}
-                            />
-                            {errors.type && <div className=" h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
-                                <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                </svg>
-                                <span className="sr-only">Info</span>
-                                <div>
-                                    {errors.type}
-                                </div>
-                            </div>}
-                        </div>
-                        <div className={styles.inputContainer}>
-                            <Input5 value={description} onChange={(e: any) => setDescription(e.target.value)} label='Description' />
-                            {errors.description && <div className=" h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
-                                <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                </svg>
-                                <span className="sr-only">Info</span>
-                                <div>
-                                    {errors.description}
-                                </div>
-                            </div>}
-
-                        </div>
-                        <div style={{ position: 'relative' }} className="border border-gray-300 relative mb-6 w-[300px] h-[80px] flex justify-center items-center rounded-[10px] border-[1px] bg-white">
-                            <label className="z-50  absolute font-lexend  top-0 left-0 px-2 pt-1 font-light text-[11px] leading-[16px] text-indigo-600 ">Choose File (Otpional)</label>
-                            <label htmlFor="fileInput" className="absolute inset-0 flex justify-center items-center cursor-pointer">
-                                <CiLogout className="text-[24px] text-[#7152F3]" />
-                                <input type="file" id="fileInput" className="hidden" accept='.pdf'
-                                    onChange={async (e: any) => {
-                                        const file = e.target.files[0];
-                                        setFile(file);
-                                        setFileName(file.name);
-                                        const base64 = await convertBase64(file);
-                                        setBase64(base64 as any);
-
-
-                                    }}
-                                />
-                            </label>
-                            <div className="absolute bottom-0 w-full text-center">{fileName}</div>
-
-
-
-                            {errors.file && (
-                                <div className="h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>{errors.file}</div>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className=" relative  h-[55px] card flex justify-content-center">
-                            <label className="z-50  absolute font-lexend  top-0 left-0 px-2 pt-1 font-light text-[11px] leading-[16px] text-indigo-600 ">Date range</label>
-                            <Calendar
-                                className='w-[300px]'
-                                value={dates}
-                                onChange={(e: any) => {
-                                    setDates(e.value);
-                                    console.log(e.value);
-                                    if (e.value && e.value.length === 2) {
-                                        let startDate = e.value[0];
-
-
-                                        //increse days by 1
-
-                                        let endDate = e.value[1];
-
-                                        const diffDays = Math.ceil(Math.abs(endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-                                        setDiffDays(diffDays);
-
-                                    } else {
-                                        setDiffDays(0); // Or any default value you prefer if no range is selected
-                                    }
-                                }}
-                                selectionMode="range"
-                                readOnlyInput
-                                minDate={new Date()} // Set minimum date to today
-                                disabledDates={disabledDates} // Disable dates inside the timeoffapproved array
-
-                            />
-
-                            {errors.daterange && <div className="absolute top-[60px] h-[30px] w-[300px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
-                                <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                </svg>
-                                <span className="sr-only">Info</span>
-                                <div>
-                                    {errors.daterange}
-                                </div>
-                            </div>}
-                        </div>
-
-
-
-
-                    </div>
-                    <div>
-                        <div className=' bg-white-500 border-[2px] translate-x-[200px] flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                            <ButtonSubmit fct={AddNewTimeOff} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add {diffdays ? diffdays === 1 ? diffdays + " day" : diffdays + " days" : ""} </h3>} />
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/*end popup to add new leave */}
-
-
-         
-
-          {/*popup to view time off atteched media in iframe */}
-          {Frame && <PDFViewer pdfUrl={selectedmedia} /> }
-            {/*end popup to view time off atteched media in iframe */}
-    
-              
+       
+          
 
 
 
@@ -385,12 +244,13 @@ const Leaves = () => {
 
 
 
-            <div className=' absolute right-[2%] top-[12%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-                <ButtonSubmit fct={() => setPopupAddTimeOff(true)} timing={200} text="Add Time Off" />
-            </div>
+
+
+
+          
 
             <div className='flex flex-row justify-between items-center '>
-                <div className='text-[#16151C] font-lexend font-semibold  text-[20px] leading-[30px]  flex flex-col '>
+                <div className='text-[#16151C] mt-[55px] font-lexend font-semibold  text-[20px] leading-[30px]  flex flex-col '>
                     <div className='w-[450px] rounded-[10px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
 
 
@@ -479,7 +339,7 @@ const Leaves = () => {
 
 
                                     return (
-                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString);setSelectedMedia(timeoff.file ? timeoff.file : '') ;console.log(timeoff.file)}} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString) }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -518,7 +378,7 @@ const Leaves = () => {
 
 
                         {/*popup to view timeoff */}
-                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-225px] center rounded-[25px] `}>
+                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-280px] center rounded-[25px] `}>
                             <IoMdClose
                                 onClick={() => {
                                     setPopupViewTimeOff(!PopupViewTimeOff);
@@ -568,21 +428,6 @@ const Leaves = () => {
                                         <Input5 isdisabled={true} value={selectedenddate} label='EndDate' />
 
                                     </div>
-
-
-                                { selectedmedia!='' &&   <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                                        <ButtonSubmit fct={()=>{setFrame(true)}} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>View Media Attached </h3>} />
-
-
-                                    </div>}
-                                    { selectedmedia==='' &&   <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                                        <ButtonSubmit fct={()=>{}}   spincol='[#7152F3]' timing={0} text={<h3 className='text-[14px] text-[#7152F3]'>No Media Attached </h3>} />
-
-
-                                    </div>}
-                                  
-
-                                    
 
 
 
@@ -637,10 +482,26 @@ const Leaves = () => {
                     />
                 </div>
             </div>
-        </div >
+        </div>
     );
+
+
+
 }
 
-export default Leaves;
+export default Leave
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
