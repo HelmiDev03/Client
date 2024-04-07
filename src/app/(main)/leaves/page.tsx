@@ -576,7 +576,7 @@ const Leaves = () => {
 
                                     </div>}
                                     { selectedmedia==='' &&   <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                                        <ButtonSubmit fct={()=>{}}   spincol='[#7152F3]' timing={0} text={<h3 className='text-[14px] text-[#7152F3]'>No Media Attached </h3>} />
+                                        <h3 className='text-[14px] text-[#7152F3]'>No Media Attached </h3>
 
 
                                     </div>}

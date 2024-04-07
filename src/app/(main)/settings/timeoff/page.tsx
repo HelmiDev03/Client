@@ -4,7 +4,7 @@ import React from 'react'
 import styles from '../company/page.module.css'
 import { MdFreeBreakfast } from 'react-icons/md'
 import { IoMdClose, IoMdSettings } from 'react-icons/io';
-import { FaSquarePen } from "react-icons/fa6";
+import { FaRegUser, FaSquarePen } from "react-icons/fa6";
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { MdHolidayVillage } from "react-icons/md";
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
+import { PiCrownLight } from 'react-icons/pi';
 const TimeOff = () => {
     const auth = useSelector((state: any) => state.auth)
     const company = useSelector((state: any) => state.company)
@@ -273,17 +274,31 @@ const TimeOff = () => {
 
 
             {/* available policies*/}
-            <div className='flex flex-wrap flex-row mb-[30px]'>
+            <div className='flex flex-wrap ml-[50px]  flex-row mb-[40px] mt-[-40px]'>
 
 
                 {policies.map((policy: any, index: any) => (
-                    <div key={policy.name} className='relative w-[550px] rounded-[10px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
-                        <FaSquarePen className='absolute right-[50%] top-[-10%] text-[30px] text-gray-600 ' />
+                    <section key={policy._id} className=" relative  border border-gray-300 rounded-lg w-[450px] flex flex-col items-center relative mr-[120px] mb-[75px]">
+                     {policy.isdefault &&   <div className="border border-gray-300 w-20 h-20 rounded-3xl flex justify-center items-center text-[#7152F3] bg-white absolute top-[-45px]">
+                        <PiCrownLight size={30} />
+                     </div> }
+                     {! policy.isdefault &&   <div className="border border-gray-300 w-20 h-20 rounded-3xl flex justify-center items-center text-[#7152F3] bg-white absolute top-[-45px]">
+                        <FaRegUser size={20} />
+                     </div> }
+                     {(removepolicy || setpolicyasdefault) && <IoMdSettings  onClick={() => toggleVisibility(index)}  className='relative right-[-45%] top-[5%] text-[24px] text-[#7152F3] hover:cursor-pointer ' /> }
+
+                     {policy.isdefault &&   <div className='rounded-[5px] p-1 mt-[20px] flex justify-center items-center bg-red-500'>
+                              <h1 className='text-[#fff] font-lexend font-semibold text-[20px]'>Default</h1>
+                     </div>  }
+                     {!policy.isdefault &&   <div className='rounded-[5px] p-1 mt-[20px] flex justify-center items-center '>
+                              <h1 className='text-[#fff] font-lexend font-semibold text-[20px]'>not seen</h1>
+                     </div>  }
+
+
+
                         <div className='flex flex-row justify-between'>
-                            <div className='rounded-[5px] h-[30px] flex justify-center items-center bg-[#7152F3]'>
-                                {policy.isdefault && <h1 className='text-[#fff] font-lexend font-semibold text-[20px] leading-[30px]'>Default</h1>}
-                            </div>
-                            {(removepolicy || setpolicyasdefault) && <IoMdSettings onClick={() => toggleVisibility(index)} className='relative text-[24px] text-[#7152F3] hover:cursor-pointer mb-4' />}
+                            
+                            
                             {isHidden[index] && (
                                 <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.3)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
                                     {!policy.isdefault && (
@@ -302,20 +317,36 @@ const TimeOff = () => {
                             )}
 
                         </div>
-                        <div className='flex flex-col justify-center items-center border-b border-gray-300'>
-                            <h1 className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>{policy.name}</h1>
 
-                            <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px] mb-4'>
+
+                        <div className='flex flex-col items-center gap-4 mt-10'>
+                            <h1 className='font-semibold text-xl'>{policy.name}</h1>
+
+                            <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>
                                 {Object.keys(policy.employees).length != 1 ? Object.keys(policy.employees).length + " employees  assigned to this policy" : Object.keys(policy.employees).length + " employee  assigned to this policy"}
                             </p>
 
                         </div>
                         <div className='flex flex-row justify-center mt-2'>
-                            {(viewtimeoffpolicydetails || auth.user.policy === policy._id) && <h1 onClick={() => router.push(`/settings/timeoff/${policy._id}/configuration`)} className='hover:cursor-pointer text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>View Policy</h1>}
+                            {(viewtimeoffpolicydetails || auth.user.policy === policy._id) && <div onClick={() => router.push(`/settings/timeoff/${policy._id}/configuration`)} className='mb-4 w-[150px] h-[50px] hover:cursor-pointer  flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'><span className='text-[#ffffff]'>View Policy</span></div>}
                             {(!viewtimeoffpolicydetails && auth.user.policy !== policy._id) && <h1 className=' text-red-500 font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Access is Restricted</h1>}
                         </div>
-                    </div>
+                    </section>
                 ))}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
 
             </div>
