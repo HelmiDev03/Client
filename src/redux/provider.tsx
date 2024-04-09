@@ -38,6 +38,7 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
             localStorage.setItem('jwt', token);
             setAuth(token);
             const decodedToken = jwtDecode(token);
+           
             store.dispatch({
               type: 'SET_USER',
               payload: decodedToken,
@@ -60,11 +61,12 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
 
 
-    //reset suceess and errors message to {} in page refresh
-
-
 
  }, []);  
+
+
+
+
 
   return (
     <ReduxProvider store={store}>

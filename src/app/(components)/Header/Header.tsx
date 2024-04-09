@@ -4,11 +4,11 @@ import { IoIosArrowDown } from "react-icons/io";
 import {useEffect, useState } from "react";
 import DropDown from "./DropDown";
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, usePathname,useRouter } from "next/navigation";
 import { IoArrowBackCircleSharp } from "react-icons/io5"
 
-
+import {io} from 'socket.io-client';
 
 
 
@@ -22,15 +22,30 @@ import { IoArrowBackCircleSharp } from "react-icons/io5"
 
 
 const Header= () => {
+  const auth = useSelector((state: any) => state.auth);
+  const notif = useSelector((state: any) => state.notif);
+  const dispatch = useDispatch();
+  const socket = io("http://localhost:5000");
+  console.log(socket);
 
-  const [notifCounter, setNotifCounter] = useState(0);
+    
+    socket.on('unreadNotificationsCount', (ob: any) => {
+      
+      auth.user._id===ob.userId ?  dispatch({
+        type: 'SET_NOTIFICATIONS_COUNT',
+        payload: ob.unreadNotificationsCount
+    }) : null;
+    });
+
+
+  
 
   
   const [Title1, setTitle1] = useState("");
   const [Title2, setTitle2] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const auth = useSelector((state: any) => state.auth);
+ 
   const { employeeId } = useParams()
   const router = useRouter();
   const pathname = usePathname();
@@ -67,7 +82,7 @@ const Header= () => {
     return     (
 
 
-        <header  className={` ${pathname==='/packages' ? 'hidden' : 'block'}         fixed z-[999] top-[-6px] w-[82%]   h-[82px]  flex items-center justify-between px-8 bg-[#ffffff] mb-10 ml-2 `}>
+        <header  className={` ${pathname==='/packages' ? 'hidden' : 'block'}         fixed z-[999] top-[-2px] w-[82%]   h-[82px]  flex items-center justify-between px-8 bg-[#ffffff] mb-10 ml-2 `}>
 
 <IoArrowBackCircleSharp onClick={()=>router.back()} className="  absolute top-[17px] right-[98%] text-[30px] text-[#7152F3] hover:cursor-pointer" />
             <div className= " h-[52px]flex  flex-row items-center">
@@ -85,15 +100,15 @@ const Header= () => {
               
      
 
-           <div className=" mr-[18px] w-[40px] h-[40px] flex justify-center items-centernded-[10px]  bg-gray-100 rou">
-            <IoIosNotificationsOutline onClick={()=>router.push('/notifications')}  className="hover:cursor-pointer relative w-[24px] h-[24px] bg-[#eee] hover:cursor-pointer" />
-           
-
+           <div onClick={()=>router.push('/notifications')}   className="relative mr-[18px] w-[40px] h-[40px] flex justify-center items-centernded-[10px] hover:cursor-pointer  ">
+            <IoIosNotificationsOutline className=" w-[38px] h-[38px] translate-y-[-3px]  hover:cursor-pointer" />
+         {notif !=0 &&   <div className="absolute w-[20px] h-[20px] top-[1%] right-[10%]   text-center rounded-[50%] bg-red-500 text-[#ffffff]" >{notif}</div> }
+                  
                  </div>
 
             <div  onClick={() => setIsDropdownOpen((prev) => !prev)}
-      className="  h-50 w-184 top-36 left-1226  p-2 border border-solid border-gray-300 rounded-lg  flex items-center  hover:cursor-pointer hover:duration-300"
-      style={{ borderColor: '#A2A1A833' }}
+      className="h-50 w-184 top-36 left-1226  p-3 border  border-gray-300 rounded-lg  flex items-center  hover:cursor-pointer hover:duration-300"
+    
     >
         
    <Image  style={{ borderRadius: '8px', marginRight: '4px'  , width : '40px' , height:'40px' }} src={auth.user.profilepicture ? auth.user.profilepicture: '/defaultprofilepicture.png'} width={40} height={40}

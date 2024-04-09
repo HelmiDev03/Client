@@ -92,7 +92,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div className={styles.ProfileContainer}>
-            <div className="flex flex-row justify-between items-center mb-6">
+            <div className="flex flex-row justify-between items-center mb-6 ">
                 <div className="w-[324px]    flex flex-row justify-start">
                     <div onClick={(e: any) => setshowUpload(!showUpload)} className='relative hover:cursor-pointer rounded-[10px]'><Image alt='image' style={{ position: 'relative', borderRadius: '10px', width: '100px', height: '100px', marginRight: '10px' }} width={100} height={100} src={auth.user.profilepicture ? auth.user.profilepicture: '/defaultprofilepicture.png'} /></div>
 
@@ -129,9 +129,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
 
                     {Url  && <div className=" z-[100] absolute top-[23%] right-[32%] right p-4 w-[400px]  max-w-lg ">
-                        <div className=" bg-lavender relative p-4  rounded-lg drop-shadow-md  md:p-8 flex flex-col justify-center">
+                        <div className=" bg-[#DBDBDD] relative p-4  rounded-[30px] drop-shadow-md  md:p-8 flex flex-col items-center justify-center">
 
-                           <img src={Url} alt="Image from Cloudinary" /> 
+                           <img src={Url} className='w-[160px]  h-[160px] rounded-[10px]' alt="Image from Cloudinary" /> 
                       
 
 
@@ -141,7 +141,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
 
                                 <div className='mb-8 w-[200px] mt-[90px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px]  ' >
-                                    <div className='  w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+                                    <div className='  w-[82px] mr-4 h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                                         <ButtonSubmit timing={200} text="Confirm" fct={()=>updatePic(Url, 'Confirm')} />
                                     </div>
                                     <div className='    w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#eee]   ' >
@@ -202,6 +202,29 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
 
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div className="flex flex-row justify-between height-auto ">
                 <div className="flex flex-col justify-center items-start w-[242px] h-[167px] mr-3 mt-5 rounded-[10px]  bg-opacity-[20%] bg-white-500">
                     <h3 className={` p-3  flex justify-start items-center font-lexendfont-light flex text-[16px] rounded-[10px]  w-[100%] leading-[24px] mb-2 hover:cursor-pointer  ${pathname.includes('/profile') ? ' text-[#eee] bg-[#7152F3]' : ' text-[#16151C]'}                    `}><IoPersonOutline className="text-[20px] mr-3" /> Profile</h3>

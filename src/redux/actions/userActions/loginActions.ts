@@ -86,6 +86,16 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
 
 
 
+    axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/notifications/unseen')
+    .then((res) => {
+        dispatch({
+            type: 'SET_NOTIFICATIONS_COUNT',
+            payload: res.data.unssennotifications
+        });
+    })
+
+
+
 
 
 

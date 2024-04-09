@@ -506,8 +506,12 @@ const Leaves = () => {
                                     return null; // Or you can display a placeholder or handle it differently
                                 }
                             })}
+
+
+
+
                             {timeOffs.length > MAX_ENTRIES && (
-                                <div className="flex justify-center  mt-[-8px] ">
+                                <div className="flex justify-center  mt-[-20px] ">
                                     <button onClick={handlePrevPage} hidden={currentPage === 1} className="bg-gray-200 text-gray-600 px-4 py-2 mr-[150px] rounded-md">Previous</button>
                                     <button onClick={handleNextPage} hidden={currentPage * MAX_ENTRIES >= timeOffs.length} className="bg-gray-200 text-gray-600 px-4 py-2 rounded-md">Next</button>
                                 </div>

@@ -36,5 +36,9 @@ export const LogoutAction = () => (dispatch: Dispatch<any>) => {
         type: 'SET_PERMISSION_GROUPS',
         payload: []
     });
+    dispatch({
+        type: 'SET_NOTIFICATIONS_COUNT',
+        payload: 0
+    });
     window.location.href='/login'; 
 };

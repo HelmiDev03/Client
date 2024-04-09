@@ -95,7 +95,7 @@ const Prof = () => {
 
     return (
         <div className=" flex flex-row flex-wrap " >
-              <Modal className ='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
+              <Modal className ='absolute w-[400px] translate-x-[520px] translate-y-[160px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
         <Modal.Header />
         <Modal.Body className=''>
           <div className="text-center">
