@@ -12,15 +12,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SelectInput, SelectInputt } from "@/app/(components)/Inputs/SelectInput";
 import { IoCalendar } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
-import { useParams,useSearchParams  } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 
 
 
 const Leave = () => {
     const id = useSearchParams().get('employeeid');
     const policy = useSearchParams().get('policyid');
-    const employeefullname  = useSearchParams().get('fullname')
-    const employeeprofilepicture =useSearchParams().get('profilepicture')
+    const employeefullname = useSearchParams().get('fullname')
+    const employeeprofilepicture = useSearchParams().get('profilepicture')
     const [maxcounter, setmaxcounter] = useState(0)
     const [date, setDate] = useState(null);
     const [workingDays, setWorkingDays] = useState(0);
@@ -39,9 +39,6 @@ const Leave = () => {
     const [popupDate, setpopupDate] = useState('')
     const [popupDateHlidayType, setpopupDateHlidayType] = useState('')
     const [popupDays, setpopupDays] = useState(0)
-    
-    
-   
 
 
 
@@ -53,7 +50,10 @@ const Leave = () => {
 
 
 
-    
+
+
+
+
     function dateTemplate(date: any, arr: any[]) {
         const currentDate = new Date(date.year, date.month, date.day + 1).toISOString()// Convert provided date to ISO string format // Creating a Date object from the provided date
 
@@ -99,7 +99,7 @@ const Leave = () => {
 
     const fetchDataAndUpdatePolicy = async () => {
         try {
-            const response = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/calculate/auth/'+id,);
+            const response = await axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/calculate/auth/' + id,);
             const { daysSinceStartExcludingOffDays, accruedDays, used, available, timeoffapproved, userStartDate, endDate } = response.data;
             console.log(response.data);
             setWorkingDays(daysSinceStartExcludingOffDays);
@@ -135,10 +135,11 @@ const Leave = () => {
     const [etat, setEtat] = useState('')
     const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
+    const [selectedmedia, setSelectedMedia] = useState('')
 
 
 
-   
+
 
 
     useEffect(() => {
@@ -155,9 +156,9 @@ const Leave = () => {
         };
 
         const gettimeoffs = async () => {
-            axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/gettimeoff/auth/'+id)
+            axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/gettimeoff/auth/' + id)
                 .then((response) => {
-                    console.log(response.data.timeoffs);    
+                    console.log(response.data.timeoffs);
                     setTimeOffs(response.data.timeoffs);
                     console.log(timeOffs.map((timeoff: any) => timeoff.daterange[0]));
                 })
@@ -204,10 +205,10 @@ const Leave = () => {
     return (
         <div className={styles.container} style={{ overflowY: 'hidden' }}>
 
-             <div className='absolute  top-[11%] right-[45%] flex flex-row items-center'>
+            <div className='absolute  top-[11%] right-[45%] flex flex-row items-center'>
                 <img className='w-[50px] h-[50px] rounded-[50%] mr-4' src={employeeprofilepicture ? employeeprofilepicture : '/defaultprofilepicture.png'} alt='profilepicture' />
                 <h1 className='font-lexend font-semibold text-[24px] leading-[30px] text-[#16151C]'>{employeefullname}</h1>
-                </div>
+            </div>
 
 
 
@@ -229,8 +230,6 @@ const Leave = () => {
 
             {/*end popup to view timeoff in calendar */}
 
-       
-          
 
 
 
@@ -247,7 +246,9 @@ const Leave = () => {
 
 
 
-          
+
+
+
 
             <div className='flex flex-row justify-between items-center '>
                 <div className='text-[#16151C] mt-[55px] font-lexend font-semibold  text-[20px] leading-[30px]  flex flex-col '>
@@ -339,7 +340,7 @@ const Leave = () => {
 
 
                                     return (
-                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString) }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -378,7 +379,7 @@ const Leave = () => {
 
 
                         {/*popup to view timeoff */}
-                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-280px] center rounded-[25px] `}>
+                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-275px] center rounded-[25px] `}>
                             <IoMdClose
                                 onClick={() => {
                                     setPopupViewTimeOff(!PopupViewTimeOff);
@@ -429,22 +430,33 @@ const Leave = () => {
 
                                     </div>
 
+                                    {selectedmedia != '' && <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
+                                        <ButtonSubmit fct={() => { window.location.href = selectedmedia }} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>View Media Attached </h3>} />
 
 
-                                    {etat === 'Approved' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
+                                    </div>}
+                                    {selectedmedia === '' && <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
+                                        <h3 className='text-[14px] text-[#7152F3]'>No Media Attached </h3>
+
+
+                                    </div>}
+
+
+
+                                    {(etat === 'Approved' || etat === 'approved') && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#3FC28A]">Approved</p>
                                         <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
                                         <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture' />
                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]  absolute top-[82%]' >Response : {response}</p>
                                     </div>}
 
-                                    {etat === 'Rejected' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                    {(etat === 'Rejected' || etat === 'rejected') && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-red-500">Rejected</p>
                                         <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
                                         <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture' />
                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]   absolute top-[82%]' >Response : {response}</p>
                                     </div>}
-                                    {etat === 'Pending' && <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                    {(etat === 'Pending' || etat === 'pending') && <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#ffab70]">Pending</p>
                                     </div>}
 

@@ -1,20 +1,15 @@
 'use client'
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar } from 'primereact/calendar';
 import styles from '@/app/(main)/page.module.css';
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
-import { FaSquarePen } from 'react-icons/fa6';
-import { IoMdClose, IoMdSettings } from 'react-icons/io';
+import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import { Input5 } from '@/app/(components)/Inputs/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { SelectInput, SelectInputt } from "@/app/(components)/Inputs/SelectInput";
-import { IoCalendar } from "react-icons/io5";
+import { SelectInputt } from "@/app/(components)/Inputs/SelectInput";
 import { FaArrowRight } from "react-icons/fa";
-import { time } from 'console';
 import { CiLogout } from 'react-icons/ci';
-import { position } from '@chakra-ui/react';
-import PDFViewer from '@/app/(components)/PdfViewer/pdf';
 
 const Leaves = () => {
     const [maxcounter, setmaxcounter] = useState(0)
@@ -136,7 +131,7 @@ const Leaves = () => {
     const [selectedstartdate, setSelectedStartDate] = useState('')
     const [selectedenddate, setSelectedEndDate] = useState('')
     const [selectedmedia, setSelectedMedia] = useState('')
-    const [Frame , setFrame] = useState(false)
+    const [Frame, setFrame] = useState(false)
     const [etat, setEtat] = useState('')
     const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
@@ -144,12 +139,13 @@ const Leaves = () => {
 
 
     const AddNewTimeOff = () => {
-
+        console.log(file)
+        console.log(fileName)
         axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/createtimeoff', {
             type: absence,
             description,
             daterange: dates,
-            file: base64
+            file: fileName ? base64 : ""
         })
             .then((response) => {
                 dispatch({ type: 'ERRORS', payload: {} });
@@ -284,6 +280,8 @@ const Leaves = () => {
                                 <input type="file" id="fileInput" className="hidden" accept='.pdf'
                                     onChange={async (e: any) => {
                                         const file = e.target.files[0];
+                                        console.log(file)
+
                                         setFile(file);
                                         setFileName(file.name);
                                         const base64 = await convertBase64(file);
@@ -365,13 +363,10 @@ const Leaves = () => {
             {/*end popup to add new leave */}
 
 
-         
 
-          {/*popup to view time off atteched media in iframe */}
-          {Frame && <PDFViewer pdfUrl={selectedmedia} /> }
-            {/*end popup to view time off atteched media in iframe */}
-    
-              
+
+
+
 
 
 
@@ -479,7 +474,7 @@ const Leaves = () => {
 
 
                                     return (
-                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString);setSelectedMedia(timeoff.file ? timeoff.file : '') ;console.log(timeoff.file)}} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -574,36 +569,36 @@ const Leaves = () => {
                                     </div>
 
 
-                                { selectedmedia!='' &&   <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                                        <ButtonSubmit fct={()=>{setFrame(true)}} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>View Media Attached </h3>} />
+                                    {selectedmedia != '' && <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
+                                        <ButtonSubmit fct={() => { window.location.href = selectedmedia }} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>View Media Attached </h3>} />
 
 
                                     </div>}
-                                    { selectedmedia==='' &&   <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
+                                    {selectedmedia === '' && <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
                                         <h3 className='text-[14px] text-[#7152F3]'>No Media Attached </h3>
 
 
                                     </div>}
-                                  
-
-                                    
 
 
 
-                                    {etat === 'Approved' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
+
+
+
+                                    {(etat === 'Approved' || etat === 'approved') && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-green-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#3FC28A]">Approved</p>
                                         <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
                                         <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture' />
                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]  absolute top-[82%]' >Response : {response}</p>
                                     </div>}
 
-                                    {etat === 'Rejected' && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                    {(etat === 'Rejected' || etat === 'rejected') && <div className="relative flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-red-500">Rejected</p>
                                         <p className='font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left '> by {supervisor.firstname} {supervisor.lastname}</p>
                                         <img className='w-[30px] h-[30px] rounded-[50%] ml-2' src={supervisor.profilepicture} alt='profilepicture' />
                                         <p className='font-lexend font-light text-[18px] leading-[30px] flex justify-center items-center w-[300px] flex-row justify-between  px-[3px] py-[8px] rounded-[4px]   absolute top-[82%]' >Response : {response}</p>
                                     </div>}
-                                    {etat === 'Pending' && <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
+                                    {(etat === 'Pending' || etat === 'pending') && <div className="flex justify-center items-center w-[66px]  px-[3px] py-[8px] rounded-[4px] bg-red-500 bg-opacity-10">
                                         <p className="font- font-lexend  font-light leading-[18px] text-[14px] text-[#ffab70]">Pending</p>
                                     </div>}
 
