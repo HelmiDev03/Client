@@ -10,6 +10,7 @@ import React, { useState } from 'react'
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import { TextareaInput } from '@/app/(components)/Inputs/textarea'
 import { useDispatch } from "react-redux";
+import { InputTextarea } from "primereact/inputtextarea";
 const Notifications = () => {
   const [PopupAcceptOrRejectLeaveRequest, setPopupAcceptOrRejectLeaveRequest] = React.useState(false)
   const [notifications, setNotifications] = React.useState([])
@@ -228,13 +229,13 @@ const Notifications = () => {
 
 
       {/* in case accept/reject timeoff reqsuest */}
-      <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupAcceptOrRejectLeaveRequest ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[350px] translate-x-[830px]  translate-y-[50px] center rounded-[25px] `}>
+      <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupAcceptOrRejectLeaveRequest ? 'block' : 'hidden'}           p-4 z-10  shadow-lg  absolute w-[350px] translate-x-[830px]  translate-y-[50px] center rounded-[25px] `}>
         <IoMdClose onClick={() => { setPopupAcceptOrRejectLeaveRequest(!PopupAcceptOrRejectLeaveRequest) }} className='absolute right-[2%] text-[24px] hover:cursor-pointer' />
         <div className=" max-w-md">
 
           <div className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>{popupText} {selecteduser.firstname}  {selecteduser.lastname}'s time off request Leave </div>
-          <div className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px] mb-4'>view employee time off history </div>
-          <TextareaInput onChange={(e: any) => setResponse(e.target.value)} placeholder='write a short response' />
+         
+        <textarea className="bg-[#EBE8EF] ml-9 mb-4 mt-3 pl-4" value={response} onChange={(e) => setResponse(e.target.value)} rows={5} cols={30} />
 
 
 

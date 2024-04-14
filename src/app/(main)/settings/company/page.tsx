@@ -131,13 +131,13 @@ const CompanySettings = () => {
       </Modal>
 
             <div className='flex flex-row justify-between mb-[30px]'>
-                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#dedede] rounded-[36px] hover:cursor-pointer'>
+                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#eee] rounded-[36px] hover:cursor-pointer'>
                     <FaPen className='text-[24px] text-[#7152F3] mb-4' />
                     <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Company Logo</h2>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Upload your company logo here</p>
                 </div>
 
-                <div className="relative translate-x-[-160px]  w-[350px] h-[200px] flex justify-center items-center rounded-[36px] border-[1px] bg-[#dedede]">
+                <div className="relative translate-x-[-160px]  w-[350px] h-[200px] flex justify-center items-center rounded-[36px] border-[1px] bg-[#eee]">
                     <label htmlFor="fileInput" className="absolute inset-0 flex justify-center items-center cursor-pointer">
                         <IoCameraOutline className="text-[24px]" />
                         <input type="file" id="fileInput" className="hidden" onChange={handleFileChange} />
@@ -151,7 +151,7 @@ const CompanySettings = () => {
             <div className='flex flex-row justify-between mb-[30px]'>
 
 
-                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#dedede] rounded-[36px] hover:cursor-pointer'>
+                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#eee] rounded-[36px] hover:cursor-pointer'>
                     <IoMdSettings className='text-[24px] text-[#7152F3] mb-4' />
                     <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>General Information</h2>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Put your company information</p>
@@ -265,7 +265,7 @@ const CompanySettings = () => {
             <div className='flex flex-row justify-between mb-[30px]'>
 
 
-                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#dedede] rounded-[36px] hover:cursor-pointer'>
+                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#eee] rounded-[36px] hover:cursor-pointer'>
                     <FaMapMarkerAlt  className='text-[24px] text-[#7152F3] mb-4' />
                     <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Adress</h2>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Put your company adress</p>
@@ -343,7 +343,7 @@ const CompanySettings = () => {
             <div className='flex flex-row justify-between mb-[30px]'>
 
 
-                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#dedede] rounded-[36px] hover:cursor-pointer'>
+                <div className='flex flex-col justify-center items-center h-[200px] w-[350px]    bg-[#eee] rounded-[36px] hover:cursor-pointer'>
                     <IoTodaySharp  className='text-[24px] text-[#7152F3] mb-4' />
                     <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Working Days</h2>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Put your company working days</p>

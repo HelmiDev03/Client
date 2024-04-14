@@ -139,8 +139,14 @@ const Leaves = () => {
 
 
     const AddNewTimeOff = () => {
+        dispatch({ type: 'ERRORS', payload: {  } });
         console.log(file)
         console.log(fileName)
+        if (!fileName.endsWith('.pdf')) {
+            dispatch({ type: 'ERRORS', payload: { daterange: 'media attached must be a PDF file' } });
+            return; // Exit the function if fileName doesn't end with .pdf
+
+        }
         axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/policy/createtimeoff', {
             type: absence,
             description,
@@ -237,7 +243,7 @@ const Leaves = () => {
 
             {/*end popup to view time off */}
             {/*popup to add new leave */}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddTimeOff ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
+            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddTimeOff ? 'block' : 'hidden'}           p-4 z-10 bg-[#FCFBFB] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[50px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => { setPopupAddTimeOff(!PopupAddTimeOff); dispatch({ type: 'ERRORS', payload: {} }); }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
 
@@ -474,7 +480,7 @@ const Leaves = () => {
 
 
                                     return (
-                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border-b border-gray-100 p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -517,7 +523,7 @@ const Leaves = () => {
 
 
                         {/*popup to view timeoff */}
-                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-225px] center rounded-[25px] `}>
+                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#FCFBFB] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-210px] center rounded-[25px] `}>
                             <IoMdClose
                                 onClick={() => {
                                     setPopupViewTimeOff(!PopupViewTimeOff);

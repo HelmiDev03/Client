@@ -172,7 +172,7 @@ const TimeOff = () => {
         <div className={styles.container}>
 
             {/* in case add policy */}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddPolicy ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
+            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddPolicy ? 'block' : 'hidden'}           p-4 z-10 bg-[#FCFCFC] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => { dispatch({ type: 'ERRORS', payload: {} }); setPopupAddPolicy(!PopupAddPolicy) }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
 
@@ -215,7 +215,7 @@ const TimeOff = () => {
 
 
             {/* in case add dnational day */}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddDay ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[250px] center rounded-[25px] `}>
+            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddDay ? 'block' : 'hidden'}           p-4 z-10 bg-[#FCFCFC] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[250px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => setPopupAddDay(!PopupAddDay)} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
 
@@ -300,7 +300,7 @@ const TimeOff = () => {
                             
                             
                             {isHidden[index] && (
-                                <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.3)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
+                                <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
                                     {!policy.isdefault && (
                                         <>
                                             {setpolicyasdefault && <h3 onClick={setnewdefaultpolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Set as Default</h3>}
@@ -394,7 +394,7 @@ const TimeOff = () => {
                 </div>
                 <div className="relative overflow-x-auto">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500  border border-gray-300 p-2 ">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-20  ">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
                                     Day Name

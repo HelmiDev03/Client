@@ -221,7 +221,7 @@ const Employees = () => {
   return (
     <div>
       {/* popup add employee to group*/}
-      <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddEmployee ? 'block' : 'hidden'}             p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
+      <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddEmployee ? 'block' : 'hidden'}             p-4 z-10 bg-[#FCFCFC] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-150px] center rounded-[25px] `}>
         <IoMdClose onClick={() => setPopupAddEmployee(!PopupAddEmployee)} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
         <div className="w-[90vw] max-w-md">
           <div>
@@ -325,7 +325,7 @@ const Employees = () => {
       {/* end popup add employee to group*/}
 
       {/* popup assign different group*/}
-      <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAssigngroup ? 'block' : 'hidden'}  h-[300px]           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
+      <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAssigngroup ? 'block' : 'hidden'}  h-[300px]           p-4 z-10 bg-[#FCFCFC] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-60px] center rounded-[25px] `}>
         <IoMdClose onClick={() => setPopupAssigngroup(!PopupAssigngroup)} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
         <div className="w-[90vw] max-w-md">
           <div className='mb-3'>

@@ -3,10 +3,11 @@ import {
   MdOutlineDashboard,
   MdOutlineLibraryAddCheck,
 } from "react-icons/md";
-import { HiOutlineCurrencyDollar, HiOutlineUserRemove } from "react-icons/hi";
+import {  HiOutlineUserRemove } from "react-icons/hi";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { LiaHandHoldingHeartSolid } from "react-icons/lia";
 import { IoSettingsOutline } from "react-icons/io5";
+import { TiShoppingBag } from "react-icons/ti";
 
 
 export const NavItems = [
@@ -30,10 +31,10 @@ export const NavItems = [
           path: '#'
         },
         {
-          itemname: 'Payroll',
+          itemname: 'Projects',
           icon:
-          <HiOutlineCurrencyDollar className="text-[24px]"/>,
-          path: '#'
+          <TiShoppingBag className="text-[24px]"/>,
+          path: '/projects'
         },
         {
           itemname: 'Candidates',

@@ -205,7 +205,7 @@ deleteemployee || viewemployeedetails ?{
 
         <div className={styles.EmployeesContainer}>
             {/*in case employee added*/}
-            <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[180px]  center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
+            <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[-10px]  center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
                 <Modal.Header />
                 <Modal.Body className=''>
                     <div className="text-center">
@@ -225,9 +225,9 @@ deleteemployee || viewemployeedetails ?{
 
             {/*in case employee deleted*/}
             {openPopupDelete && <div id="static-modal" data-modal-backdrop="static" aria-hidden="true" className="bg-[#eee] overflow-y-auto overflow-x-hidden absolute w-[500px] right-[40%] center rounded-[25px]  z-50 justify-center items-center ">
-                <div className="bg-[#eee] relative  w-full max-w-2xl max-h-full">
+                <div className="bg-[#eee]  relative  w-full max-w-2xl max-h-full">
 
-                    <div className="bg-[#eee]  relative  rounded-lg shadow ">
+                    <div className="bg-[#eee] p-4 relative  rounded-lg shadow ">
 
                         <div className=" bg-[#eee] flex items-center justify-between p-4 md:p-5 border-b border-red-200 rounded-t">
                             <h3 className="text-xl font-semibold text-gray-900 ">

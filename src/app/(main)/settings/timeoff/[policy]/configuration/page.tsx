@@ -114,7 +114,7 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
       </div> }
 
 
-      <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[180px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
+      <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[-30px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
         <Modal.Header />
         <Modal.Body >
           <div className="text-center">

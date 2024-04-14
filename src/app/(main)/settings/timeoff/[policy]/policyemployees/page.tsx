@@ -228,7 +228,7 @@ const Employees = () => {
     return (
         <div>
             {/* popup add employee to policy*/}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddEmployee ? 'block' : 'hidden'}             p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
+            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddEmployee ? 'block' : 'hidden'}             p-4 z-10 bg-[#FCFCFC] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => setPopupAddEmployee(!PopupAddEmployee)} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
                     <div>
@@ -321,7 +321,7 @@ const Employees = () => {
                     </div>
                     <div>
                         <div className=' bg-white-500 border-[2px] translate-x-[200px] flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                            <ButtonSubmit fct={AddNewEmployeeToPolicy} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add Employees</h3>} />
+                            <ButtonSubmit fct={AddNewEmployeeToPolicy} spincol='[#17152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add Employees</h3>} />
 
 
                         </div>
@@ -332,7 +332,7 @@ const Employees = () => {
             {/* end popup add employee to policy*/}
 
             {/* popup assign different policy*/}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAssignPolicy ? 'block' : 'hidden'}  h-[300px]           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
+            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAssignPolicy ? 'block' : 'hidden'}  h-[300px]           p-4 z-10 bg-[#FCFCFC] shadow-lg  absolute w-[500px] translate-x-[180px]  translate-y-[-20px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => setPopupAssignPolicy(!PopupAssignPolicy)} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
                     <div className='mb-3'>

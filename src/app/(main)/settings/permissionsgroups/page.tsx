@@ -2,19 +2,20 @@
 
 import React from 'react'
 import styles from '../company/page.module.css'
-import { MdFreeBreakfast, MdOutlineGroups3 } from 'react-icons/md'
+import {  MdOutlineGroups3 } from 'react-icons/md'
 import { IoMdClose, IoMdSettings } from 'react-icons/io';
 import { FaRegUser, FaSquarePen } from "react-icons/fa6";
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import { IoAddCircleOutline } from 'react-icons/io5';
-import { MdHolidayVillage } from "react-icons/md";
 import { Input5 } from '@/app/(components)/Inputs/TextInput';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
-import { AiOutlineDelete } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import { PiCrownLight } from 'react-icons/pi';
+
+
+
 const TimeOff = () => {
     const company = useSelector((state: any) => state.company)
     const permissionGroups = useSelector((state: any) => state.permissionGroups)
@@ -146,7 +147,7 @@ const TimeOff = () => {
         <div className={styles.container}>
 
             {/* in case add group */}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddGroup ? 'block' : 'hidden'}           p-4 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
+            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddGroup ? 'block' : 'hidden'}           p-4 z-10 bg-[#FCFCFC] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[100px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => { dispatch({ type: 'ERRORS', payload: {} }); setGroupName(''); setPopupAddGroup(!PopupAddGroup) }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
 
@@ -236,7 +237,7 @@ const TimeOff = () => {
                             <h1 className='text-[#fff] font-lexend font-semibold text-[20px]'>nothing</h1>
                         </div>}
                         {group.iscustom && isHidden[index] && (
-                            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.3)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
+                            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
                                 <>
                                     <h3 onClick={deletegroup(group._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>
                                 </>
