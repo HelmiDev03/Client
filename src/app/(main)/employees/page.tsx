@@ -4,7 +4,7 @@
 import styles from './employees.module.css'
 
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef} from '@mui/x-data-grid';
 import { FiEye } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useEffect } from 'react';

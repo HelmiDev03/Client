@@ -76,6 +76,9 @@ const Header= () => {
   if (employeeId){
     setTitle2('Employee Profile')
   }
+  if ( pathname.includes('/projects')  ) {
+    setTitle2('')
+  }
   }, [pathname])
 
 

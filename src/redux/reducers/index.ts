@@ -7,6 +7,8 @@ import companyReducer from "./companyReducer";
 import policiesReducer from "./policyReducer";
 import permissionGroupReducer from "./permissionGroupReducer";
 import notificationReducer from "./notificationsReducer";
+import projectsReducer from "./projectsReducer";
+import taskReducer from "./tasksReducer";
 
 
 const rootReducer = combineReducers({
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
     policies: policiesReducer,
     permissionGroups: permissionGroupReducer,
     notif: notificationReducer,
+    projects: projectsReducer,
+    tasks: taskReducer
 
 });
 

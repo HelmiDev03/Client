@@ -40,5 +40,10 @@ export const LogoutAction = () => (dispatch: Dispatch<any>) => {
         type: 'SET_NOTIFICATIONS_COUNT',
         payload: 0
     });
+    dispatch({
+        type: 'SET_PROJECTS',
+        payload: []
+    });
+
     window.location.href='/login'; 
 };
