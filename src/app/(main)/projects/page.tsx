@@ -14,7 +14,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { GetAllEmployees } from '@/redux/actions/usersActions/getAllEmployees';
-
+import { IoCloseOutline } from "react-icons/io5";
 
 
 const Projects = () => {
@@ -153,9 +153,12 @@ const Projects = () => {
                 <div onClick={() => { router.push('/projects/' + row.projectid + '/projectemployees') }} className='p-2 mr-4 ml-[-10px] rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                     <button type="submit"      ><FaArrowRight className='  font-lexend font-lexend  leading-[20px] text-[#7152F3] text-[20px]' /></button>
                 </div>
-                <div onClick={() => { axios.delete(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/deleteproject/' + row.projectid).then((res) => { dispatch({ type: 'SET_PROJECTS', payload: res.data.projects }) }).catch((err) => console.log(err)) }} className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
+                <div onClick={() => { axios.delete(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/deleteproject/' + row.projectid).then((res) => { dispatch({ type: 'SET_PROJECTS', payload: res.data.projects }) }).catch((err) => console.log(err)) }} className='p-2 rounded-[50%] mr-4 w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                     <button type="submit"      ><MdOutlineDeleteOutline className='  font-lexend font-light  leading-[20px] text-red-500 text-[20px]' /></button>
                 </div>
+                {row.status === 'Active' &&   <div onClick={() => { axios.put(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/closeproject/' + row.projectid).then((res) => { dispatch({ type: 'SET_PROJECTS', payload: res.data.projects }) }).catch((err) => console.log(err)) }} className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
+                    <button type="submit"      ><IoCloseOutline  className='  font-lexend font-light  leading-[20px] _1m2pwdr0 _1m2pwdr6 _1m2pwdr8 text-[20px]' /></button>
+                </div> }
 
 
             </>
@@ -410,7 +413,9 @@ const Projects = () => {
                                     }}
 
 
-
+                                    localeText={{
+                                        footerRowSelected: (count: number) => null, // This will remove the "1 row selected" text
+                                    }}
 
                                     pageSizeOptions={[5]}
 

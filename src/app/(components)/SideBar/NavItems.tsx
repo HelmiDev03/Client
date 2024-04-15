@@ -4,8 +4,6 @@ import {
   MdOutlineLibraryAddCheck,
 } from "react-icons/md";
 import {  HiOutlineUserRemove } from "react-icons/hi";
-import { AiOutlineUserAdd } from "react-icons/ai";
-import { LiaHandHoldingHeartSolid } from "react-icons/lia";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TiShoppingBag } from "react-icons/ti";
 
@@ -36,22 +34,14 @@ export const NavItems = [
           <TiShoppingBag className="text-[24px]"/>,
           path: '/projects'
         },
-        {
-          itemname: 'Candidates',
-          icon: <AiOutlineUserAdd   className="text-[24px]"   />,
-          path: '#'
-        },
+        
      
         {
           itemname: 'Leaves',
           icon: <HiOutlineUserRemove  className="text-[24px]" />,
           path: '/leaves'
         },
-        {
-          itemname: 'Holidays',
-          icon: <LiaHandHoldingHeartSolid  className="text-[24px]" />,
-          path: '#'
-        },
+       
         {
           itemname: 'Settings',
           icon: <IoSettingsOutline className="text-[24px]"/>,

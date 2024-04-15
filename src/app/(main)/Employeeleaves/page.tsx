@@ -276,7 +276,7 @@ const Leave = () => {
                             <div className='flex flex-col ml-4 justify-center items-center  mr-2'>
                                 <h1 className={` ${maxcounter > 0 ? (available >= maxcounter ? "text-red-500" : "") : (available <= maxcounter ? "text-red-500" : "")} font-lexend font-semibold text-[30px] leading-[40px]`} >{available}</h1>
 
-                                <h1 className={`     font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left `}>{maxcounter > 0 ? (available >= maxcounter ? "Negative Counter" : "Available") : (available <= maxcounter ? "Negative Counter" : "Available")} </h1>
+                                <h1 className={`     font-lexend text-body-2 font-normal  text-sm leading-5 tracking-normal text-left `}>{maxcounter > 0 ? (available >= maxcounter ? "Negative Counter" : "Available") : (available <= maxcounter ? "Negative Counter" : "Available")} </h1>
                             </div>
                             <div className='flex flex-col ml-4 justify-center items-center mr-2 '>
                                 <h1 className='font-lexend font-semibold text-[30px] leading-[40px]'>{used}</h1>
@@ -379,7 +379,7 @@ const Leave = () => {
 
 
                         {/*popup to view timeoff */}
-                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#eee] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-275px] center rounded-[25px] `}>
+                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#FCFBFB] shadow-lg  absolute w-[500px] translate-x-[300px] translate-y-[-290px]  z-[1000]  center rounded-[25px] `}>
                             <IoMdClose
                                 onClick={() => {
                                     setPopupViewTimeOff(!PopupViewTimeOff);
@@ -420,12 +420,12 @@ const Leave = () => {
 
                                     </div>
 
-                                    <div className="h-[55px] card flex justify-content-center">
+                                    <div className={styles.inputContainer}>
 
                                         <Input5 isdisabled={true} value={selectedstartdate} label='StartDate' />
 
                                     </div>
-                                    <div className="h-[55px] card flex justify-content-center">
+                                    <div className={styles.inputContainer}>
                                         <Input5 isdisabled={true} value={selectedenddate} label='EndDate' />
 
                                     </div>
@@ -481,7 +481,7 @@ const Leave = () => {
 
 
 
-                <div className="card flex justify-content-center absolute right-[-2%] top-[147px] mr-[50px]">
+                <div className="card flex justify-content-center absolute right-[-2%] top-[-100px] mr-[80px]">
 
                     <Calendar
                         value={date}

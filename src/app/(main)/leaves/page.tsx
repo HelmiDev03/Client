@@ -131,7 +131,6 @@ const Leaves = () => {
     const [selectedstartdate, setSelectedStartDate] = useState('')
     const [selectedenddate, setSelectedEndDate] = useState('')
     const [selectedmedia, setSelectedMedia] = useState('')
-    const [Frame, setFrame] = useState(false)
     const [etat, setEtat] = useState('')
     const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
@@ -142,7 +141,7 @@ const Leaves = () => {
         dispatch({ type: 'ERRORS', payload: {  } });
         console.log(file)
         console.log(fileName)
-        if (!fileName.endsWith('.pdf')) {
+        if (!fileName.endsWith('.pdf') && fileName !="" ) {
             dispatch({ type: 'ERRORS', payload: { daterange: 'media attached must be a PDF file' } });
             return; // Exit the function if fileName doesn't end with .pdf
 
@@ -243,7 +242,7 @@ const Leaves = () => {
 
             {/*end popup to view time off */}
             {/*popup to add new leave */}
-            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddTimeOff ? 'block' : 'hidden'}           p-4 z-10 bg-[#FCFBFB] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[50px] center rounded-[25px] `}>
+            <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className={` ${PopupAddTimeOff ? 'block' : 'hidden'}           p-4 z-10 bg-[#FCFBFB] shadow-lg  absolute w-[500px]       translate-x-[300px]  translate-y-[50px] center rounded-[25px] `}>
                 <IoMdClose onClick={() => { setPopupAddTimeOff(!PopupAddTimeOff); dispatch({ type: 'ERRORS', payload: {} }); }} className='absolute right-[5%] text-[24px] hover:cursor-pointer' />
                 <div className="w-[90vw] max-w-md">
 
@@ -315,7 +314,7 @@ const Leaves = () => {
                         <div className=" relative  h-[55px] card flex justify-content-center">
                             <label className="z-50  absolute font-lexend  top-0 left-0 px-2 pt-1 font-light text-[11px] leading-[16px] text-indigo-600 ">Date range</label>
                             <Calendar
-                                className='w-[300px]'
+                                className='w-[300px] h-[56px] mt-[-50px]'
                                 value={dates}
                                 onChange={(e: any) => {
                                     setDates(e.value);
@@ -523,7 +522,7 @@ const Leaves = () => {
 
 
                         {/*popup to view timeoff */}
-                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#FCFBFB] shadow-lg  absolute w-[500px] translate-x-[300px]  translate-y-[-210px] center rounded-[25px] `}>
+                        <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupViewTimeOff ? 'block' : 'hidden'}           p-10 z-10 bg-[#FCFBFB] shadow-lg  absolute w-[500px] translate-x-[300px] translate-y-[-250px]  z-[1000]  center rounded-[25px] `}>
                             <IoMdClose
                                 onClick={() => {
                                     setPopupViewTimeOff(!PopupViewTimeOff);
@@ -564,18 +563,18 @@ const Leaves = () => {
 
                                     </div>
 
-                                    <div className="h-[55px] card flex justify-content-center">
+                                    <div className={styles.inputContainer}>
 
                                         <Input5 isdisabled={true} value={selectedstartdate} label='StartDate' />
 
                                     </div>
-                                    <div className="h-[55px] card flex justify-content-center">
+                                    <div className={styles.inputContainer}>
                                         <Input5 isdisabled={true} value={selectedenddate} label='EndDate' />
 
                                     </div>
 
 
-                                    {selectedmedia != '' && <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
+                                    {selectedmedia !== '' && <div className=' bg-white-500 border-[2px]  flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
                                         <ButtonSubmit fct={() => { window.location.href = selectedmedia }} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>View Media Attached </h3>} />
 
 
@@ -629,7 +628,7 @@ const Leaves = () => {
 
 
 
-                <div className="card flex justify-content-center absolute right-[-2%] top-[147px] mr-[50px]">
+                <div className="card flex justify-content-center  absolute right-[-2%] top-[-90px] mr-[80px]">
 
                     <Calendar
                         value={date}

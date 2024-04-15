@@ -23,13 +23,13 @@ export default function RootLayout({
     }, )
     return (
         <div className={styles.container}>
-            <div className='p-3 flex flex-col justify-center items-center border border-b border-gray-100'>
+            <div className='p-3 ml-12 flex flex-col justify-center items-center border border-b border-gray-100'>
                 <h1 className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px]'>{name}</h1>
             </div>
             <div className='p-3 mb-6 flex flex-row justify-center items-center '>
             <h1 onClick={()=>router.push(`projectemployees`)} className={`${pathname === `/projects/${project}/projectemployees` || pathname === `/projects/${project}` ? 'border-b border-gray-500' : ''} p-2 text-[#16151C] mr-6 font-lexend font-light text-[20px] leading-[25px] hover:cursor-pointer`}>Collaborators</h1>
              <h1 onClick={()=>router.push(`treeview`)} className={`${pathname === `/projects/${project}/treeview` ? ' border-b border-gray-500' : ''} text-[#16151C] font-lexend font-light text-[20px] p-2 leading-[25px] hover:cursor-pointer`}>Tree View</h1>
-             <h1 onClick={()=>router.push(`tasks`)} className={`${pathname === `/projects/${project}/tasks` ? ' border-b border-gray-500' : ''} text-[#16151C] font-lexend font-light text-[20px] p-2 leading-[25px] hover:cursor-pointer`}>Tasks</h1>
+             <h1 onClick={()=>router.push(`tasks`)} className={`${pathname.includes('/tasks') ? ' border-b border-gray-500' : ''} text-[#16151C] font-lexend font-light text-[20px] p-2 leading-[25px] hover:cursor-pointer`}>Tasks</h1>
             </div>
             <div className='ml-[200px]'>{children}</div>
         </div>
