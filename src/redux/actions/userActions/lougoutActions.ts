@@ -44,6 +44,10 @@ export const LogoutAction = () => (dispatch: Dispatch<any>) => {
         type: 'SET_PROJECTS',
         payload: []
     });
+    dispatch({
+        type: 'SET_TASKS',
+        payload: []
+    });
 
     window.location.href='/login'; 
 };
