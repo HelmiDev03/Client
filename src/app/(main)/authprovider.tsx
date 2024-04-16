@@ -35,7 +35,7 @@ const Authprovider = ({ children }: { children: React.ReactNode }) => {
 
 
       router.push('/login');
-      return ; 
+      
     }
     if (company.package === '') {
       router.push('/packages');
