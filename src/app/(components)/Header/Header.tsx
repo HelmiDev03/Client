@@ -9,7 +9,7 @@ import { useParams, usePathname,useRouter } from "next/navigation";
 import { IoArrowBackCircleSharp } from "react-icons/io5"
 
 import {io} from 'socket.io-client';
-import axios from "axios";
+
 
 
 
@@ -62,24 +62,7 @@ const Header= () => {
     } else {
       pathParts[index] = part.charAt(0).toUpperCase() + part.slice(1);
     }
-    axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/company')
-    .then(res => {
-        console.log(res.data.company);
-        dispatch({
-            type: 'SET_COMPANY',
-            payload: res.data.company
-        });
-    })
-
-
-
-axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/notifications/unseen')
-.then((res) => {
-    dispatch({
-        type: 'SET_NOTIFICATIONS_COUNT',
-        payload: res.data.unssennotifications
-    });
-})
+   
    
 
   });
