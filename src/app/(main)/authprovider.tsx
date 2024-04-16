@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 const Authprovider = ({ children }: { children: React.ReactNode }) => {
   const auth = useSelector((state: any) => state.auth);
   const router = useRouter();
-  console.log(auth);
   const company = useSelector((state: any) => state.company);
   const dispatch = useDispatch();
   const errors = useSelector((state: any) => state.errors);

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import StoreProvider from "@/redux/provider";
 import NextTopLoader from 'nextjs-toploader';
+import inDevEnvironment from "@/app/devorprod";
 
 export const metadata: Metadata = {
   title: "SignIn",
@@ -10,12 +11,14 @@ export const metadata: Metadata = {
 };
 
 
-if(process.env.NODE_ENV == "development"){
-  process.env.NEXT_PUBLIC_DOMAIN = 'http://localhost:5000';
+if (inDevEnvironment) {
+  console.log("in dev environment");
 }
-else if (process.env.NODE_ENV == "production"){
-  process.env.NEXT_PUBLIC_DOMAIN = 'https://clinetapi.onrender.com';
+else{
+  process.env.NEXT_PUBLIC_DOMAIN= 'https://clinetapi.onrender.com';
 }
+
+
 
 export default function RootLayout({
   children,

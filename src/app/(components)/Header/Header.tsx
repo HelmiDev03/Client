@@ -26,7 +26,7 @@ const Header= () => {
   const notif = useSelector((state: any) => state.notif);
   const dispatch = useDispatch();
   const socket = io("http://localhost:5000");
-  console.log(socket);
+ 
 
     
     socket.on('unreadNotificationsCount', (ob: any) => {
