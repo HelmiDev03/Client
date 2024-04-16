@@ -1,5 +1,4 @@
 'use client'
-import axios from 'axios';
 import Image from 'next/image';
 import { Card } from 'flowbite-react';
 import { useState,  } from 'react';
@@ -10,7 +9,10 @@ import { ImSpinner8 } from 'react-icons/im';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { UpdatePackage } from '@/redux/actions/companyActions/updatePackage';
+
 const Packages = () => {
+    
+    
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
 
