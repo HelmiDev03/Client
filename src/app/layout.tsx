@@ -15,7 +15,7 @@ if (inDevEnvironment) {
   console.log("in dev environment");
 }
 else{
-  process.env.NEXT_PUBLIC_DOMAIN= 'https://clinetapi.onrender.com';
+  console.log("in prod mode ");
 }
 
 
