@@ -17,6 +17,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import axios from 'axios';
 import { setAuth } from '@/redux/utils/setAuth';
 import { jwtDecode } from 'jwt-decode';
+
 const Security = () => {
     const [openPopupDelete, setOpenPopupDelete] = useState(false);
     const [popupDeletePage, setPopupDeletePage] = useState(1);
@@ -112,9 +113,9 @@ const Security = () => {
                         });
                 localStorage.setItem('jwt', res.data.token);
                 setAuth(res.data.token);
+                setOpenPopupDelete(false);
             })
-        window.location.reload()
-
+        
 
     }
 

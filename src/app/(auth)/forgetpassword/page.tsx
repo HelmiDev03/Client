@@ -83,7 +83,7 @@ const ForgetPassword = () => {
                 <div className=" h-[40px]flex mb-[100px] ml-10 flex-row items-center translate-y-[110px]">
 
                     <p className={styles.maintext}>Forgot Password</p>
-                    <p className="font-lexend text-body-2 font-light text-[16px] text-gray-400 text-sm leading-[24px] tracking-normal text-left   ">Please enter your email  , we will send you an otp to reset your password</p>
+                    <p className="font-lexend text-body-2 font-light text-[16px] text-gray-400 text-sm leading-[24px] tracking-normal text-left   ">Please enter your email or cin  , we will send you an otp to reset your password</p>
 
 
                 </div>
@@ -96,7 +96,7 @@ const ForgetPassword = () => {
                         <div className={styles.InputContainer} >
 
 
-                            <Input3 onChange={handleEmail} label="email" type="text" />
+                            <Input3 onChange={handleEmail} label="email or cin" type="text" />
                             {errors.message && <div className=" h-[30px] w-[445px] flex justify-center items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
                             <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />

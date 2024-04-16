@@ -20,8 +20,7 @@ const Prof = () => {
 
     const [createdAt, setCreatedAt] = useState(createdAtString);
     const edit = () => { setInputDisable(!inputDisble) }
-    const Update = () => { }
-    const Cancel = () => { }
+    
     const [manager, setManager] = useState<{ firstname: string, lastname: string, profilepicture: string }>({ firstname: '', lastname: '', profilepicture: '' });
 
 
@@ -42,9 +41,7 @@ const Prof = () => {
 
     return (
         <div className=" flex flex-row flex-wrap " >
-            <div className=' absolute   top-[25%] right-[6%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-                <ButtonSubmit timing={200} text="Edit" fct={edit} />
-            </div>
+          
 
             <div className={styles.InputContainer}>
                 <h3 className={styles.InputLabel}>Email Adress</h3>
@@ -84,12 +81,7 @@ const Prof = () => {
             </div>
 
 
-            {!inputDisble && <div className=' absolute   top-[81%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-                <ButtonSubmit spincol='#7152F3' timing={200} text="Update" fct={Update} />
-            </div>}
-            {!inputDisble && <div className=' absolute   top-[81%] right-[13%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#eee]   ' >
-                <ButtonCancel text="Cancel" fct={Cancel} />
-            </div>}
+            
 
         </div>
     )
