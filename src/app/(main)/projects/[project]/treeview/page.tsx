@@ -55,7 +55,7 @@ const StyledTreeExample = () => {
       </StyledNode>}
     >
       {users.map((user:any) => (
-        <TreeNode label={<StyledNode>
+        <TreeNode key={user._id} label={<StyledNode>
           <div onClick={()=>router.push('/employees/'+user.user._id)} className='flex flex-col items:center'>
             <img className='hover:cursor-pointer w-[80px] mb-2 h-[80px] rounded-[10px]' src={user.user.profilepicture ? user.user.profilepicture : '/defaultprofilepicture.png'} />
             <span title="hhhhhh nnnnnnnnnnn" className="_1sco1wt1 font-bold mb-2 " >{user.user.firstname} {user.user.lastname}</span>

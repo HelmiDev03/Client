@@ -385,7 +385,7 @@ const Projects = () => {
                                 {selectedUsers.filter((userc: any) => userc._id !== user._id).slice(0,2).map((user: any, index: number) => {
                                     return (
                                         
-                                            <img src={user.profilepicture ? user.profilepicture : '/defaultprofilepicture.png'} alt="" className='w-[40px] h-[40px] rounded-[50%] mr-6' />
+                                            <img key={user._id} src={user.profilepicture ? user.profilepicture : '/defaultprofilepicture.png'} alt="" className='w-[40px] h-[40px] rounded-[50%] mr-6' />
 
                                            
                                         
