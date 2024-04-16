@@ -134,15 +134,17 @@ const Leaves = () => {
     const [etat, setEtat] = useState('')
     const [supervisor, setSupervisor] = useState({ firstname: '', lastname: '', profilepicture: '' })
     const [response, setResponse] = useState('')
-
+    const [isbuttondisabled , setIsbuttondisabled] = useState(false)
 
 
     const AddNewTimeOff = () => {
+        setIsbuttondisabled(true)
         dispatch({ type: 'ERRORS', payload: {  } });
         console.log(file)
         console.log(fileName)
         if (!fileName.endsWith('.pdf') && fileName !="" ) {
             dispatch({ type: 'ERRORS', payload: { daterange: 'media attached must be a PDF file' } });
+            setIsbuttondisabled(false)
             return; // Exit the function if fileName doesn't end with .pdf
 
         }
@@ -153,11 +155,16 @@ const Leaves = () => {
             file: fileName ? base64 : ""
         })
             .then((response) => {
+                
                 dispatch({ type: 'ERRORS', payload: {} });
                 window.location.reload();
             })
             .catch((error) => {
+                
                 dispatch({ type: 'ERRORS', payload: error.response.data });
+            })
+            .finally(() => {
+                setIsbuttondisabled(false); // Reset isbuttondisabled to false after the function completes (whether it succeeds or fails)
             });
     }
 
@@ -358,7 +365,7 @@ const Leaves = () => {
                     </div>
                     <div>
                         <div className=' bg-white-500 border-[2px] translate-x-[200px] flex justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-                            <ButtonSubmit fct={AddNewTimeOff} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add {diffdays ? diffdays === 1 ? diffdays + " day" : diffdays + " days" : ""} </h3>} />
+                            <ButtonSubmit isbuttondisabled={isbuttondisabled} fct={AddNewTimeOff} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Add {diffdays ? diffdays === 1 ? diffdays + " day" : diffdays + " days" : ""} </h3>} />
 
 
                         </div>

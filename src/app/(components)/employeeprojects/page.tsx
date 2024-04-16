@@ -1,9 +1,8 @@
-'use client '
+'use client'
 import axios from 'axios';
 import { Table } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import {  useEffect, useState } from 'react';
-import { BsCurrencyDollar } from "react-icons/bs";
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 
 
@@ -29,7 +28,7 @@ function EmployeeProject(props: any) {
 
 
 
-        <div className="overflow-x-auto h-auto  ">
+        <div className="overflow-x-auto h-auto rounded-[10px]  ">
             <Table striped >
 
                 <Table.Head>
