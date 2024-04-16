@@ -61,7 +61,6 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
 
     const { token } = res.data;
     const { refreshToken } = res.data;
-    const { company } = res.data;
     localStorage.setItem('jwt', token);
     localStorage.setItem('refreshToken', refreshToken);
     const decodedToken = jwtDecode(token);
