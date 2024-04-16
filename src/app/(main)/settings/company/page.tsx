@@ -22,7 +22,6 @@ const CompanySettings = () => {
     const dispatch = useDispatch<AppDispatch>()
     const [fileName, setFileName] = useState('');
     const [base64, setBase64] = useState('' as any); // State to store the base64 string of the selected file
-    const [fileError, setFileError] = useState('');
     
     const errors = useSelector((state: any) => state.errors);
 
@@ -63,7 +62,7 @@ const CompanySettings = () => {
     };
 
     const handleFileChange = async (event: any) => {
-        setFileError('');
+        setFileName('');
         const file = event.target.files[0];
         console.log(file);
 
@@ -78,13 +77,13 @@ const CompanySettings = () => {
         if (fileName) {
             const fileExtension = fileName.split('.').pop()?.toLowerCase() ?? '';
             if (!allowedExtensions.includes(fileExtension)) {
-                setFileError('Please select a valid image file (jpg, jpeg, png)');
+                setFileName('Please select a valid image file (jpg, jpeg, png)');
                 return;
             }
 
             const maxSizeInBytes = 10 * 1024 * 1024; // wanna max 1.5mb
             if (file.size > maxSizeInBytes) {
-                setFileError('File size exceeds 1.5MB');
+                setFileName('File size exceeds 1.5MB');
                 return;
             }
 
@@ -107,6 +106,16 @@ const CompanySettings = () => {
       .catch((err) => {
         console.log(err)
       })
+
+
+      axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/company')
+        .then(res => {
+            console.log(res.data.company);
+            dispatch({
+                type: 'SET_COMPANY',
+                payload: res.data.company
+            });
+        })
     }, []);
 
 
