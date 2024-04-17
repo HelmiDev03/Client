@@ -9,7 +9,7 @@ import permissionGroupReducer from "./permissionGroupReducer";
 import notificationReducer from "./notificationsReducer";
 import projectsReducer from "./projectsReducer";
 import taskReducer from "./tasksReducer";
-
+import isbuttondisbaledReducer from "./isbuttondisbaledReducer";
 
 const rootReducer = combineReducers({
     auth: userReducer,
@@ -21,7 +21,8 @@ const rootReducer = combineReducers({
     permissionGroups: permissionGroupReducer,
     notif: notificationReducer,
     projects: projectsReducer,
-    tasks: taskReducer
+    tasks: taskReducer,
+    isbuttondisabled: isbuttondisbaledReducer
 
 });
 

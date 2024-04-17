@@ -340,7 +340,7 @@ const Leave = () => {
 
 
                                     return (
-                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border-b border-gray-200 p-4 flex flex-row mb-6'>
+                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border h-[80px] border-gray-200 rounded-[10px] p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -481,7 +481,7 @@ const Leave = () => {
 
 
 
-                <div className="card flex justify-content-center absolute right-[-2%] top-[-100px] mr-[80px]">
+                <div className="card flex justify-content-center absolute right-[-2%] top-[20px] mr-[80px]">
 
                     <Calendar
                         value={date}
@@ -489,6 +489,7 @@ const Leave = () => {
                         showWeek
                         selectionMode="single"
                         readOnlyInput={true}
+                        className='border border-gray-200 rounded-[10px] '
 
                         dateTemplate={(date) => dateTemplate(date, timeoffapproved)}
                     />

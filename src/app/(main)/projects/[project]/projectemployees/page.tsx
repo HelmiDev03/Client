@@ -74,10 +74,10 @@ const ProjectEmployees = () => {
     
     return {
       id: index + 1,
-      userid : user.user._id,
-      name: user.user.firstname + ' ' + user.user.lastname,
-      profilepicture: user.user.profilepicture ? user.user.profilepicture : '/defaultprofilepicture.png',
-      position: user.position,
+      userid : user.user?._id,
+      name: user.user?.firstname + ' ' + user.user?.lastname,
+      profilepicture: user.user?.profilepicture ? user.user.profilepicture : '/defaultprofilepicture.png',
+      position: user?.position,
     }
   })
 

@@ -9,8 +9,11 @@ interface UserData {
 
 
 export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
-
+    
+   
     axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/login', data)
+
+    
         .then(res => {
 
             if (res.data.token) {
@@ -30,6 +33,8 @@ export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
                         window.location.href = '/login';
                        
                     })
+                    
+                    
 
             }
         })
@@ -37,11 +42,16 @@ export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
         .catch((err: any) => {
 
             localStorage.setItem('errorMessage', err.response?.data.message);
+            
             window.location.href = '/login';
+           
             console.log(err.response);
 
 
-        });
+        })
+        
+       
+      
 
 };
 

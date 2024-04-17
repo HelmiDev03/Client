@@ -73,7 +73,7 @@ const Notifications = () => {
 
 
   return (
-    <div className={styles.container}>
+    <div  className={styles.container}>
 
       <div className='flex justify-between flex-col p-12 w-[850px] '>
 
@@ -83,7 +83,7 @@ const Notifications = () => {
           <>
 
             {notif.content.reason === 'Time off request' && (
-              <div key={notif._id} className='flex justify-between items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
+              <div key={notif._id} className='flex justify-between h-[170px] items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
                 <div className='w-[60px] h-[60px] rounded-[50% ] mr-3'>
                   <img src={notif.content.user.profilepicture ? notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%]' />
                 </div>
@@ -114,7 +114,7 @@ const Notifications = () => {
 
 
             {notif.content.reason === 'Time off request Answered' && (
-              <div key={notif._id} className='flex justify-between items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-6  '>
+              <div key={notif._id} className='flex justify-between h-[170px] items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-6  '>
                 <div className='w-[60px] h-[60px] rounded-[50% ] mr-3'>
                   <img src={notif.content.user.profilepicture ? notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%]' />
                 </div>
@@ -229,25 +229,51 @@ const Notifications = () => {
 
 
       {/* in case accept/reject timeoff reqsuest */}
-      <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.2)" }} className={` ${PopupAcceptOrRejectLeaveRequest ? 'block' : 'hidden'}           p-4 z-10  shadow-lg  absolute w-[350px] translate-x-[830px]  translate-y-[50px] center rounded-[25px] `}>
-        <IoMdClose onClick={() => { setPopupAcceptOrRejectLeaveRequest(!PopupAcceptOrRejectLeaveRequest) }} className='absolute right-[2%] text-[24px] hover:cursor-pointer' />
-        <div className=" max-w-md">
+    
 
-          <div className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>{popupText} {selecteduser.firstname}  {selecteduser.lastname}'s time off request Leave </div>
+
+     {PopupAcceptOrRejectLeaveRequest && <div id="select-modal"   className=" absolute w-[240px] translate-x-[320px] overflow-y-hidden  translate-y-[90px] center rounded-[25px] z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] ">
+    <div className="relative p-4 w-full max-w-md ">
+        
+        <div className="relative bg-white border border-gray-200 rounded-[25px] shadow ">
          
-        <textarea className="bg-[#EBE8EF] ml-9 mb-4 mt-3 pl-4" value={response} onChange={(e) => setResponse(e.target.value)} rows={5} cols={30} />
-
-
-
-          <div>
-            <div className=' bg-white-500 border-[2px] translate-x-[60px] flex justify-center items-center border-[#7152F3] w-[100px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
-              <ButtonSubmit fct={UpdateTimeoff} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>{popupText}  </h3>} />
-
-
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
+                <h3 className="text-lg font-semibold text-gray-900 ">
+                {popupText} {selecteduser.firstname}  {selecteduser.lastname}'s time off request Leave
+                </h3>
+                <button onClick={() => { setPopupAcceptOrRejectLeaveRequest(!PopupAcceptOrRejectLeaveRequest) }} type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center  " data-modal-toggle="select-modal">
+                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span className="sr-only">Close modal</span>
+                </button>
             </div>
-          </div>
+           
+            <div className="p-4 md:p-5">
+                <p className="text-gray-500  mb-4">Write your desired answer:</p>
+                <ul className="space-y-4 mb-4">
+                    <li>
+                        <input type="radio" id="job-1" name="job" value="job-1" className="hidden peer" required />
+                        <label htmlFor="job-1" className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer  peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100  ">                           
+                            <div className="block">
+                                
+                            
+                                <textarea className={` ${popupText==='Accept' ? 'bg-blue-100' :'bg-red-100'} p-4 text-lg font-semibold ml-9 mb-4 translate-x-[-35px] w-full text-gray-500`} value={response} onChange={(e) => setResponse(e.target.value)} rows={5} cols={30} />
+                            </div> 
+                           
+                        </label>
+                    </li>
+                   
+                    
+                </ul>
+                <button onClick={UpdateTimeoff} className={`text-white inline-flex w-full justify-center ${popupText==='Accept' ? 'bg-blue-700 hover:bg-blue-800 focus:ring-blue-300':'bg-red-500 hover:bg-red-600 focus:ring-red-300' }   focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center`}>
+                {popupText}
+                </button>
+            </div>
         </div>
-      </div>
+    </div>
+    </div>}
+
 
 
 

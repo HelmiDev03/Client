@@ -396,9 +396,11 @@ const Leaves = () => {
                 <ButtonSubmit fct={() => setPopupAddTimeOff(true)} timing={200} text="Add Time Off" />
             </div>
 
+
+
             <div className='flex flex-row justify-between items-center '>
-                <div className='text-[#16151C] font-lexend font-semibold  text-[20px] leading-[30px]  flex flex-col '>
-                    <div className='w-[450px] rounded-[10px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
+                <div className='text-[#16151C]  h-[660px]  font-lexend font-semibold  text-[20px] leading-[30px]  flex flex-col '>
+                    <div className='w-[450px] h-[170px] rounded-[10px] mb-6  mr-6 flex flex-col border border-gray-300 p-2'>
 
 
                         <div className='p-2 rounded-[5px]  flex flex-col   border-b border-b-gray-300 justify-center items-center'>
@@ -435,7 +437,7 @@ const Leaves = () => {
                     </div>
 
 
-                    <div className='flex flex-col  '>
+                    <div className='flex flex-col h-[450px] '>
                         <div className='flex justify-start mb-4'>
                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 32 32"
                                 style={{ fill: "#7152f3", marginRight: "15px", marginTop: "-5px" }} >
@@ -447,7 +449,7 @@ const Leaves = () => {
 
 
 
-                        <div className='flex flex-col border-gray-600 p-8 mt-[-40px]' >
+                        <div className='flex flex-col border-gray-600 p-8 mt-[-40px] h-[380px]' >
 
 
                             {paginatedTimeOffs.map((timeoff: any) => {
@@ -486,7 +488,7 @@ const Leaves = () => {
 
 
                                     return (
-                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border-b border-gray-100 p-4 flex flex-row mb-6'>
+                                        <div key={timeoff._id} onClick={() => { setResponse(timeoff.response); setSupervisor({ firstname: timeoff.supervisor?.firstname, lastname: timeoff.supervisor?.lastname, profilepicture: timeoff.supervisor?.profilepicture }); setPopupViewTimeOff(true); setSelectedType(timeoff.type); setEtat(timeoff.etat); setSelectedDescription(timeoff.description); setSelectedStartDate(startDateString); setSelectedEndDate(endDateString); setSelectedMedia(timeoff.file ? timeoff.file : '') }} className='hover:cursor-pointer border h-[80px] border-gray-200 rounded-[10px] p-4 flex flex-row mb-6'>
                                             <div className='w-[50px] h-[50px] text-center justify-center items-center flex flex-col mr-6'>
                                                 <h1 className="bg-[#7152F3] rounded-[2px] text-[10px] text-[#fff] w-[100%] ">{startDateMonth}</h1>
                                                 <h1 className="bg-gray-200 rounded-[2px] w-[100%]">{startDateDay}</h1>
@@ -518,7 +520,7 @@ const Leaves = () => {
 
 
                             {timeOffs.length > MAX_ENTRIES && (
-                                <div className="flex justify-center  mt-[-20px] ">
+                                <div className="flex justify-center fixed  mt-[300px] translate-x-[50px]">
                                     <button onClick={handlePrevPage} hidden={currentPage === 1} className="bg-gray-200 text-gray-600 px-4 py-2 mr-[150px] rounded-md">Previous</button>
                                     <button onClick={handleNextPage} hidden={currentPage * MAX_ENTRIES >= timeOffs.length} className="bg-gray-200 text-gray-600 px-4 py-2 rounded-md">Next</button>
                                 </div>
@@ -635,7 +637,7 @@ const Leaves = () => {
 
 
 
-                <div className="card flex justify-content-center  absolute right-[-2%] top-[-90px] mr-[80px]">
+                <div className="card flex justify-content-center h-[510px]  absolute right-[-2%] top-[-80px] mr-[80px]">
 
                     <Calendar
                         value={date}
@@ -643,10 +645,14 @@ const Leaves = () => {
                         showWeek
                         selectionMode="single"
                         readOnlyInput={true}
+                        className='border border-gray-200 rounded-[10px] '
 
                         dateTemplate={(date) => dateTemplate(date, timeoffapproved)}
                     />
                 </div>
+
+
+
             </div>
         </div >
     );

@@ -23,7 +23,9 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const router = useRouter()
     const [loading, setLoading] = useState(false);
-
+    
+   
+ 
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -36,10 +38,11 @@ const Login = () => {
         setPassword(e.target.value);
     };
     const Loginfct =()=>{
-
-
+        
        dispatch(LoginAction({emailorcin,password} ))
-
+       
+    
+    
 
     }
     return (
@@ -141,7 +144,7 @@ const Login = () => {
                     </form>
                     
                     <div className='mb-4 w-[445px] h-[56px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
-                    <ButtonSubmit timing={250} text={loading ? <><ImSpinner8  className="animate-spin mr-2 text-[20px]" /> Loading...</> : <h3 className='text-white text-[20px]' >Login</h3>} fct={Loginfct} />
+                    <ButtonSubmit  timing={250} text={loading ? <><ImSpinner8  className="animate-spin mr-2 text-[20px]" /> Loading...</> : <h3 className='text-white text-[20px]' >Login</h3>} fct={Loginfct} />
                     </div>
                     
 
