@@ -11,6 +11,17 @@ const Authprovider = ({ children }: { children: React.ReactNode }) => {
   const errors = useSelector((state: any) => state.errors);
   const success = useSelector((state: any) => state.sucess);
 
+  const todayhour = useSelector((state: any) => state.todayhour);
+  const time = useSelector((state: any) => state.time);
+  dispatch ({
+    type: 'SET_TIMER',
+    payload: Math.floor(todayhour.hr * 3600 + todayhour.min * 60 + todayhour.sec)
+  
+  })
+  
+ 
+  
+
 
   useEffect(() => {
 
@@ -41,7 +52,30 @@ const Authprovider = ({ children }: { children: React.ReactNode }) => {
       router.push('/packages');
     }
 
-  }, [router, auth.isConnected]);
+    const timer = setInterval(() => {
+      if (todayhour.increment) {
+        let prevTime = time;
+        dispatch ({
+          type: 'SET_TIMER',
+          payload: time +1 
+        
+        })
+        dispatch({
+          type: 'SET_HOURS',
+          payload: {
+            hr: Math.floor((time+1)/ 3600),
+            min: Math.floor(((time+1)% 3600) / 60),
+            sec: (time+1)% 60,
+            increment: true,
+            lastclockin: todayhour.lastclockin?.toString()
+          }
+        });
+      }
+    }, 1000);
+  
+    return () => clearInterval(timer);
+
+  }, [router, auth.isConnected , todayhour.increment , time ]);
 
   return <main>{children}</main>;
 };

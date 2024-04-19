@@ -23,10 +23,10 @@ export const NavItems = [
         },
      
         {
-          itemname: 'Attendance',
+          itemname: 'Clock in',
           icon: 
           <MdOutlineLibraryAddCheck className="text-[24px]"   />,
-          path: '#'
+          path: '/clockin'
         },
         {
           itemname: 'Projects',

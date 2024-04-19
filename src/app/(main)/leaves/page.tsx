@@ -12,6 +12,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { CiLogout } from 'react-icons/ci';
 
 const Leaves = () => {
+    
     const [maxcounter, setmaxcounter] = useState(0)
     const [date, setDate] = useState(null);
     const [workingDays, setWorkingDays] = useState(0);
@@ -126,6 +127,7 @@ const Leaves = () => {
     const errors = useSelector((state: any) => state.errors);
     const [diffdays, setDiffDays] = useState(0);
     const dispatch = useDispatch();
+    
     const [selectedtype, setSelectedType] = useState('')
     const [selecteddescription, setSelectedDescription] = useState('')
     const [selectedstartdate, setSelectedStartDate] = useState('')

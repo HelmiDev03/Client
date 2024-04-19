@@ -102,6 +102,28 @@ axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/notifications/unseen')
     });
 })
 
+axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/attendance/history')
+.then((res) => {
+    const lastworkingdayhours = res.data.workingHours[res.data.workingHours.length -1].date;
+    console.log(res.data.workingHours[res.data.workingHours.length -1])
+    
+    if (new Date(lastworkingdayhours).setHours(0, 0, 0, 0)=== new Date().setHours(0, 0, 0, 0)) {
+        dispatch({
+            type: 'SET_HOURS',
+            payload: { 
+                 hr: res.data.workingHours[res.data.workingHours.length -1].time.hr,
+                 min: res.data.workingHours[res.data.workingHours.length -1].time.min,
+                 sec : res.data.workingHours[res.data.workingHours.length -1].time.sec,
+                 increment :false,
+                 lastclockin : new Date()
+                }
+        });
+    }
+})
+
+
+
+window.location.href = '/dashboard';
 
 
 
@@ -110,7 +132,9 @@ axios.get(process.env.NEXT_PUBLIC_DOMAIN+'/api/notifications/unseen')
 
 
 
-    window.location.href = '/dashboard';
+
+
+    
 
 
 

@@ -22,6 +22,7 @@ import { Deleteemployee } from '@/redux/actions/usersActions/deleteEmployee';
 import axios from 'axios';
 
 const Employees = () => {
+    
     const router = useRouter();
     const users = useSelector((state: any) => state.users);
     const dispatch = useDispatch<AppDispatch>();
@@ -205,7 +206,7 @@ deleteemployee || viewemployeedetails ?{
 
         <div className={styles.EmployeesContainer}>
             {/*in case employee added*/}
-            <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[-10px]  center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
+            <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[160px]  center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
                 <Modal.Header />
                 <Modal.Body className=''>
                     <div className="text-center">

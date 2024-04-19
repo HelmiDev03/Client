@@ -10,6 +10,8 @@ import notificationReducer from "./notificationsReducer";
 import projectsReducer from "./projectsReducer";
 import taskReducer from "./tasksReducer";
 import isbuttondisbaledReducer from "./isbuttondisbaledReducer";
+import todayhourReducer from "./todayshoursReducer";
+import timerReducer from "./timeReducer";
 
 const rootReducer = combineReducers({
     auth: userReducer,
@@ -22,7 +24,9 @@ const rootReducer = combineReducers({
     notif: notificationReducer,
     projects: projectsReducer,
     tasks: taskReducer,
-    isbuttondisabled: isbuttondisbaledReducer
+    isbuttondisabled: isbuttondisbaledReducer,
+    todayhour: todayhourReducer,
+    time : timerReducer,
 
 });
 

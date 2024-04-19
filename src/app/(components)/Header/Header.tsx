@@ -23,13 +23,13 @@ import {io} from 'socket.io-client';
 
 
 
+
 const Header= () => {
   const auth = useSelector((state: any) => state.auth);
   const notif = useSelector((state: any) => state.notif);
   const dispatch = useDispatch();
   const socket = io(process.env.NEXT_PUBLIC_DOMAIN as any);
-
-
+  
     
     socket.on('unreadNotificationsCount', (ob: any) => {
       
