@@ -35,12 +35,7 @@ const EmployeeAttendance = () => {
         .then((res: any) => {
           console.log(new Date(res.data.workingHours[res.data.workingHours.length - 1].date).toString().slice(0, 10) === new Date().toString()?.slice(0, 10))
 
-          setworkingHours(res.data.workingHours.filter((h: any) => {
-            const date = new Date(h.date); // Parse date string into Date object
-            if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-              return h;
-            }
-          }))
+          setworkingHours(res.data.workingHours)
         })
     }
 
@@ -59,7 +54,7 @@ const EmployeeAttendance = () => {
 
 
 
-  }, [currentMonth, currentYear]);
+  }, []);
 
 
   const seconds = (time % 60).toString().padStart(2, '0');
@@ -162,12 +157,7 @@ const EmployeeAttendance = () => {
           axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/attendance/history')
             .then((res: any) => {
 
-              setworkingHours(res.data.workingHours.filter((h: any) => {
-                const date = new Date(h.date); // Parse date string into Date object
-                if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-                  return h;
-                }
-              }))
+              setworkingHours(res.data.workingHours)
             })
         })
     }
@@ -184,12 +174,7 @@ const EmployeeAttendance = () => {
           axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/attendance/history')
             .then((res: any) => {
 
-              setworkingHours(res.data.workingHours.filter((h: any) => {
-                const date = new Date(h.date); // Parse date string into Date object
-                if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
-                  return h;
-                }
-              }))
+              setworkingHours(res.data.workingHours)
             })
         })
 
@@ -215,7 +200,12 @@ const EmployeeAttendance = () => {
   let totalSeconds = 0;
 
   // Iterate over each object in the list and sum up the total seconds
-  workingHours.forEach((obj: any) => {
+  workingHours.filter((h: any) => {
+    const date = new Date(h.date); // Parse date string into Date object
+    if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
+      return h;
+    }
+  }).forEach((obj: any) => {
     totalSeconds += toSeconds(obj.time.hr, obj.time.min, obj.time.sec);
   });
 
@@ -228,7 +218,7 @@ const EmployeeAttendance = () => {
         <div className='flex gap-4'>
           <button onClick={decrementMonth} className='hover:rounded-full hover:bg-slate-200'><FaAngleLeft /></button>
           <h1 className='text-lg font-semibold'>{months[currentMonth]} {currentYear}</h1>
-          {currentMonth === new Date().getMonth() ? null : (
+          {currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear()? null : (
             <button onClick={incrementMonth} className='hover:rounded-full hover:bg-slate-200'><FaAngleRight /></button>
           )}
         </div>
@@ -238,7 +228,7 @@ const EmployeeAttendance = () => {
             <h1 className='text-2xl font-bold flex gap-4 items-center'><TbClock2 size={30} className='text-blue-600' />Clock in</h1>
             <p className='text-md'>Record the hours you work every day. Your timesheet will then be approved by your manager.</p>
           </div>
-          {currentMonth === new Date().getMonth() ? (
+          {currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear() ? (
             <div className='border rounded-md w-[500px] flex flex-col items-center'>
               <p className='p-3 font-bold text-sm'>{todayhour.increment ? "YOU ARE CLOCKED IN 👌" : "CLOCK IN"}</p>
               <hr className='w-full' />
@@ -258,7 +248,12 @@ const EmployeeAttendance = () => {
           ) : null}
 
         </div>
-        {workingHours.length === 0 ? (
+        {workingHours.filter((h: any) => {
+            const date = new Date(h.date); // Parse date string into Date object
+            if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
+              return h;
+            }
+          }).length === 0 ? (
           <section className='w-[90%] h-[250px] bg-slate-50 border mt-16 flex justify-center items-center rounded-md font-bold text-slate-300'>
             <p>Time Tracking has not been enabled for this month.</p>
           </section>
@@ -314,7 +309,12 @@ const EmployeeAttendance = () => {
                     const dayOfMonth = index + 1;
                     const date = String(new Date(currentYear, currentMonth, dayOfMonth + 1).toISOString().split('T')[0]);
 
-                    const matchingEntry = workingHours.find((entry: any) => entry.date.slice(0, 10) === date);
+                    const matchingEntry = workingHours.filter((h: any) => {
+                      const date = new Date(h.date); // Parse date string into Date object
+                      if (date.getMonth() === currentMonth && date.getFullYear() === currentYear) {
+                        return h;
+                      }
+                    }).find((entry: any) => entry.date.slice(0, 10) === date);
 
 
                     return (
