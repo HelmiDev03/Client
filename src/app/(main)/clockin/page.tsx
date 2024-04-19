@@ -11,8 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 const EmployeeAttendance = () => {
 
   const [workingHours, setworkingHours] = useState([] as any);
+  const user = useSelector((state: any) => state.auth.user);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
 
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -31,7 +33,7 @@ const EmployeeAttendance = () => {
     const fecthData = () => {
       axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/attendance/history')
         .then((res: any) => {
-          console.log(new Date(res.data.workingHours[res.data.workingHours.length - 1].date).toString().slice(0, 10)===new Date().toString()?.slice(0, 10))
+          console.log(new Date(res.data.workingHours[res.data.workingHours.length - 1].date).toString().slice(0, 10) === new Date().toString()?.slice(0, 10))
 
           setworkingHours(res.data.workingHours.filter((h: any) => {
             const date = new Date(h.date); // Parse date string into Date object
@@ -57,7 +59,8 @@ const EmployeeAttendance = () => {
 
 
 
-  }, []);
+  }, [currentMonth, currentYear]);
+
 
   const seconds = (time % 60).toString().padStart(2, '0');
   const minutes = Math.floor(Math.floor(time % 3600) / 60).toString().padStart(2, '0');
@@ -133,7 +136,7 @@ const EmployeeAttendance = () => {
       const index = parseInt(label); // Assuming label is the index of workingHours
       const time = workingHours[index]?.time || { hr: 0, min: 0, sec: 0 }; // Default to 0 if workingHours[index] doesn't exist
       const formattedTime = `${time.hr}h ${time.min}m ${time.sec}sec`;
-  
+
       return (
         <div className="h-8 w-28 bg-blue-50 flex justify-center items-center rounded-md">
           <p className="text-xs font-semibold">{label + 1} {months[currentMonth]}-{formattedTime}</p>
@@ -202,6 +205,22 @@ const EmployeeAttendance = () => {
     setCurrentMonth(currentMonth === 0 ? 11 : currentMonth - 1);
     if (currentMonth === 0) setCurrentYear(currentYear - 1);
   };
+  console.log(workingHours)
+
+  function toSeconds(hours: any, minutes: any, seconds: any) {
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
+  // Initialize total seconds
+  let totalSeconds = 0;
+
+  // Iterate over each object in the list and sum up the total seconds
+  workingHours.forEach((obj: any) => {
+    totalSeconds += toSeconds(obj.time.hr, obj.time.min, obj.time.sec);
+  });
+
+  // Calculate total hours by dividing total seconds by 3600
+  const totalHours = totalSeconds / 3600;
   return (
     <div className={styles.container}>
       <section className='flex flex-col items-center gap-8'>
@@ -239,7 +258,7 @@ const EmployeeAttendance = () => {
           ) : null}
 
         </div>
-        {currentMonth !== new Date().getMonth() ? (
+        {workingHours.length === 0 ? (
           <section className='w-[90%] h-[250px] bg-slate-50 border mt-16 flex justify-center items-center rounded-md font-bold text-slate-300'>
             <p>Time Tracking has not been enabled for this month.</p>
           </section>
@@ -248,11 +267,11 @@ const EmployeeAttendance = () => {
             <div className='flex w-full gap-10 mt-8'>
               <div className='flex items-center border rounded-md gap-2 p-4 w-[70%]'>
                 <div className='p-2 w-[30%] border-r'>
-                  <h1 className='text-xl mb-2'>0h</h1>
+                  <h1 className='text-xl mb-2'>{Math.floor(totalHours)}h</h1>
                   <p>Worked hours</p>
                 </div>
                 <div className='p-2 w-[30%] border-r'>
-                  <h1 className='text-xl mb-2'>0h</h1>
+                  <h1 className='text-xl mb-2'>160h</h1>
                   <p>Estimated hours</p>
                 </div>
                 <div className='p-1 w-[40%]'>
