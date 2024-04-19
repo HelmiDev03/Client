@@ -30,7 +30,7 @@ const Permissions = () => {
   const [addanewemployeetoapolicy, setAddANewEmployeeToAPolicy] = React.useState(false)
   const [changeemployeepolicy, setChangeEmployeesPolicy] = React.useState(false)
   const [isCustom, setIsCustom] = React.useState(false)
-  const [isUserinAdmins , setIsUserinAdmins] = React.useState(false)
+  const permission = useSelector((state: any) => state.permission);
   const handleCheckboxChange = (setState: any) => {
     setState((prevState: any)=> !prevState);
 
@@ -118,15 +118,7 @@ const Permissions = () => {
 
 
         })
-    axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)   
     
-      .then((res) => {
-        setIsUserinAdmins(res.data.group.isadministrators)
-        console.log(res.data.group)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
                    
    
     }
@@ -151,7 +143,7 @@ const Permissions = () => {
           </div>
         </Modal.Body>
       </Modal>
-   {isCustom && isUserinAdmins&&   <div className=' bg-white-500 border-[2px] translate-y-[-80px]  translate-x-[900px] flex justify-center items-center border-[#7152F3] w-[90px] h-[50px] w-[250px] text-white rounded-[10px] p-1  ' >
+   {isCustom && permission.isadministrators&&   <div className=' bg-white-500 border-[2px] translate-y-[-80px]  translate-x-[900px] flex justify-center items-center border-[#7152F3] w-[90px] h-[50px] w-[250px] text-white rounded-[10px] p-1  ' >
         <ButtonSubmit fct={Update} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Update</h3>} />
 
 

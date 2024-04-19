@@ -12,6 +12,7 @@ import taskReducer from "./tasksReducer";
 import isbuttondisbaledReducer from "./isbuttondisbaledReducer";
 import todayhourReducer from "./todayshoursReducer";
 import timerReducer from "./timeReducer";
+import permissionReducer   from "./permissionReducer"
 
 const rootReducer = combineReducers({
     auth: userReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
     isbuttondisabled: isbuttondisbaledReducer,
     todayhour: todayhourReducer,
     time : timerReducer,
+    permission : permissionReducer
 
 });
 

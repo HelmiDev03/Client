@@ -26,7 +26,7 @@ const Employees = () => {
   const [groupEmployees, setgroupEmployees] = React.useState<any[]>([])
   const [filteredUsers, setfilteredUsers] = React.useState<any[]>([])
   const [selectedUserIds, setSelectedUserIds] = React.useState<string[]>([]);
-  const [isUserinAdmins, setIsUserinAdmins] = React.useState(false)
+  const permission = useSelector((state: any) => state.permission);
   const handleCheckboxChange = (userId: string) => {
 
 
@@ -71,14 +71,7 @@ const Employees = () => {
 
 
 
-    axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
-
-      .then((res) => {
-        setIsUserinAdmins(res.data.group.isadministrators)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    
 
 
 
@@ -173,7 +166,7 @@ const Employees = () => {
     },
 
 
-    isUserinAdmins ?{
+    permission.isadministrators ?{
       field: 'Action',
       headerName: 'Action',
       renderCell: (params) => <ActionCellRenderer row={params.row} />,
@@ -362,7 +355,7 @@ const Employees = () => {
 
 
 
-     {isUserinAdmins && <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+     { permission.isadministrators && <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
         <ButtonSubmit fct={() => setPopupAddEmployee(!PopupAddEmployee)} timing={200} text="Add Employee" />
       </div> }
       <IoIosPeople className='text-[25px] text-[#7152F3]' /><h1 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] '>Employees</h1>

@@ -29,7 +29,8 @@ const TimeOff = () => {
     const [PopupAddDay, setPopupAddDay] = React.useState(false)
     const [Day, setDay] = React.useState('')
     const [Name, setName] = React.useState('')
-    const [isUserinAdmins, setIsUserinAdmins] = React.useState(false)
+    const permission = useSelector((state: any) => state.permission);
+   
     const [isHidden, setIsHidden] = React.useState(new Array(permissionGroups.length).fill(false))
     const toggleVisibility = (index: number) => {
         const newIsHidden = isHidden.map((item, i) => i === index ? !item : false)
@@ -40,14 +41,7 @@ const TimeOff = () => {
     React.useEffect(() => {
 
         const fetchdata = async () => {
-            axios.get(process.env.NEXT_PUBLIC_DOMAIN + `/api/permissions/usergroup`)
-
-                .then((res) => {
-                    setIsUserinAdmins(res.data.group.isadministrators)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+          
 
             axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/permissions')
                 .then(res => {
@@ -195,7 +189,7 @@ const TimeOff = () => {
                     <h2 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Permission groups</h2>
                     <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px]'>Manage employees access in NRH</p>
                 </div>
-                {isUserinAdmins && <div className=' mb-4 w-[241px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
+                {permission.isadministrators && <div className=' mb-4 w-[241px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
                     <ButtonSubmit
                         fct={() => setPopupAddGroup(true)}
                         timing={200}
@@ -224,7 +218,7 @@ const TimeOff = () => {
                         {group.iscustom && <div className="border border-gray-300 w-20 h-20 rounded-3xl flex justify-center items-center text-[#7152F3] bg-white absolute top-[-45px]">
                             <FaSquarePen size={30} className='text-[#7152F3]' />
                         </div>}
-                        {group.iscustom && isUserinAdmins && (
+                        {group.iscustom && permission.isadministrators && (
                             <IoMdSettings onClick={() => toggleVisibility(index)} className='absolute text-[24px] text-[#7152F3] hover:cursor-pointer right-[1%] top-[5%]' />
                         )}
                         {group.isdefault && <div className='rounded-[5px] p-1 mt-[35px] flex justify-center items-center bg-red-500'>
@@ -249,10 +243,10 @@ const TimeOff = () => {
                                 {Object.keys(group.users).length != 1 ? Object.keys(group.users).length + " employees assigned to this group" : Object.keys(group.users).length + " employee assigned to this group"}
                             </p>
                         </div>
-                        {(auth.user.permissionGroup === group._id || isUserinAdmins) && <div className='flex flex-row justify-center mt-2'>
+                        {(auth.user.permissionGroup === group._id || permission.isadministrators) && <div className='flex flex-row justify-center mt-2'>
                             <h1 onClick={() => router.push(`/settings/permissionsgroups/${group._id}/permissions`)} className='hover:cursor-pointer text-[#7152F3] font-lexend font-semibold text-[20px] leading-[30px] mb-4'>See Group</h1>
                         </div>}
-                        {(auth.user.permissionGroup !== group._id && !isUserinAdmins) && <div className='flex flex-row justify-center mt-2'>
+                        {(auth.user.permissionGroup !== group._id && !permission.isadministrators) && <div className='flex flex-row justify-center mt-2'>
                             <h1 className='text-red-500 font-lexend font-semibold text-[20px] leading-[30px] mb-4'>Access is Restricted</h1>
                         </div>}
                     </div>

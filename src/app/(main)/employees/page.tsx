@@ -36,12 +36,7 @@ const Employees = () => {
     const [employeeId, setEmployeeId] = useState('')
     const [employeeImage, setEmployeeImage] = useState('')
 
-
-    //to check permissions
-    const [addnewemployee, setAddNewEmployee] = useState(false)
-    const [viewemployeedetails , setViewEmployeeDetails] = useState(false)
-    const [deleteemployee, setDeleteEmployee] = useState(false)
-    const [viewallemployees, setViewAllEmployees] = useState(false)
+    const permission = useSelector((state: any) => state.permission);
 
 
     const handleEmployeeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,10 +59,7 @@ const Employees = () => {
             .then((res) => {
      
                 
-                    setAddNewEmployee(res.data.group.addnewemployee)
-                    setViewEmployeeDetails(res.data.group.viewemployeedetails)
-                    setDeleteEmployee(res.data.group.deleteemployee)
-                    setViewAllEmployees(res.data.group.viewallemployees)
+                   
 
                 
             })
@@ -122,8 +114,8 @@ const Employees = () => {
 
         return (
 
-            <div>  { viewemployeedetails && <button onClick={() => router.push(`/employees/${row.userid}`)} type="submit"    ><FiEye className=' font-lexend font-light  leading-[24px] text-[#7152F3] text-[20px] mr-2' /></button>}
-               {deleteemployee && <button onClick={() => { setPopupDeletePage(1); setOpenPopupDelete(true); setEmployeeSelected(row.fullname); setEmployeeId(row.userid); setEmployeeImage(row.profilepicture) }} type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button>}</div>
+            <div>  { permission.iewemployeedetails && <button onClick={() => router.push(`/employees/${row.userid}`)} type="submit"    ><FiEye className=' font-lexend font-light  leading-[24px] text-[#7152F3] text-[20px] mr-2' /></button>}
+               {permission.deleteemployee && <button onClick={() => { setPopupDeletePage(1); setOpenPopupDelete(true); setEmployeeSelected(row.fullname); setEmployeeId(row.userid); setEmployeeImage(row.profilepicture) }} type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button>}</div>
 
         );
     };
@@ -182,7 +174,7 @@ const Employees = () => {
 
 
       
-deleteemployee || viewemployeedetails ?{
+        permission.deleteemployee || permission.viewemployeedetails ?{
             field: 'Action',
             headerName: 'Action',
             renderCell: (params) => <ActionCellRenderer row={params.row} />,
@@ -295,7 +287,7 @@ deleteemployee || viewemployeedetails ?{
 
 
 
-        { addnewemployee &&    <div className=' mb-4 w-[221px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
+        { permission.addnewemployee &&    <div className=' mb-4 w-[221px] h-[50px] absolute top-[13%] right-[5%] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]'>
                 <ButtonSubmit
                     text={
                         <div className='flex'>
@@ -305,7 +297,7 @@ deleteemployee || viewemployeedetails ?{
                     fct={() => router.push('employees/addnewemployee')}
                 />
             </div> }
-        {viewallemployees &&    <Box sx={{ height: 550, width: '100%', marginTop: '30px' }}>
+        {permission.viewallemployees &&    <Box sx={{ height: 550, width: '100%', marginTop: '30px' }}>
                 <DataGrid
 
                     rows={rows}
@@ -322,7 +314,7 @@ deleteemployee || viewemployeedetails ?{
                     disableRowSelectionOnClick
                 />
             </Box> }
-            {!viewallemployees && <div className="flex justify-center items-center h-[500px] w-[100%]">
+            {!permission.viewallemployees && <div className="flex justify-center items-center h-[500px] w-[100%]">
                 <h1 className="text-red-500 text-[24px] font-lexend font-light">You do not have permission to view all employees</h1></div>
                     }
         </div>

@@ -57,8 +57,7 @@ const Employees = () => {
     }
 
 
-  const [addnewemployeetoapolicy, setaddnewemployeetoapolicy] = React.useState(false)
-  const [changeemployeepolicy , setchangeemployeepolicy] = React.useState(false)
+    const permission = useSelector((state: any) => state.permission);
     useEffect(() => {
         dispatch(GetAllEmployees());
         axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/get/${policy}`)
@@ -69,16 +68,7 @@ const Employees = () => {
 
 
             })
-            axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)   
-    
-            .then((res) => {
-                
-                      setaddnewemployeetoapolicy(res.data.group.addnewemployeetoapolicy)
-                        setchangeemployeepolicy(res.data.group.changeemployeepolicy)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
+            
 
 
 
@@ -180,7 +170,7 @@ const Employees = () => {
         },
 
 
-        changeemployeepolicy?  {
+        permission.changeemployeepolicy?  {
             field: 'Action',
             headerName: 'Action',
             renderCell: (params) => <ActionCellRenderer row={params.row} />,
@@ -369,7 +359,7 @@ const Employees = () => {
 
 
 
-          {addnewemployeetoapolicy &&  <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+          {permission.addnewemployeetoapolicy &&  <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit fct={() => setPopupAddEmployee(!PopupAddEmployee)} timing={200} text="Add Employee" />
             </div>}
             <IoIosPeople className='text-[25px] text-[#7152F3]' /><h1 className='text-[#16151C] font-lexend font-semibold text-[20px] leading-[30px] '>Employees</h1>

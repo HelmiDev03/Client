@@ -72,7 +72,8 @@ const Config = () => {
 
   }
 
-const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
+
+const permission = useSelector((state: any) => state.permission);
   useEffect(() => {
     axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/get/${policy}`)
       .then((res: any) => {
@@ -93,15 +94,7 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
         
       })
      
-            axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)   
-    
-            .then((res) => {
-                
-                      setEditpolicyconfig(res.data.group.editpolicyconfig)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
+            
      
  
 
@@ -109,7 +102,7 @@ const [editpolicyconfig, setEditpolicyconfig] = React.useState(false);
 
   return (
     <div>
-     {editpolicyconfig && <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+     {permission.editpolicyconfig && <div className=' absolute right-[3%] top-[23%]   w-[150px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
         <ButtonSubmit fct={updatePolicy} timing={100} text="Edit Policy" />
       </div> }
 

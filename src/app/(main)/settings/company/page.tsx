@@ -108,14 +108,7 @@ const CompanySettings = () => {
       })
 
 
-      axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/company')
-        .then(res => {
-            console.log(res.data.company);
-            dispatch({
-                type: 'SET_COMPANY',
-                payload: res.data.company
-            });
-        })
+     
     }, []);
 
 
