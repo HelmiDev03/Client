@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en">
         
       <body >
-      <NextTopLoader  color="#7152F3"  showSpinner={false}  speed={10}    />
+
       <StoreProvider>
  
       
