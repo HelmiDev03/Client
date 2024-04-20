@@ -81,12 +81,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
             </div>
             <div className="flex flex-row justify-between height-auto ">
-                <div className="flex flex-col justify-center items-start w-[242px] h-[167px] mr-3 mt-5 rounded-[10px]  bg-opacity-[20%] bg-white-500">
+                <div className="flex flex-col justify-center items-start w-[242px] h-[167px] mr-3 mt-[-15px] rounded-[10px]  bg-opacity-[20%] bg-white-500">
                     <h3 className={`p-3 flex justify-start items-center font-lexendfont-light text-[16px] rounded-[10px] w-[100%] leading-[24px] mb-2 hover:cursor-pointer ${pathname.includes(`/employees/${employeeId}`) ? 'text-[#eee] bg-[#7152F3]' : 'text-[#16151C]'}`}>
                         <IoPersonOutline className="text-[20px] mr-3" /> Profile
                     </h3>
 
-                    <h3 className={` p-3  flex justify-start items-center font-lexendfont-light flex text-[16px] rounded-[10px]  w-[100%] leading-[24px] mb-2 hover:cursor-pointer text-[#16151C] `}> <MdOutlineLibraryAddCheck className="text-[20px] mr-3" />Attednance</h3>
+                   
                     <h3 className={` p-3  flex justify-start items-center font-lexendfont-light flex text-[16px] rounded-[10px]  w-[100%] leading-[24px] mb-2 hover:cursor-pointer   text-[#16151C] `}><IoNewspaperOutline className="text-[20px] mr-3 text-[20px]" />Projects</h3>
                 </div>
                 <div className={`flex flex-col w-[768px]  height-auto rounded-[10px] bg-white  ml-4 `}>

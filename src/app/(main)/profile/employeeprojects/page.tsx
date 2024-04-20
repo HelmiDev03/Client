@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux'
 const Projects = () => {
   const auth  = useSelector((state: any) => state.auth)
   return (
-    <div>
+    
       <EmployeeProject id  = {auth.user._id} />
-    </div>
+    
   )
 }
 
