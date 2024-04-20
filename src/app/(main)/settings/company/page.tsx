@@ -39,7 +39,6 @@ const CompanySettings = () => {
     const [zip, setZip] = useState(company.zip);
     const [country, setCountry] = useState(company.country);
     const success = useSelector((state: any) => state.success)
-    const [editcompanyinfo , setEditCompanyInfo] = useState(false)
     const closeModel = () => {
         dispatch({
             type: 'SUCCESS',
@@ -97,21 +96,9 @@ const CompanySettings = () => {
    }
 
    
-    React.useEffect(() => {
-        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
+    
 
-      .then((res) => {
-        setEditCompanyInfo(res.data.group.editcompanyinfo)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-
-
-     
-    }, []);
-
-
+    const permission = useSelector((state: any) => state.permission);
 
 
     return (
@@ -390,7 +377,7 @@ const CompanySettings = () => {
 
 
 
-          {editcompanyinfo &&  <div className=' translate-x-[1090px] translate-y-[-1170px]   w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+          {permission.editcompanyinfo &&  <div className=' translate-x-[1090px] translate-y-[-1170px]   w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit timing={200} text="Update" fct={update}  />
             </div> }
 

@@ -42,8 +42,7 @@ const Personnel = () => {
     const [adress, setAdress] = useState('')
     const [city, setCity] = useState('')
     const [postalcode, setPostalcode] = useState('')
-    //for permisisons
-    const [editemployeedetails, setEditEmployeeDetails] = useState(false)
+
 
     const edit = () => { setInputDisable(!inputDisble) }
 
@@ -111,20 +110,7 @@ const Personnel = () => {
             })
 
 
-        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
-
-            .then((res) => {
-
-
-
-                setEditEmployeeDetails(res.data.group.editemployeedetails)
-
-
-
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+      
 
 
 
@@ -134,7 +120,7 @@ const Personnel = () => {
 
 
 
-
+    const permission = useSelector((state: any) => state.permission);
 
 
 
@@ -161,7 +147,7 @@ const Personnel = () => {
                 </Modal.Body>
             </Modal>
 
-           {editemployeedetails && <div className=' absolute   top-[25%] right-[6%]   top-[-50%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+           {permission.editemployeedetails && <div className=' absolute   top-[25%] right-[6%]   top-[-50%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit timing={200} text="Edit" fct={edit} />
             </div> }
 

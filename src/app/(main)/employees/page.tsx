@@ -54,18 +54,7 @@ const Employees = () => {
 
 
         dispatch(GetAllEmployees());
-        axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
-
-            .then((res) => {
-     
-                
-                   
-
-                
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+       
 
 
 
@@ -114,7 +103,7 @@ const Employees = () => {
 
         return (
 
-            <div>  { permission.iewemployeedetails && <button onClick={() => router.push(`/employees/${row.userid}`)} type="submit"    ><FiEye className=' font-lexend font-light  leading-[24px] text-[#7152F3] text-[20px] mr-2' /></button>}
+            <div>  { permission.viewemployeedetails && <button onClick={() => router.push(`/employees/${row.userid}`)} type="submit"    ><FiEye className=' font-lexend font-light  leading-[24px] text-[#7152F3] text-[20px] mr-2' /></button>}
                {permission.deleteemployee && <button onClick={() => { setPopupDeletePage(1); setOpenPopupDelete(true); setEmployeeSelected(row.fullname); setEmployeeId(row.userid); setEmployeeImage(row.profilepicture) }} type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button>}</div>
 
         );
@@ -174,7 +163,7 @@ const Employees = () => {
 
 
       
-        permission.deleteemployee || permission.viewemployeedetails ?{
+        permission.deleteemployee || permission.viewcompanydetails ?{
             field: 'Action',
             headerName: 'Action',
             renderCell: (params) => <ActionCellRenderer row={params.row} />,
@@ -183,6 +172,7 @@ const Employees = () => {
         }:{field: ''},
 
     ];
+    console.log(permission.viewcompanydetails )
 
 
     const rows = users.map((user: any, index: number) => ({

@@ -41,51 +41,35 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
         type: 'SET_USER',
         payload: decodedToken
     });
+    dispatch({
+        type: 'UPDATE_COMPANY',
+        payload: res.data.company
+    });
+    dispatch({
+        type: 'SET_NOTIFICATIONS_COUNT',
+        payload: res.data.unssennotifications
+    });
+    dispatch({
+        type: 'SET_PERMISSION',
+        payload: res.data.group
+    })
+   
 
-    // Sequential API calls
-    axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/company')
-        .then(res => {
-            dispatch({
-                type: 'UPDATE_COMPANY',
-                payload: res.data.company
-            });
-            // Call next API after the first one completes
-            axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/notifications/unseen')
-                .then((res) => {
-                    dispatch({
-                        type: 'SET_NOTIFICATIONS_COUNT',
-                        payload: res.data.unssennotifications
-                    });
-                    // Call the next API after the second one completes
-                    axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/attendance/history')
-                        .then((res: any) => {
-                            const lastworkingdayhours = res.data.workingHours[res.data.workingHours.length - 1].date;
-                            if (new Date(res.data.workingHours[res.data.workingHours.length - 1].date).toString().slice(0, 10) == new Date().toString()?.slice(0, 10)) {
-                                dispatch({
-                                    type: 'SET_HOURS',
-                                    payload: {
-                                        hr: res.data.workingHours[res.data.workingHours.length - 1].time.hr,
-                                        min: res.data.workingHours[res.data.workingHours.length - 1].time.min,
-                                        sec: res.data.workingHours[res.data.workingHours.length - 1].time.sec,
-                                        increment: false,
-                                        lastclockin: new Date()
-                                    }
-                                });
-                            }
-                            // Call the next API after the third one completes
-                            axios.get(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/usergroup`)
-                                .then((res) => {
-                                    dispatch({
-                                        type  :'SET_PERMISSION',
-                                        payload  : res.data.group
-                                    })
-                                    // You can dispatch actions or perform other operations with the response data here
-                                })
-                                .catch((err) => {
-                                    console.error('Error fetching user group permissions:', err);
-                                });
-                            window.location.href = '/dashboard'; // Redirect after all API calls complete
-                        });
-                });
+    if (new Date(res.data.workingHours[res.data.workingHours.length - 1].date).toString().slice(0, 10) == new Date().toString()?.slice(0, 10)) {
+        dispatch({
+            type: 'SET_HOURS',
+            payload: {
+                hr: res.data.workingHours[res.data.workingHours.length - 1].time.hr,
+                min: res.data.workingHours[res.data.workingHours.length - 1].time.min,
+                sec: res.data.workingHours[res.data.workingHours.length - 1].time.sec,
+                increment: false,
+                lastclockin: new Date()
+            }
         });
-};
+    }
+
+
+    window.location.href = '/dashboard'; // Redirect to dashboard
+
+       
+    };
