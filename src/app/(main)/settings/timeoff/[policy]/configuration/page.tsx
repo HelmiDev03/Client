@@ -36,8 +36,8 @@ const Config = () => {
   
   const updatePolicy = () => {
     //check if all field are not empty
-    if (!name  || !StartMonth || !duration || !workingDays || !timeOffDays || !ParentalLeaveMaxTimeOffDaysForWomen || !ParentalLeaveMaxTimeOffDaysForMen || !SickLeaveMaxTimeOffDays || !maxcounter || !bankHoliday || !canbeused || !includerest){
-     toast.error("all field are  required");
+    if (!name    || !StartMonth || !duration ){
+     toast.error("all fields are  required");
       return;
     }
     const data = {

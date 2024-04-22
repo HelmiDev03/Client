@@ -52,6 +52,7 @@ const TimeOff = () => {
                         payload: {}
 
                     })
+                    toast.success("Policy Added Successfully")
 
                     return res.data.policies
                 })
@@ -60,7 +61,7 @@ const TimeOff = () => {
                 })
                 .then((newdata) => {
                     setIsHidden(new Array(newdata?.length).fill(false))
-                    toast.success("Policy Added Successfully")
+                    
                 })
 
         }
