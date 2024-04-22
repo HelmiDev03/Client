@@ -22,5 +22,11 @@ export const Registration = (data: UserData ) => (dispatch: Dispatch<any>) => {
             type: 'ERRORS',
             payload: err.response ? err.response.data : {}
         });
-    });
+    })
+    .finally(() => {
+        dispatch({
+            type: 'Chnage_State',
+            payload: false
+        })
+    })
 };

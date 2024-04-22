@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -14,5 +15,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <><div className="translate-x-[-178px] z-50 relative">
+  <Toaster position="top-right"  reverseOrder={false}></Toaster>
+  </div>{children}</>;
 }

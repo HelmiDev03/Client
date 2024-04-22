@@ -3,10 +3,13 @@ import { Dispatch } from 'redux';
 import { jwtDecode } from 'jwt-decode';
 import { setAuth } from '@/redux/utils/setAuth';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 interface UserData {
     // Define the structure of your user data object
 }
+
+
 
 export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
     axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/login', data)
@@ -25,7 +28,14 @@ export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
         })
         .catch((err: any) => {
             toast.error(err.response?.data.message);
-        });
+            
+        })
+        .finally(() => {
+            dispatch({
+                type: 'Chnage_State',
+                payload: false
+            })
+        })
 };
 
 export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {

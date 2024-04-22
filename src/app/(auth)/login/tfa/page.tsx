@@ -35,7 +35,7 @@ const TFA= () => {
         axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/tfa/verifytokenexist', { tokenid })
             .catch((err) => {
                 router.push('/login');
-                toast.error("time expired ");
+                toast.error("time expired");
             });
             const timer = setInterval(() => {
                 setTime((prevTime) => {

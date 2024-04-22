@@ -51,12 +51,15 @@ const ResetPassword = () => {
             !/\d/.test(password1) ||
             !/[!@#$%^&*(),.?":{}|<>]/.test(password1) ||
             password1 !== password2
-        ) { return toast.error('Invalid Password');}
+        ) { return ;}
       
         axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/forgetpassword/changepassword', { email, password: password1 })
             .then((res) => {
-                toast.success('Password Updated');
                 router.push('/login');
+                
+                
+            }).then(() => {
+                toast.success('Password Updated');
             })
             .catch((err) => {
                 dispatch({ type: 'ERRORS', payload: err.response?.data });
@@ -87,19 +90,7 @@ const ResetPassword = () => {
     return (
         <div className="w-screen h-screen flex justify-center items-center" >
             
-           {success.message!='' && <div className=" absolute  center rounded-[25px]   z-50  ">
-                <div className=" relative p-4 w-[400px] max-w-lg ">
-                    <div className=" bg-lavender relative p-4  rounded-lg drop-shadow-md  md:p-8 flex flex-col justify-center">
-                        <FaCheckCircle className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
-                        <h3 className="mb-3 text-2xl  font-bold text-gray-900 translate-x-[16%] translate-y-[94%]"> Password  Updated</h3>
-                        <div className=" justify-center items-center pt-0 space-y-4 sm:flex sm:space-y-0">
-                            <div className='mb-8 w-[200px] mt-[90px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
-                                <ButtonSubmit timing={500} text='Back To Login' fct={() => window.location.href = '/login'} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>}
+       
 
             <div className="flex mb-6 flex-col items-center mt-[60px]">
                 <p className={styles.maintext}>Reset Your Password</p>

@@ -4,7 +4,7 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
 
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 
 
@@ -28,5 +28,6 @@ export const Addnewemployee = (data:any , router:any) => (dispatch: Dispatch<any
             // Handle errors if needed
             console.error('Error fetching employees:', error);
         })
+        
        
 };

@@ -20,7 +20,7 @@ import 'react-international-phone/style.css';
 
 import { Registration } from '@/redux/actions/userActions/registerAction';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { ImSpinner8 } from 'react-icons/im';
 import { FcGoogle } from 'react-icons/fc';
@@ -107,7 +107,7 @@ const Register = () => {
             }
         } catch (err: any) {
             console.log(err.response?.data);
-             return toast.error('This Email is Already Used By Someone Else');
+            return toast.error("email already taken");
         }
 
         setPage("signup2");
@@ -129,7 +129,7 @@ const Register = () => {
             await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifycin`, { cin: CIN });
             setPage("signup3");
         } catch (err: any) {
-             return toast.error('this CIN is used by someone else');
+             return toast.error('CIN already taken');
         }
         setPage("signup3");
     }
@@ -152,11 +152,14 @@ const Register = () => {
             setPage("signup4");
         } catch (err: any) {
             console.log(err.response?.data);
-             return toast.error('this Phone number is already used by other company');
+             return toast.error('number already taken');
         }
 
         setPage("signup4");
     }
+
+
+    const isbuttondisabled = useSelector((state: any) => state.isbuttondisabled);
 
     const checkflow4 = () => {
         if (password1.length < 12 ||
@@ -166,6 +169,12 @@ const Register = () => {
             !/[!@#$%^&*(),.?":{}|<>]/.test(password1) ||
             password1 !== password2
         ) {  return ;}
+
+
+        dispatch({
+            type: 'Chnage_State',
+            payload: true
+        })
         
         dispatch(Registration({
             firstname: firstName,
@@ -514,7 +523,7 @@ const Register = () => {
                         <h3 className='flex items-center text-gray-400 mb-2'> <TiMinusOutline className={` ${password1 != password2 ? 'block' : 'hidden'} mt-[2px] mr-[3px]  text-[20px] text-red-500`} /> <FaCheck className={` ${password1 == password2 ? 'block' : 'hidden'} text-[20px] mr-[3px] text-green-500`} />Password Matches</h3>
                     </div>
                     <button className='mb-8 w-[61px] mt-[34px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
-                        <ButtonSubmit timing={500} text={loading ? <><ImSpinner8 className="animate-spin  text-[20px]" /> Loading...</> : <FaArrowRight className='text-white text-[20px]' />} fct={() => handleNext(Page)} />
+                        <ButtonSubmit isbuttondisabled={isbuttondisabled} timing={500} text={loading ? <><ImSpinner8 className="animate-spin  text-[20px]" /> Loading...</> : <FaArrowRight className='text-white text-[20px]' />} fct={() => handleNext(Page)} />
                     </button>
                     <div className="translate-y-[10px]  ml-6 flex flex-row  justify-center items-center w-[155px] h-[17px]  ">
                         <div className={`${styles.cercle} ${Page === 'signup1' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -15,5 +13,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <><div className="translate-x-[-208px] z-50 relative">
+  <Toaster position="top-right"  reverseOrder={false}></Toaster>
+  </div>{children}</>;
 }

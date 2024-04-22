@@ -15,7 +15,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import styles from '@/app/(auth)/register/page.module.css';
 
 import { Addnewemployee } from '@/redux/actions/usersActions/addEmployee';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import toast from "react-hot-toast";
 
@@ -40,6 +40,7 @@ const AddNewEmployee = () => {
   const [Page, setPage] = useState(1);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const isbuttondisabled = useSelector((state: any) => state.isbuttondisabled);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -247,7 +248,15 @@ const AddNewEmployee = () => {
       password: Password,
       profilepicture: fileName != "" ? base64 : "",
     };
+    dispatch({
+      type: 'Chnage_State',
+      payload: true
+  })
     dispatch(Addnewemployee(data, router));
+    dispatch({
+      type: 'Chnage_State',
+      payload: false
+  })
 
 
   };
@@ -389,7 +398,7 @@ const AddNewEmployee = () => {
             <ButtonCancel text="Cancel" fct={handleCancel} />
           </div>
           <div className=' w-[91px] h-[50px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-            <ButtonSubmit text="Next" fct={handleFirstNext} />
+            <ButtonSubmit isbuttondisabled={isbuttondisabled} text="Next" fct={handleFirstNext} />
           </div>
 
 
