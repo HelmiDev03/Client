@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
 import { setAuth } from '@/redux/utils/setAuth';
+import toast from 'react-hot-toast';
 
 
 
@@ -13,26 +14,14 @@ export const ChangePassword =  (data: any) => (dispatch: Dispatch<any>) => {
         
         
         
-        dispatch({
-            type: 'SUCCESS',
-            payload: res.data.message
-        });
+       toast.success('Password Updated Successfully');
     
         
-        dispatch({
-            type: 'ERRORS',
-            payload: {}
-        });
+       
     })
     .catch((err) => {
         console.log(err);
-        dispatch({
-            type: 'ERRORS',
-            payload: err.response ? err.response.data : {}
-        });
-        dispatch({
-            type: 'SUCCESS',
-            payload: ''
-        });
+        toast.error('Password Incorrect');
+      
     });
 }

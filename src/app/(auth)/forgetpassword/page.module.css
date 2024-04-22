@@ -1,28 +1,33 @@
-.InputContainer{
-    
-
-    display: flex;
-    flex-direction: column;
-    height:auto;
-}
+.title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #212121;
+  }
+  .subtitle {
+    font-size: 0.725rem;
+    max-width: 80%;
+    text-align: center;
+    line-height: 1.1rem;
+    color: #8B8E98
+  }
 .maintext{
-    
     margin-left: -6px;
     font-size: 30px;
     font-weight: 600;
     font-family: 'Lexend', sans-serif; 
     color: #16151C;
-    line-height: 40px;
-    
+    line-height: 40px;  
 }
-.maintext2{
-    
-    margin-left: -6px;
-    font-size: 20px;
-    font-weight: 600;
-    font-family: 'Lexend', sans-serif; 
-    color: #7152F3 ;
-    line-height: 40px;
-    
+.InputContainer{
+    display: flex;
+    flex-direction: column;
 }
-
+.InputWithEye {
+    display: flex;
+    align-items: center;
+}
+.InputWithEye button {
+    margin-left: -30px; /* Adjust the margin as needed */
+    z-index: 5;
+}

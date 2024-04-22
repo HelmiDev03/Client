@@ -24,264 +24,182 @@ const Packages = () => {
     return(
         
       
-            <div className={`w-[90%] h-[90%] m-[60px] mt-[23px] mb-[10px]`}>
+            <div className="w-full h-full flex flex-col items-center m-5 gap-5">
+                <h1 className="text-4xl font-bold text-black">Choose the best plan for your business</h1>
+                <div className='rounded-full bg-slate-200 mb-7'>
+                    <button className="py-2.5 px-5 me-2 text-sm font-medium text-gray-500 focus:outline-none bg-transparent rounded-full hover:border hover:border-gray-200 hover:bg-gray-100 hover:text-black">Individuals and Teams</button>
+                    <button className="text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center">Business Plans</button>
+                </div>
 
-
-                <div className="flex items-center justify-start mb-3">
-
-                    <div className=" h-[40px] mr-[500px]   flex items-center justify-center  header-nav    ">
-
-                        <Image
-                            width={40}
-                            height={40}
-                            className="w-11 h-10 mr-[5px]"
-                            src="/logo.png"
-                            alt="" />
-
-                        <p className=" leading-[40px] text-[30px] font-semibold">NRH </p>
+                <div className="w-full flex justify-center gap-20">
+                    <div className="w-[320px] pt-4 px-4 my-3 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
+                        <h5 className="mb-4 text-xl font-medium text-gray-500">Business (7 days Free trial)</h5>
+                        <div className="flex items-baseline text-gray-900">
+                            <span className="text-3xl font-semibold">$</span>
+                            <span className="text-5xl font-extrabold tracking-tight">15</span>
+                            <span className="ms-1 text-xl font-normal text-gray-500">/month</span>
+                        </div>
+                        <ul role="list" className="space-y-5 my-7">
+                            <li className="flex items-center">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">2 team members</span>
+                            </li>
+                            <li className="flex">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">20GB Cloud storage</span>
+                            </li>
+                            <li className="flex">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Integration help</span>
+                            </li>
+                            <li className="flex line-through decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Sketch Files</span>
+                            </li>
+                            <li className="flex line-through decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">API Access</span>
+                            </li>
+                                <li className="flex line-through decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Complete documentation</span>
+                            </li>
+                            <li className="flex line-through decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">24×7 phone & email support</span>
+                            </li>
+                        </ul>
+                        <button onClick={()=>Finish('Free')} className="text-blue-800 bg-white border border-blue-800 hover:bg-blue-500 hover:text-white hover:font-semibold focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">{loading ? "Loading ..." : "Get Started"}</button>
                     </div>
-
-                    <p className="  text-lg font-bold font-lexend text-[26px] leading-[40px] translate-x-[-43px]  text-[#16151C]   ">Choose Your Pack</p>
-
-
-                </div>
-
-
-                <div className=" h-[573px] rounded-[30px] bg-[#7152F3] bg-opacity-[5%] flex items-center justify-center mb-3">
-                    <Card className='translate-x-[-70px] mt-[70px] max-w-sm mr-3 w-[350px] h-[480px] p-[30px] rounded-[18px] bg-[#7152F3]'>
-                        <h5 className="mb-4 text-xl font-medium  text-white ">Free</h5>
-                        <div className="flex items-baseline text-white">
+                    <div className="w-[320px] p-4 bg-white border border-gray-200 rounded-lg shadow relative">
+                    <button className="text-white bg-blue-500 font-medium rounded-2xl text-xs px-3 py-1.5 text-center absolute right-1 top-1">Most Popular</button>
+                        <h5 className="mb-4 text-xl font-medium text-gray-500">Business Plus</h5>
+                        <div className="flex items-baseline text-gray-900">
                             <span className="text-3xl font-semibold">$</span>
-                            <span className="text-5xl font-extrabold tracking-tight">0</span>
-                            <span className="ml-1 text-xl font-normal  text-white ">/month</span>
+                            <span className="text-5xl font-extrabold tracking-tight">25</span>
+                            <span className="ms-1 text-xl font-normal text-gray-500">/month</span>
                         </div>
-                        <ul className="my-7 space-y-5">
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
+                        <ul role="list" className="space-y-5 my-7">
+                            <li className="flex items-center">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">2 team members</span>
                             </li>
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
+                            <li className="flex">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">
-                                    evoices messages anywhere
-                                </span>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">20GB Cloud storage</span>
                             </li>
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white "
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
+                            <li className="flex">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                                 </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Integration help</span>
                             </li>
-
-
-
+                            <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Sketch Files</span>
+                            </li>
+                            <li className="flex items-center">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ">2 team members</span>
+                            </li>
+                            <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">API Access</span>
+                            </li>
+                                <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Complete documentation</span>
+                            </li>
+                            <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">24×7 phone & email support</span>
+                            </li>
                         </ul>
-                        <button
-                            type="button"
-                            className=" mt-[60px]   inline-flex w-full h-[55px] justify-center rounded-[10px] bg-white px-5 py-2.5     leading [30px] text-center text-[26px] font-poppins text-[#16151C] text-opacity-[50%] font-bold   hover:cursor-pointer focus:outline-none focus:ring-4  "
-                        >
-                            Already Using
-                        </button>
-                    </Card>
-                    <Card className='mt-[50px]  relative max-w-sm mr-3 w-[350px] h-[480px] p-[30px] rounded-[18px] bg-[#7152F3]'>
-                        <div className="absolute top-[-76px] left-0 w-[100%] h-[99px] bg-[#7152F3] opacity-[90%] rounded-t-[35px]  flex items-center justify-center">
-                            <span className=" mt-[-11px] text-white font-bold text-[26px] leading-[40px]" >Most Popular</span>
-                        </div>
-                        <h5 className="mb-4 text-xl font-medium  text-white ">Premium</h5>
-                        <div className="flex items-baseline text-white">
-                            <span className="text-3xl font-semibold">$</span>
-                            <span className="text-5xl font-extrabold tracking-tight">9</span>
-                            <span className="ml-1 text-xl font-normal  text-white ">/month</span>
-                        </div>
-                        <ul className="my-7 space-y-5">
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
-                            </li>
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">
-                                    evoices messages anywhere
-                                </span>
-                            </li>
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white "
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
-                            </li>
-
-
-
-                        </ul>
-                        <button
-                            type="button"
-                            className=" mt-[60px]   inline-flex w-full h-[55px] justify-center rounded-[10px] bg-white px-5 py-2.5     leading [30px] text-center text-[26px] font-poppins text-[#7152F3] font-bold   hover:cursor-pointer focus:outline-none focus:ring-4  "
-                        >
-                            Buy Now
-                        </button>
-                    </Card>
-                    <Card className='translate-x-[70px] mt-[70px] max-w-sm mr-3 w-[350px] h-[480px] p-[30px] rounded-[18px] bg-[#7152F3]'>
-                        <h5 className="mb-4 text-xl font-medium  text-white "> Business</h5>
-
-                        <div className="flex items-baseline text-white">
-                            <span className="text-3xl font-semibold">$</span>
-                            <span className="text-5xl font-extrabold tracking-tight">29.99</span>
-                            <span className="ml-1 text-xl font-normal  text-white ">/month</span>
-                        </div>
-                        <ul className="my-7 space-y-5">
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
-                            </li>
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">
-                                    evoices messages anywhere
-                                </span>
-                            </li>
-                            <li className="flex space-x-3">
-                                <svg
-                                    className="h-5 w-5 shrink-0 text-white "
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                                <span className="text-base font-normal leading-tight  text-white ">voices messages anywhere</span>
-                            </li>
-
-
-
-                        </ul>
-                        <button
-                            type="button"
-                            className=" mt-[60px]   inline-flex w-full h-[55px] justify-center rounded-[10px] bg-white px-5 py-2.5     leading [30px] text-center text-[26px] font-poppins text-[#7152F3]  font-bold   hover:cursor-pointer focus:outline-none focus:ring-4  "
-                        >
-                            Buy Now
-                        </button>
-                    </Card>
-
-
-
-
-                </div>
-
-
-                <div className="flex items-center justify-center mb-3">
-
-
-                    <div className=' w-[130px] h-[56px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
-                    <ButtonSubmit timing={1000} text={loading ? <><ImSpinner8  className="animate-spin mr-2 text-[20px]" /> Loading...</> : 'Finish'} fct={()=>Finish('Free')} />
+                        <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Choose plan</button>
                     </div>
-
-
-
-
+                    <div className="w-[320px] pt-4 px-4 my-3 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
+                        <h5 className="mb-4 text-xl font-medium text-gray-500">Entreprise Plus</h5>
+                        <div className="flex items-baseline text-gray-900">
+                            <span className="text-3xl font-semibold">$</span>
+                            <span className="text-5xl font-extrabold tracking-tight">45</span>
+                            <span className="ms-1 text-xl font-normal text-gray-500">/month</span>
+                        </div>
+                        <ul role="list" className="space-y-5 my-7">
+                            <li className="flex items-center">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">2 team members</span>
+                            </li>
+                            <li className="flex">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">20GB Cloud storage</span>
+                            </li>
+                            <li className="flex">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Integration help</span>
+                            </li>
+                            <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Sketch Files</span>
+                            </li>
+                            <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">API Access</span>
+                            </li>
+                                <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">Complete documentation</span>
+                            </li>
+                            <li className="flex decoration-gray-500">
+                                <svg className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                </svg>
+                                <span className="text-base font-normal leading-tight text-gray-500 ms-3">24×7 phone & email support</span>
+                            </li>
+                        </ul>
+                        <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Choose plan</button>
+                    </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
             </div>
-    
-   
     );
 }
 

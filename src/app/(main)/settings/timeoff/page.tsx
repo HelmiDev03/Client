@@ -15,6 +15,7 @@ import { AppDispatch } from '@/redux/store';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import { PiCrownLight } from 'react-icons/pi';
+import toast from 'react-hot-toast';
 const TimeOff = () => {
     const auth = useSelector((state: any) => state.auth)
     const company = useSelector((state: any) => state.company)
@@ -55,19 +56,16 @@ const TimeOff = () => {
                     return res.data.policies
                 })
                 .catch((err: any) => {
-                    dispatch({
-                        type: 'ERRORS',
-                        payload: err.response.data
-
-                    })
+                  toast.error("Policy Name Already Taken")
                 })
                 .then((newdata) => {
-                    setIsHidden(new Array(newdata.length).fill(false))
+                    setIsHidden(new Array(newdata?.length).fill(false))
+                    toast.success("Policy Added Successfully")
                 })
 
         }
         else {
-            return;
+          toast.error("Please enter a policy name")
         }
     }
 
@@ -87,9 +85,10 @@ const TimeOff = () => {
             })
             .then((newdata) => {
                 setIsHidden(new Array(newdata?.length).fill(false))
+                toast.success("Policy Deleted Successfully")
             })
     }
-    const setnewdefaultpolicy = (id: string) => () => {
+    const setnewdefaultpolicy = (id: string , policyname : string) => () => {
         axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/setnewdefaultpolicy/${id}`)
             .then(res => {
                 dispatch({
@@ -104,6 +103,7 @@ const TimeOff = () => {
             })
             .then((newdata) => {
                 setIsHidden(new Array(newdata?.length).fill(false))
+                toast.success("Policy "+ policyname + " Set as Default Successfully")
             })
     }
 
@@ -124,12 +124,14 @@ const TimeOff = () => {
                     });
                     setDay('')
                     setName('')
+                    toast.success("National Day Added Successfully")
                 })
                 .catch(err => {
                     console.log(err)
                 })
         }
         else {
+            toast.error("Please enter a valid name and a date")
             return;
         }
     }
@@ -287,7 +289,7 @@ const TimeOff = () => {
                                 <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
                                     {!policy.isdefault && (
                                         <>
-                                            {permission.setpolicyasdefault && <h3 onClick={setnewdefaultpolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Set as Default</h3>}
+                                            {permission.setpolicyasdefault && <h3 onClick={setnewdefaultpolicy(policy._id,policy.name)} className='hover:cursor-pointer hover:bg-gray-200 p-3 mb-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Set as Default</h3>}
                                             {permission.removepolicy && <h3 onClick={deletePolicy(policy._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>}
                                         </>
                                     )}

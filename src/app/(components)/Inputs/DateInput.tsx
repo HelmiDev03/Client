@@ -3,21 +3,9 @@ const Input4 = (props: any) => {
     const isDisabled = props.isDisabled;
     const name = props.name;
     
-  
-    
     const formattedValue = value ? new Date(value).toISOString().split('T')[0] : '';
-
-
-
     return (
-        <input  name={name}     disabled = {isDisabled}           value = {formattedValue} type='date' className="w-[330px] h-[56px] p-[16px] md:p-[16px] lg:p-[20px]  font-lexend font-light  text-[16px] leading-[24px] text-[#16151C] 
-                                                                                                                                                                                        xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
-                                                                                                                                                                                        border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors 
-                                                                                                                                                                                        duration-300 ease-in-out" />
-    )
-        ;
-
+        <input name={name} disabled={isDisabled} value={formattedValue} type='date' className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"/>
+    );
 }
-export default Input4 
-
-
+export default Input4

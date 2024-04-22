@@ -14,9 +14,10 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 
 import styles from '@/app/(auth)/register/page.module.css';
 
-import {Addnewemployee} from '@/redux/actions/usersActions/addEmployee';
+import { Addnewemployee } from '@/redux/actions/usersActions/addEmployee';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
+import toast from "react-hot-toast";
 
 
 
@@ -25,31 +26,22 @@ import { AppDispatch } from "@/redux/store";
 
 const AddNewEmployee = () => {
   const [firstName, setFirstName] = useState('');
-  const [firstNameError, setFirstNameError] = useState('');
   const [lastName, setLastName] = useState('');
-  const [lastNameError, setLastNameError] = useState('');
   const [mobile, setMobile] = useState('');
-  const [mobileError, setMobileError] = useState('');
   const [cin, setCin] = useState('');
-  const [cinError, setCinError] = useState('');
   const [adress, setAdress] = useState('');
-  const [adressError, setAdressError] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  const [birthdateError, setBirthdateError] = useState('');
   const [fileName, setFileName] = useState('');
-  const [base64 , setBase64] = useState('' as any); // State to store the base64 string of the selected file
+  const [base64, setBase64] = useState('' as any); // State to store the base64 string of the selected file
   const [fileError, setFileError] = useState('');
   const [EmployeeRole, setEmployeeRole] = useState('');
-  const [EmployeeRoleError, setEmployeeRoleError] = useState('');
   const [Email, setEmail] = useState('');
-  const [EmailError, setEmailError] = useState('');
   const [Password, setPassword] = useState('');
-  const [PasswordError, setPasswordError] = useState('');
   const [Page, setPage] = useState(1);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
- const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -80,9 +72,9 @@ const AddNewEmployee = () => {
   const handleFileChange = async (event: any) => {
     setFileError('');
     const file = event.target.files[0];
-   console.log(file);
-   setBase64(await convertBase64(file));
-    
+    console.log(file);
+    setBase64(await convertBase64(file));
+
     let filename = file.name;
     // Take only the first 10 characters of the file name
     if (file.name.length > 10) {
@@ -158,57 +150,52 @@ const AddNewEmployee = () => {
   };
 
 
-  const checkFlow1 =async () => {
-   
-    setLastNameError('');
-    setFirstNameError('');
-    setMobileError('');
-    setCinError('');
-    setBirthdateError('');
-    //name must conatin at least 3 characters , uuper or lower
-    const nameRegex  = /^[a-zA-Z]{3,}$/;
+  const checkFlow1 = async () => {
+
+
+    const nameRegex = /^[a-zA-Z]{3,}$/;
     const cinRegex = /^\d{8}$/;
     const phoneNumberRegex = /^\+\d{2,4}\d{8,}$/
 
     if (!nameRegex.test(firstName)) {
-      setFirstNameError('First Name must contain at least 3 characters');
+      toast.error('First Name must contain at least 3 characters');
       return;
     }
     if (!nameRegex.test(lastName)) {
-      setLastNameError('Last Name must contain at least 3 characters');
+      toast.error('Last Name must contain at least 3 characters');
       return;
     }
     if (!phoneNumberRegex.test(mobile)) {
-      setMobileError('Mobile Number must contain 8 digits');
+      toast.error('Mobile Number must contain 8 digits');
       return;
     }
 
 
-      axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyuserphone`, { phonenumber:mobile })
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN + `/api/verifyuserphone`, { phonenumber: mobile })
       .catch(() => {
-        setMobileError('this phone number is used by someone else');
+        toast.error('this phone number is used by someone else');
         return;
 
       });
-   
-      
+
+
     if (!cinRegex.test(cin)) {
-      setCinError('CIN must contain 8 digits');
+      toast.error('CIN must contain 8 digits');
       return;
     }
 
-    axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifycin`, { cin })
+    axios.post(process.env.NEXT_PUBLIC_DOMAIN + `/api/verifycin`, { cin })
       .catch(() => {
-        setCinError('this CIN is used by someone else');
+        toast.error('this CIN is used by someone else');
         return;
 
       });
 
     if (!birthdate) {
-      setBirthdateError('Please enter birth day');
+      toast.error('Please enter birth day');
       return;
     }
-    
+
 
     setPage(2);
 
@@ -217,30 +204,23 @@ const AddNewEmployee = () => {
 
 
   const checkFlow2 = async () => {
-    setLastNameError('');
-    setFirstNameError('');
-    setMobileError('');
-    setCinError('');
-    setBirthdateError('');
-    setEmployeeRoleError('');
-    setEmailError('');
-    setPasswordError('');
+
     const emailPattern = /^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$/;
 
     if (!EmployeeRole) {
-      setEmployeeRoleError('Please select a role');
+      toast.error('Please select a role');
       return;
     }
 
     if (!emailPattern.test(Email)) {
-      setEmailError('Please enter a valid email address');
+      toast.error('Please enter a valid email address');
       return;
     }
 
     try {
-      await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyemail`, { email: Email });
+      await axios.post(process.env.NEXT_PUBLIC_DOMAIN + `/api/verifyemail`, { email: Email });
     } catch (error) {
-      setEmailError('This email is used by someone else');
+      toast.error('This email is used by someone else');
       return;
     }
 
@@ -251,24 +231,24 @@ const AddNewEmployee = () => {
       !/\d/.test(Password) ||
       !/[!@#$%^&*(),.?":{}|<>]/.test(Password)
     ) {
-      setPasswordError('Password must contain at least 12 characters, one uppercase letter, one lowercase letter, one number and one special character');
+      toast.error('Password must contain at least:\n- 12 characters\n- 1 uppercase letter\n- 1 lowercase letter\n- 1 number\n- 1 special character');
       return;
     }
 
     const data = {
-      firstname : firstName,
-      lastname : lastName,
-      phonenumber : mobile,
-      cin : cin,
-      adress : adress,
-      dateofbirth : birthdate,
-      role : EmployeeRole,
-      email : Email,
-      password : Password,
-      profilepicture  : fileName!="" ? base64 : "" ,
+      firstname: firstName,
+      lastname: lastName,
+      phonenumber: mobile,
+      cin: cin,
+      adress: adress,
+      dateofbirth: birthdate,
+      role: EmployeeRole,
+      email: Email,
+      password: Password,
+      profilepicture: fileName != "" ? base64 : "",
     };
-    dispatch(Addnewemployee(data,router));
-    
+    dispatch(Addnewemployee(data, router));
+
 
   };
 
@@ -285,7 +265,7 @@ const AddNewEmployee = () => {
     checkFlow2()
 
   }
-  
+
 
 
 
@@ -363,88 +343,40 @@ const AddNewEmployee = () => {
 
           <div className=' mr-8 mb-2 h-[100px]'>
             <Input onChange={handleFirstName} label="Fist Name" type="text" width="510px" />
-            {firstNameError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {firstNameError}
-              </div>
-            </div>}
+
 
 
           </div>
           <div className=' mr-8 mb-2  h-[100px] '>
             <Input onChange={handleLastName} label="Last Name" type="text" />
-            {lastNameError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {lastNameError}
-              </div>
-            </div>}
+
 
           </div>
 
           <div className=' mr-8 mb-2 h-[100px] '>
             <Input onChange={handleMobile} label="Phone Number" type="text" />
-            {mobileError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {mobileError}
-              </div>
-            </div>}
+
 
           </div>
 
           <div className=' mr-8 mb-2 h-[100ox] '>
 
             <Input onChange={handleCin} label="CIN" type="text" />
-            {cinError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {cinError}
-              </div>
-            </div>}
+
 
           </div>
 
           <div className=' mr-8 mb-2 h-[100px] '>
 
             <Input onChange={handleAdress} value={adress} label="Adresse" type="text" />
-            {adressError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {adressError}
-              </div>
-            </div>}
+
 
           </div>
 
           <div className=' mr-8 mb-2 h-[100px] '>
 
             <Input onChange={handleBirthdate} label="Birth Date" type="date" />
-            {birthdateError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {birthdateError}
-              </div>
-            </div>}
+
 
           </div>
 
@@ -498,30 +430,14 @@ const AddNewEmployee = () => {
               options={['Manager HR', 'service informatique', 'stagiaire', 'admin']}
               onChange={handleEmployeeRole} // Pass your onChange handler function
             />
-            {EmployeeRoleError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {EmployeeRoleError}
-              </div>
-            </div>}
+           
 
 
 
           </div>
           <div className=' mr-8 mb-2 h-[100px] '>
             <Input onChange={handleEmail} label='Email' type="email" />
-            {EmailError && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-              </svg>
-              <span className="sr-only">Info</span>
-              <div>
-                {EmailError}
-              </div>
-            </div>}
+          
 
           </div>
           <div className=' mr-8 mb-2 h-[100ox]  '>
@@ -535,18 +451,10 @@ const AddNewEmployee = () => {
               <button type="button" onClick={toggleShowPassword}>
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
-              {PasswordError && <div className=" translate-y-[100px]  translate-x-[-145%]   h-[100px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                </svg>
-                <span className="sr-only">Info</span>
-                <div>
-                  {PasswordError}
-                </div>
-              </div>}
-              
+             
 
-              
+
+
             </div>
           </div>
 

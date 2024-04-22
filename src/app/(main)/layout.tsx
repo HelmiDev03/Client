@@ -2,7 +2,7 @@ import Authprovider from "./authprovider";
 
 import SideBar from '@/app/(components)/SideBar/SideBar';
 import Header from '@/app/(components)/Header/Header';
-
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -34,7 +34,7 @@ export default async  function RootLayout({
                   {/* Page content */}
   
                    <Header />
-  
+                   <Toaster position="top-center" reverseOrder={false}></Toaster>
                    {children}
                   
   

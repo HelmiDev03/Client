@@ -40,51 +40,65 @@ const Prof = () => {
 
 
     return (
-        <div className=" flex flex-row flex-wrap " >
-          
-
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Email Adress</h3>
-                <Input4 isDisabled={true} value={email} type='text' />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Role</h3>
-
+        <div className="h-full py-14 px-12 flex flex-col">
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+                Email Adress
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  value={email}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled
+                />
+              </div>
+              <div className="mb-3 w-full">
+                <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900">
+                Role
+                </label>
                 <SelectInput2
                     placeholder={auth.user.role}
                     options={['Admin', 'Manager', 'Employee']}
                     isDisabled={true}
-
                 />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className=" font-lexend font-light  text-[14px] leading-[22px] text-[#A2A1A8] mb-1">Joining Date</h3>
-
-                <DateInput value={auth.user.createdAt} type='date' isDisabled={true} />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Matricule</h3>
-                <Input4 isDisabled={inputDisble} value={auth.user.matricule} type='text' />
-            </div>
-
-            <div style={{position : 'relative'}} className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Manager</h3>
-                <img src={manager.profilepicture ? manager.profilepicture : '/defaultprofilepicture.png'} className='absolute w-[40px] h-[40px] translate-x-[260px] translate-y-[30px] rounded-[50%] ' />
+              </div>
+            </section>
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="Manager" className="block mb-2 text-sm font-medium text-gray-900">
+                Manager
+                </label>
                 <SelectInput222
-                    
                     placeholder={manager.firstname + ' ' + manager.lastname }
                     options={[{label: manager.firstname + ' ' + manager.lastname, value: auth.user.manager}]}
-                   
-                   
-                  
                 />
-            </div>
-
-
-            
-
+              </div>
+              
+              <div className="mb-3 w-full">
+                <label htmlFor="Matricule" className="block mb-2 text-sm font-medium text-gray-900">
+                Matricule
+                </label>
+                <input
+                  type="text"
+                  id="Matricule"
+                  value={auth.user.matricule}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled
+                />
+              </div>
+            </section>
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900">
+                Joining Date
+                </label>
+                <DateInput value={auth.user.createdAt} type='date' isDisabled={true} />
+              </div>
+            </section>
         </div>
-    )
+    );
 }
 
 export default Prof

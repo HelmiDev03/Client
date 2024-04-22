@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SelectInputt } from "@/app/(components)/Inputs/SelectInput";
 import { FaArrowRight } from "react-icons/fa";
 import { CiLogout } from 'react-icons/ci';
-
+import toast, { Toaster } from "react-hot-toast";
 const Leaves = () => {
     
     const [maxcounter, setmaxcounter] = useState(0)
@@ -142,10 +142,16 @@ const Leaves = () => {
     const AddNewTimeOff = () => {
         setIsbuttondisabled(true)
         dispatch({ type: 'ERRORS', payload: {  } });
+        if (!absence || !description ||  ! dates.length ) {
+            toast.error('All fields are required')
+            setIsbuttondisabled(false)
+            return ;
+        }
+
         console.log(file)
         console.log(fileName)
         if (!fileName.endsWith('.pdf') && fileName !="" ) {
-            dispatch({ type: 'ERRORS', payload: { daterange: 'media attached must be a PDF file' } });
+             toast.error('File must be a pdf')
             setIsbuttondisabled(false)
             return; // Exit the function if fileName doesn't end with .pdf
 
@@ -159,11 +165,15 @@ const Leaves = () => {
             .then((response) => {
                 
                 dispatch({ type: 'ERRORS', payload: {} });
+                toast.success('Time off added successfully');
                 window.location.reload();
             })
             .catch((error) => {
                 
-                dispatch({ type: 'ERRORS', payload: error.response.data });
+                
+                toast.error(error.response.data.daterange)
+                
+              
             })
             .finally(() => {
                 setIsbuttondisabled(false); // Reset isbuttondisabled to false after the function completes (whether it succeeds or fails)

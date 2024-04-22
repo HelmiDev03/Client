@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { useRouter } from 'next/navigation';
 import { PiCrownLight } from 'react-icons/pi';
+import toast from 'react-hot-toast';
 
 
 
@@ -76,14 +77,11 @@ const TimeOff = () => {
                     return res.data.permissionGroups
                 })
                 .catch((err: any) => {
-                    dispatch({
-                        type: 'ERRORS',
-                        payload: err.response.data
-
-                    })
+                    toast.error('Group name already exists')
                 })
                 .then((newdata) => {
                     setIsHidden(new Array(newdata.length).fill(false))
+                    toast.success('Group created successfully')
                 })
                 .catch((err) => {
                     console.log(err)
@@ -91,12 +89,13 @@ const TimeOff = () => {
 
         }
         else {
+            toast.error("Please fill the group name")
             return;
         }
     }
 
 
-    const deletegroup = (id: string) => () => {
+    const deletegroup = (id: string , groupname:string) => () => {
         axios.delete(process.env.NEXT_PUBLIC_DOMAIN + `/api/permissions/delete/${id}`)
             .then(res => {
                 dispatch({
@@ -111,25 +110,10 @@ const TimeOff = () => {
             })
             .then((newdata) => {
                 setIsHidden(new Array(newdata?.length).fill(false))
+                toast.success(groupname + ' has been deleted successfully')
             })
     }
-    const setnewdefaultgroup = (id: string) => () => {
-        axios.put(process.env.NEXT_PUBLIC_DOMAIN + `/api/group/setnewdefaultgroup/${id}`)
-            .then(res => {
-                dispatch({
-                    type: 'SET_permissionGroups',
-                    payload: res.data.permissionGroups
-                });
-                setIsHidden(isHidden.map(() => false))
-                return res.data.permissionGroups
-            })
-            .catch(err => {
-                console.log(err)
-            })
-            .then((newdata) => {
-                setIsHidden(new Array(newdata?.length).fill(false))
-            })
-    }
+
 
 
 
@@ -233,7 +217,7 @@ const TimeOff = () => {
                         {group.iscustom && isHidden[index] && (
                             <div style={{ boxShadow: "inset 0 0 10px 0 rgba(0, 0, 0, 0.1)" }} className="rounded-[10px] absolute z-50 flex flex-col top-[20%] bg-white p-6  right-[-4%]">
                                 <>
-                                    <h3 onClick={deletegroup(group._id)} className='hover:cursor-pointer hover:bg-gray-200 p-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>
+                                    <h3 onClick={deletegroup(group._id , group.name)} className='hover:cursor-pointer hover:bg-gray-200 p-3 text-[14px] font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Remove</h3>
                                 </>
                             </div>
                         )}

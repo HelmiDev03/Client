@@ -5,6 +5,7 @@ import React from 'react'
 import { TfiWrite } from "react-icons/tfi";
 import { LuPen } from "react-icons/lu";
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
+import toast from 'react-hot-toast';
 
 
 
@@ -26,7 +27,7 @@ const Taks = () => {
         axios.put(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/tasks/update/' + taskid,
          { status: task.status === 'in progress' ? 'completed' : 'in progress' }
           )
-          .then(() => window.location.reload())
+          .then(() =>{ window.location.reload() ; toast.success('Task Updated Successfully')})
             .catch((err) => console.log(err))
 
 

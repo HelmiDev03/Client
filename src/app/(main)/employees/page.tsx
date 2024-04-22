@@ -20,6 +20,7 @@ import { Input2 } from '@/app/(components)/Inputs/TextInput';
 import { GetAllEmployees } from '@/redux/actions/usersActions/getAllEmployees';
 import { Deleteemployee } from '@/redux/actions/usersActions/deleteEmployee';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Employees = () => {
     
@@ -69,7 +70,8 @@ const Employees = () => {
         }
         else if (popupDeletePage === 2) {
             if (employeeName !== employeeSelected) {
-                dispatch({ type: 'ERRORS', payload: { message: 'The name you entered does not match the employee name' } })
+                toast.error('The name you entered does not match the employee name')
+                
 
             }
             else {
@@ -187,23 +189,7 @@ const Employees = () => {
     return (
 
         <div className={styles.EmployeesContainer}>
-            {/*in case employee added*/}
-            <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[160px]  center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
-                <Modal.Header />
-                <Modal.Body className=''>
-                    <div className="text-center">
-                        <IoPersonAdd className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
-                        <h3 className="mb-5 text-lg font-normal  text-[#ffffff] ">
-                            Employee Successfully Added
-                        </h3>
-                        <div className="flex justify-center gap-4">
-
-                        </div>
-
-                    </div>
-                </Modal.Body>
-            </Modal>
-            {/*end in case employee added*/}
+          
 
 
             {/*in case employee deleted*/}

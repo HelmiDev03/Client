@@ -13,6 +13,7 @@ import axios from 'axios';
 import { HiDotsVertical } from "react-icons/hi";
 import { useParams } from 'next/navigation';
 import { SelectInput8 } from '@/app/(components)/Inputs/SelectInput';
+import toast from 'react-hot-toast';
 
 const Employees = () => {
   const [Name, setName] = React.useState('')
@@ -43,6 +44,7 @@ const Employees = () => {
   const AddNewEmployeeToPermissionGroup = async () => {
 
     if (selectedUserIds.length === 0) {
+      toast.error('Please select at least one employee');
       return;
     }
     axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/permissions/addemployeestopermissiongroup/${group}`, { employeesId: selectedUserIds })
@@ -51,6 +53,7 @@ const Employees = () => {
           type: 'SET_PERMISSION_GROUPS',
           payload: res.data.permissionGroups
         });
+        toast.success('Employees added successfully');
         window.location.reload()
       })
   }
@@ -197,9 +200,11 @@ const Employees = () => {
         });
       })
       setPopupAssigngroup(false)
+      toast.success('Employee group updated successfully');
       window.location.reload()
     }
     else {
+      toast.error('Please select a group');
       return;
     }
   }

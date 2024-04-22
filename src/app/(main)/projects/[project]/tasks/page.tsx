@@ -12,6 +12,7 @@ import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { IoMdClose } from 'react-icons/io';
 import { Input5 } from '@/app/(components)/Inputs/TextInput';
+import toast from 'react-hot-toast';
 
 const Tasks = () => {
 
@@ -60,7 +61,7 @@ const Tasks = () => {
                 <div onClick={() => { router.push('tasks/'+ row.taskid ) }} className='p-2 mr-4 ml-[-10px] rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                     <button type="submit"      ><FaArrowRight className='  font-lexend font-lexend  leading-[20px] text-[#7152F3] text-[20px]' /></button>
                 </div>
-                <div onClick={() => { axios.delete(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/'+project+'/tasks/delete/' + row.taskid).then((res) => { dispatch({ type: 'SET_TASKS', payload: res.data.tasks }) }).catch((err) => console.log(err)) }}   className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
+                <div onClick={() => { axios.delete(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/'+project+'/tasks/delete/' + row.taskid).then((res) => { dispatch({ type: 'SET_TASKS', payload: res.data.tasks }) ; toast.success('Task deleted ') }).catch((err) => console.log(err)) }}   className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                     <button type="submit"      ><MdOutlineDeleteOutline className='  font-lexend font-light  leading-[20px] text-red-500 text-[20px]' /></button>
                 </div>
 
@@ -252,10 +253,14 @@ const Tasks = () => {
 
 
     const formvalid = taskname !== '' && deadlines !== '' && selectedUsers.length !== 0;
-    console.log(formvalid)
+    
 
 
     const AddNewTask = () => {
+        if (!formvalid) {
+            toast.error('Please fill all the fields');
+            return;
+        }
         axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/' + project + '/tasks/create', {
             name: taskname,
             deadline: deadlines,
@@ -269,6 +274,12 @@ const Tasks = () => {
                         payload: res.data.tasks
                     }
                 )
+                toast.success('Task created successfully');
+                setPopupAddTask(false);
+            })
+            .catch((res) => {
+              
+                toast.error('Task name already exists');
                 setPopupAddTask(false);
             })
     }

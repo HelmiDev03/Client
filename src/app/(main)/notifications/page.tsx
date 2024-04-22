@@ -11,6 +11,7 @@ import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import { TextareaInput } from '@/app/(components)/Inputs/textarea'
 import { useDispatch } from "react-redux";
 import { InputTextarea } from "primereact/inputtextarea";
+import toast from "react-hot-toast";
 const Notifications = () => {
   const [PopupAcceptOrRejectLeaveRequest, setPopupAcceptOrRejectLeaveRequest] = React.useState(false)
   const [notifications, setNotifications] = React.useState([])
@@ -50,7 +51,7 @@ const Notifications = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const MAX_ENTRIES = 3; // Maximum entries to display at once
 
-  const paginatednotifications = notifications.slice((currentPage - 1) * MAX_ENTRIES, currentPage * MAX_ENTRIES);
+  const paginatednotifications = notifications?.slice((currentPage - 1) * MAX_ENTRIES, currentPage * MAX_ENTRIES);
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -66,6 +67,7 @@ const Notifications = () => {
       .then((res: any) => {
         axios.delete(process.env.NEXT_PUBLIC_DOMAIN + '/api/notifications/delete/' + notif)
           .then(() => {
+            toast.success('Time off request ' + popupText + 'ed successfully')
             window.location.reload()
           })
       })
@@ -89,7 +91,7 @@ const Notifications = () => {
                 </div>
                 <div className='flex justify-between flex-col mr-12 '>
                   <p className='mb-2 font-lexend text-body-1 font-bold text-[#16151C] text-base leading-6 tracking-normal text-left '>{notif.content.user.firstname} {notif.content.user.lastname}  <span className='font-lexend text-caption font-light text-[#A2A1A8] text-sm leading-5 tracking-normal '>time off request is pending</span></p>
-                  <p className='mb-2 flex flex-row font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><IoIosCalendar className='mr-2 text-[#7152F3] text-[20px] ' />{notif.content.type}  from {notif.content.startdate.slice(0, 10)}  to {notif.content.enddate.slice(0, 10)}</p>
+                  <p className='mb-2 flex flex-row font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><IoIosCalendar className='mr-2 text-[#7152F3] text-[20px] ' />{notif.content.type}  from {notif.content.startdate?.slice(0, 10)}  to {notif.content.enddate?.slice(0, 10)}</p>
                   <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> requested at  : {notif.createdAt.slice(0, 10)} </p>
                   {notif.content.file && <div onClick={()=>window.location.href =notif.content.file} className='hover:cursor-pointer bg-white-500 border-[2px]  flex flex-row  justify-center items-center border-[#7152F3] w-[150px] h-[30px] w-[250px] text-white rounded-[10px] p-1  ' >
                     <IoDocumentOutline className='mr-2 text-[#7152F3] text-[20px] ' />          <h3 className='text-[14px] text-[#7152F3]'>View Media Attached </h3>
@@ -120,8 +122,8 @@ const Notifications = () => {
                 </div>
                 <div className='flex justify-between flex-col mr-12 '>
                   <p className='mb-2 font-lexend text-body-1 font-bold text-[#16151C] text-base leading-6 tracking-normal text-left '>{notif.content.user.firstname} {notif.content.user.lastname}  <span className='font-lexend text-caption font-light text-[#A2A1A8] text-sm leading-5 tracking-normal '>has answred your time off request</span></p>
-                  <p className='mb-2 flex flex-row font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><IoIosCalendar className='mr-2 text-[#7152F3] text-[20px] ' />{notif.content.type}  from {notif.content.startdate.slice(0, 10)}  to {notif.content.enddate.slice(0, 10)}</p>
-                  <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> Answredat at  : {notif.content.answredat.slice(0, 10)} </p>
+                  <p className='mb-2 flex flex-row font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><IoIosCalendar className='mr-2 text-[#7152F3] text-[20px] ' />{notif.content.type}  from {notif.content.startdate?.slice(0, 10)}  to {notif.content.enddate?.slice(0, 10)}</p>
+                  <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> Answredat at  : {notif.content.answredat?.slice(0, 10)} </p>
                   <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> Response  : {notif.content.response} </p>
 
 

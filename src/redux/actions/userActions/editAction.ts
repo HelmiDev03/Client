@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import axios from 'axios';
 import { setAuth } from '@/redux/utils/setAuth';
 
-
+import toast, { Toaster } from "react-hot-toast";
 
 
 interface UserData {
@@ -21,11 +21,9 @@ export const EditPersonalInformation =  (data: UserData) => (dispatch: Dispatch<
             type: 'UPDATE_USER',
             payload: res.data.user
         });
+        toast.success(res.data.message);
 
-        dispatch({
-            type: 'SUCCESS',
-            payload: res.data.message
-        });
+        
     
         
         dispatch({

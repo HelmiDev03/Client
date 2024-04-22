@@ -4,7 +4,7 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
 
-
+import toast, { Toaster } from "react-hot-toast";
 
 
 
@@ -12,10 +12,7 @@ import axios from 'axios';
 export const Addnewemployee = (data:any , router:any) => (dispatch: Dispatch<any>) => {
     axios.post(process.env.NEXT_PUBLIC_DOMAIN+'/api/employees/addnewemployee' , data)
         .then(res => {
-            dispatch({
-                type: 'SUCCESS',
-                payload: res.data.message
-            });
+            toast.success(res.data.message);
             dispatch({
                 type: 'SET_POLICIES',
                 payload: res.data.policies

@@ -4,6 +4,7 @@ import "./globals.css";
 import StoreProvider from "@/redux/provider";
 import inDevEnvironment from "@/app/devorprod";
 
+
 export const metadata: Metadata = {
   title: "SignIn",
   description: "novencia SignIn page",
@@ -30,7 +31,8 @@ export default function RootLayout({
       <body >
 
       <StoreProvider>
- 
+   
+    
       
     {children}
 

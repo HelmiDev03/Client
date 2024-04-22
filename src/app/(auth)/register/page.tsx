@@ -1,46 +1,30 @@
 
-
-
 'use client'
 import { motion } from 'framer-motion';
 import styles from './page.module.css'
 
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { Input3 } from "@/app/(components)/Inputs/TextInput";
-import { SelectInput } from "@/app/(components)/Inputs/SelectInput";
+import { TiMinusOutline } from "react-icons/ti";
+import { FaCheck } from "react-icons/fa6";
 
 import { useEffect, useState } from "react";
 
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
-import { TiTick } from "react-icons/ti";
 
 import { FaArrowRight } from "react-icons/fa6";
 import Image from 'next/image';
 import axios from 'axios';
 import { PhoneInput } from 'react-international-phone';
-
+import toast from "react-hot-toast";
 import 'react-international-phone/style.css';
 
-import { BiErrorCircle } from "react-icons/bi";
-
 import { Registration } from '@/redux/actions/userActions/registerAction';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { ImSpinner8 } from 'react-icons/im';
-
-
-
-
-
-
-
-
-
-
-
-
+import { FcGoogle } from 'react-icons/fc';
+import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 
 
 const Register = () => {
@@ -48,30 +32,20 @@ const Register = () => {
     const router = useRouter()
     const dispatch = useDispatch<AppDispatch>();
    
-
-
-
-
     const [Page, setPage] = useState("signup1");
 
     const [email, setEmail] = useState("");
-    const [emailError, setEmailError] = useState("");
     const [role, setRole] = useState("");
-    const [roleError, setRoleError] = useState("");
     const [firstName, setFirstName] = useState("");
-    const [firstNameError, setFirstNameError] = useState("");
     const [lastName, setLastName] = useState("");
-    const [lastNameError, setLastNameError] = useState("");
     const [CIN, setCIN] = useState("");
-    const [CINError, setCINError] = useState("");
     const [companyName, setCompanyName] = useState("");
-    const [companyNameError, setCompanyNameError] = useState("");
+
     const [domain, setDomain] = useState("");
-    const [domainError, setDomainError] = useState("");
+
 
     const [phoneNumber, setPhoneNumber] = useState("");
 
-    const [phoneNumberError, setPhoneNumberError] = useState("");
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -80,7 +54,6 @@ const Register = () => {
 
     const handleEmail = (e: any) => {
         setEmail(e.target.value);
-
     }
     const handleRole = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedRole = e.target.value;
@@ -88,23 +61,15 @@ const Register = () => {
     };
     const handleFirstName = (e: any) => {
         setFirstName(e.target.value);
-
-
     };
     const handleLastName = (e: any) => {
         setLastName(e.target.value);
-
-
     };
     const handleCIN = (e: any) => {
         setCIN(e.target.value);
-
-
     };
     const handleCompanyName = (e: any) => {
         setCompanyName(e.target.value);
-
-
     };
     const handleDomain = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedDomain = e.target.value;
@@ -112,51 +77,29 @@ const Register = () => {
     };
     const handlePhoneNumber = (value: any) => {
         setPhoneNumber(value);
-
     };
-
     const handleChangePassword1 = (e: any) => {
         setPassword1(e.target.value);
         // Perform validation here
-
     };
-
     const handleChangePassword2 = (e: any) => {
         setPassword2(e.target.value);
         // Perform validation here
-
     }
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
     useEffect(() => {
-
     }, [role]); // Run the effect whenever the 'role' state changes
 
-
-
-
-  
-
     const checkflow1 = async () => {
-        setEmailError("");
-        setRoleError("");
-    
         const emailPattern = /^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$/;
-    
         if (!emailPattern.test(email)) {
-       
-            setEmailError('Invalid Email');
-            return ;
+             return toast.error('Invalid Email');
         }
-    
         if (role === '') {
-           
-            setRoleError('Invalid Role');
-            return ;
-
+            return  toast.error('Invalid Role');
         }
-    
         try {
             if (emailPattern.test(email)) {
                 await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyemail`, { email: email });
@@ -164,87 +107,66 @@ const Register = () => {
             }
         } catch (err: any) {
             console.log(err.response?.data);
-          
-            setEmailError('This Email is Already Used By Someone Else');
-            return ;
+             return toast.error('This Email is Already Used By Someone Else');
         }
-    
-       
+
+        setPage("signup2");
     }
     
     const checkflow2 = async () => {
-        setFirstNameError('');
-        setLastNameError('');
-        setCINError('');
-        const nameRegex = /^[a-zA-Z]{4,}$/
+        const nameRegex = /^[a-zA-Z]{3,}$/
         const cinRegex = /^\d{8}$/;
         if (!nameRegex.test(firstName)) {
-            setFirstNameError('Invalid First Name');
-            return;
+            return toast.error('Invalid First Name');
         }
         if (!nameRegex.test(lastName)) {
-            setLastNameError('Invalid Last Name');
-            return;
+            return toast.error('Invalid Last Name');
         }
         if (!cinRegex.test(CIN)) {
-            setCINError('Invalid CIN');
-            return;
+             return toast.error('Invalid CIN');
         }
         try {
             await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifycin`, { cin: CIN });
             setPage("signup3");
         } catch (err: any) {
-            console.log(err.response?.data);
-            setCINError('this CIN is used by someone else');
-            return;
+             return toast.error('this CIN is used by someone else');
         }
-
-
+        setPage("signup3");
     }
 
     const checkflow3 = async () => {
-        setCompanyNameError('');
-        setDomainError('');
-        setPhoneNumberError('');
-        const nameRegex = /^[a-zA-Z]{4,}$/
-        const phoneNumberRegex = /^\+\d{2,4}\d{9,}$/
+        const nameRegex = /^[a-zA-Z]{2,}$/
+        const phoneNumberRegex = /^\+\d{2,4}\d{8,8}$/
 
-
-        if (domain == '') {
-            setDomainError('Invalid Domain');
-            return;
+        if (domain === '') {
+            return toast.error('Invalid Industry');
         }
         if (!nameRegex.test(companyName)) {
-            setCompanyNameError('Invalid Company Name');
-            return;
+             return toast.error('Invalid Company Name');
         }
         if (!phoneNumberRegex.test(phoneNumber)) {
-            setPhoneNumberError('Invalid Phone Number');
-            return;
+             return toast.error('Invalid Phone Number');
         }
         try {
-
             await axios.post(process.env.NEXT_PUBLIC_DOMAIN+`/api/verifyphone`, { phonenumber: phoneNumber.trim() });
             setPage("signup4");
         } catch (err: any) {
             console.log(err.response?.data);
-            setPhoneNumberError('this Phone number is already used by other company');
-            return;
+             return toast.error('this Phone number is already used by other company');
         }
 
+        setPage("signup4");
     }
 
     const checkflow4 = () => {
-        if (
-            password1.length < 12 ||
+        if (password1.length < 12 ||
             !/[A-Z]/.test(password1) ||
             !/[a-z]/.test(password1) ||
             !/\d/.test(password1) ||
             !/[!@#$%^&*(),.?":{}|<>]/.test(password1) ||
             password1 !== password2
-        ) {
-            return;
-        }
+        ) {  return ;}
+        
         dispatch(Registration({
             firstname: firstName,
             lastname: lastName,
@@ -256,24 +178,12 @@ const Register = () => {
             domaine: domain,
             phonenumber: phoneNumber
         })
-
         )
-
-
     }
-
-
-
-
-
-
-
-
 
     const handleNext = (CurrentPage: string) => {
         if (CurrentPage == "signup1") {
             checkflow1();
-
         }
         else if (CurrentPage == "signup2") {
             checkflow2();
@@ -281,118 +191,93 @@ const Register = () => {
         else if (CurrentPage == "signup3") {
             checkflow3();
         }
-
         else if (CurrentPage == "signup4") {
             checkflow4();
         }
-
-
-
-
     }
-
-
-
-
 
     return (
         <div >
-
-
-            <div className={`  ${Page === "signup4" ? "hidden" : "block"}  flex flex-row h-screen justify-center ml-[-40px]  `} >
-
-
-                <div className=" w-[50%] h-[95%] mt-6 ml-[50px] rounded-[30px]  mr-[20px] flex justify-center items-center bg-[#7152F3] bg-opacity-[5%]  ">
-
-
+            <div className={`${Page === "signup4" ? "hidden" : "block"} flex h-screen justify-center`} >
+                <div className=" w-[60%] h-full flex justify-center items-center bg-[#7152F3] bg-opacity-[5%]">
                     <Image width={430} height={430} src="/Code review-bro 1.png" alt="signup" />
-
-
-
                 </div>
-
-
-
-
-                <div className="w-[50%] mr-2   flex flex-col justify-center items-center  mb-3">
-
-                    <div onClick={(e: any) => { setPage(`signup${parseInt(Page.replace('signup', '')) - 1}`) }}> <IoArrowBackCircleSharp className={`  ${Page === "signup1" ? "hidden" : "block"}    absolute top-[132px] right-[37%] text-[30px] text-[#7152F3] hover:cursor-pointer`} /></div>
-
+                <div className="w-[40%] flex flex-col justify-center items-center">
+                    <div onClick={(e: any) => { setPage(`signup${parseInt(Page.replace('signup', '')) - 1}`) }}> <IoArrowBackCircleSharp className={`  ${Page === "signup1" ? "hidden" : "block"} absolute top-5 right-[36%] text-[35px] text-[#7152F3] hover:cursor-pointer`} /></div>
                     {/*LOGO*/}
-                    <div className=" h-[40px]   flex items-center justify-center font-lexend translate-y-[25px] ">
-
+                    <div className=" h-[40px] flex items-center justify-center font-lexend translate-y-[25px] ">
                         <Image
                             width={40}
                             height={40}
-                            className="w-11 h-10 mr-[5px]"
+                            className="w-16 mr-[5px]"
                             src="/logo.png"
                             alt="" />
-
-                        <p className=" leading-[40px] text-[30px] font-semibold">NRH </p>
+                        <p className="leading-[40px] text-[35px] font-bold">NRH </p>
                     </div>
                     {/*Welcome && Please sign up here*/}
-                    <div className=" h-[40px]flex mb-[100px] ml-10 flex-row items-center mt-[60px]">
-
+                    <div className="h-[40px] flex mb-[80px] flex-col items-center mt-[60px] gap-1">
                         <p className={styles.maintext}>Welcome</p>
-                        <p className="font-lexend text-body-2 font-light text-[16px] text-gray-400 text-sm leading-[24px] tracking-normal text-left   ">Please Sign Up here</p>
-
-
+                        <p className="font-lexend text-body-2 font-light text-[16px] text-gray-400 text-sm leading-[24px] tracking-normal text-center">Get started with NRH, just create an account and enjoy the experience.</p>
                     </div>
 
-
                     {/*Dynamic Layout of Singup 1*/}
-                    <div className={` ${Page === 'signup1' ? "block" : "hidden"}  signup-section flex flex-col mt-8 mb-4  justify-center items-center  h-[200px] bg-white-500 justify-center items-center rounded-[10px] pt-[5px] `}>
-                        <form className='mb-12 mr-[35px]  '>
-                            <div className={styles.InputContainer} >
-
-
-                                <Input3 onChange={handleEmail} label="email" placeholder="exemple.exemple.com" type="email" />
-                                { emailError && <div className="      h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {emailError}
-                                    </div>
-                                </div>}
-                            </div>
-
-                            <div style={{ marginBottom: '10px' }} className={styles.InputContainer}>
-
-
-                                <SelectInput onChange={handleRole} placeholder='choose role' label='role' options={['Manager HR', 'service informatique', 'stagiaire', 'admin']} />
-                                {roleError && <div className="      h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {roleError}
-                                    </div>
-                                </div>}
-                            </div>
-                           
+                    <div className={`${Page === 'signup1' ? "block" : "hidden"} flex flex-col justify-center items-center bg-white-500`}>
+             
+                        <form className='mb-3 w-full'>
+                                {/* <!--Email input--> */}
+                                <div className="relative mb-3">
+                                    <input
+                                        type="email"
+                                        onChange={handleEmail}
+                                        className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                        id="floatingInput"
+                                        placeholder="name@example.com" />
+                                    <label
+                                        htmlFor="floatingInput"
+                                        className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                        >Email
+                                    </label>
+                                </div>
+                                {/* <Input3 onChange={handleEmail} label="email" placeholder="exemple.exemple.com" type="email" /> */}
+                                <div className="relative mb-3">
+                                    <select
+                                        onChange={handleRole}
+                                        className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                        id="floatingSelect"
+                                    >
+                                        <option value="" disabled selected hidden>Choose a role</option>
+                                        <option value="other">Other</option>
+                                        <option value="HR Manager">HR Manager</option>
+                                        <option value="HR specialist">HR Specialist</option>
+                                        <option value="IT department">IT Department</option>
+                                        <option value="management team">Management Team</option>
+                                        <option value="operations team">Operations Team</option>
+                                        <option value="accounting">Accounting</option>
+                                        <option value="intern">Intern</option>
+                                    </select>
+                                    <label
+                                        htmlFor="floatingSelect"
+                                        className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                    >
+                                        Role
+                                    </label>
+                                </div>
+                                {/* <SelectInput onChange={handleRole} placeholder='choose role' label='role' options={['Manager HR', 'service informatique', 'stagiaire', 'admin']} /> */}
                         </form>
-
-
-
-
-                        <div className='  mb-2 ml-[90px] flex justify-center items-end flex-col w-[250px] h-[22px] '>
-
-
+                        <div className='mx-[90px] mb-4 flex justify-center items-end flex-col w-full'>
                             <div className='flex flex-col '>
-                                <p className="font-light font-lexend text-[#7152F3]   text-[14px] leading-[22px] ">You  have an account ?
+                                <p className="font-light text-[#7152F3] text-[14px] leading-[22px] ">You have an account ?
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         transition={{ duration: 0 }}
-                                        className="inline-block ml-[5px] "
-
+                                        className="inline-block  ml-[5px] "
                                     >
-                                        <span onClick={(e) => { router.push('/login',) }} className="font-bold hover:cursor-pointer">Login  Here</span>
-                                    </motion.div></p></div>
+                                        <span onClick={(e) => { router.push('/login',) }} className="font-bold hover:cursor-pointer hover:underline">Login  Here</span>
+                                    </motion.div>
+                                </p>
+                            </div>
                         </div>
                         <div className="text-center mb-3">
                             <div className="flex items-center justify-center">
@@ -401,405 +286,246 @@ const Register = () => {
                                 <hr className="border border-solid border-[#7152F3] w-[190px] mx-2" />
                             </div>
                         </div>
-                        <button className=" mb-6 bg-white-500 border-[3px] flex justify-center items-center border-[#7152F3] w-[209px] h-[71px] text-white rounded-[10px] p-1"><h3 className=' font-lexend font-bold text-[20px] text-[#7152F3]'>Conitnue With Google</h3> </button>
-
+                        <button className="bg-white-500 border-[3px] flex justify-center items-center gap-4 border-[#7152F3] w-full text-white rounded-[10px] p-2">
+                            <FcGoogle size={30}/>
+                            <h3 className='font-bold text-[20px] text-[#7152F3]'>Conitnue With Google</h3> 
+                        </button>
                     </div>
-
-
-
-
-
-
-
-
-
-
                     {/*End Dynamic Layout of Singup 1*/}
 
-
-
-
-
                     {/*Dynamic Layout of Singup 2*/}
-                    <div className={` ${Page === 'signup2' ? "block " : "hidden "} n flex flex-col mt-8 mb-4  justify-center items-center  h-[200px] bg-white-500 justify-center items-center rounded-[10px] pt-[5px] `}>
-                        <div className={styles.InputContainer}>
-
-
-                            <Input3 onChange={handleFirstName} label="First Name" placeholder="exemple" type="text" />
-                            { firstNameError && <div className="      h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {firstNameError}
-                                    </div>
-                                </div>}
+                    <div className={`${Page === 'signup2' ? "block " : "hidden "} flex flex-col justify-center items-center bg-white-500 w-[70%]`}>
+                       
+                        {/* <!--First Name input--> */}
+                        <div className="relative mb-3 w-full">
+                            <input
+                                type="text"
+                                onChange={handleFirstName}
+                                className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                id="floatingInput"
+                                placeholder="name@example.com" />
+                            <label
+                                htmlFor="floatingInput"
+                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                >First Name
+                            </label>
                         </div>
-                        
-
-                        <div className={styles.InputContainer}>
-
-
-                            <Input3 onChange={handleLastName} label="Last Name" placeholder="exemple" type="text" />
-                            { lastNameError && <div className="      h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {lastNameError}
-                                    </div>
-                                </div>}
+                        {/* <!--Last Name input--> */}
+                        <div className="relative mb-3 w-full">
+                            <input
+                                type="text"
+                                onChange={handleLastName}
+                                className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                id="floatingInput"
+                                placeholder="name@example.com" />
+                            <label
+                                htmlFor="floatingInput"
+                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                >Last Name
+                            </label>
                         </div>
-                      
-                        <div className={styles.InputContainer}>
-
-
-                            <Input3 onChange={handleCIN} label="CIN" placeholder="00000000" type="text" />
-                            { CINError && <div className="      h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {CINError}
-                                    </div>
-                                </div>}
+                        {/* <!--CIN input--> */}
+                        <div className="relative mb-3 w-full">
+                            <input
+                                type="text"
+                                onChange={handleCIN}
+                                className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                id="floatingInput"
+                                placeholder="name@example.com" />
+                            <label
+                                htmlFor="floatingInput"
+                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                >CIN
+                            </label>
                         </div>
-                      
-
-
                     </div>
-
                     {/*End Dynamic Layout of Singup 2*/}
 
-
-
                     {/*Dynamic Layout of Singup 3*/}
-                    <div className={` ${Page === 'signup3' ? "bloc " : "hidden "}  flex flex-col mt-8 mb-4  justify-center items-center  h-[200px] bg-white-500 justify-center items-center rounded-[10px] pt-[5px] `}>
-                        <div  className={styles.InputContainer}>
-
-
-                            <SelectInput
+                    <div className={`${Page === 'signup3' ? "bloc " : "hidden "} flex flex-col justify-center items-center bg-white-500 w-[70%]`}>
+                    
+                        {/* <!--Domain input--> */}
+                        <div className="relative mb-3 w-full">
+                            <select
                                 onChange={handleDomain}
-                                placeholder='Choose industry'
-                                label='Industy'
-                                options={[
-                                    'Industrie',
-                                    'Administration Publique',
-                                    'Agriculture',
-                                    'Alimentation, Boissons & Tabac',
-                                    'Automobiles & Composants',
-                                    'Autre',
-                                    'Aérospatial & Défense',
-                                    'Banque & Assurance',
-                                    'Biens Durables & Habillement',
-                                    'Construction & Ingénierie',
-                                    'Contenants & Emballages',
-                                    'Couverture & Services Médicaux',
-                                    'Distribution',
-
-                                    'Fabrication',
-                                    'Finances Diversifiées',
-                                    'Hôtellerie',
-                                    'Immobilier',
-                                    'Internet & Marketing Commercial Direct',
-                                    'Logiciels & Services Informatiques',
-                                    'Machinerie',
-                                    'Marchandises',
-                                    'Matériel & Equipement Technologique',
-                                    'Militaire',
-                                    'Médias & Divertissements',
-                                    'Métaux & Activité minière',
-                                    'Organisation à But Non Lucratif',
-                                    'Produits Chimiques',
-                                    'Produits pharmaceutiques et biotechnologie',
-                                    'Semi-conducteurs',
-                                    'Service Client',
-                                    'Services Commerciaux & Professionnels',
-                                    'Services Juridiques',
-                                    'Services Publics',
-                                    'Services de Recherche & de Conseil',
-                                    'Sociétés Commerciales & Distributeurs',
-                                    'Transport',
-                                    'Télécommunications',
-                                    'Voyages & Tourisme',
-                                    'Education'
-                                ]}
+                                className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                id="floatingSelect"
+                            >
+                                <option value="" disabled selected hidden>Choose Industry</option>
+                                <option value="other">Other</option>
+                                <option value="Industry">Industry</option>
+                                <option value="Public Administration">Public Administration</option>
+                                <option value="Agriculture">Agriculture</option>
+                                <option value="Food, Beverage & Tobacco">Food, Beverage & Tobacco</option>
+                                <option value="Automotive & Components">Automotive & Components</option>
+                                <option value="Aerospace & Defense">Aerospace & Defense</option>
+                                <option value="Banking & Insurance">Banking & Insurance</option>
+                                <option value="Durable Goods & Apparel">Durable Goods & Apparel</option>
+                                <option value="Construction & Engineering">Construction & Engineering</option>
+                                <option value="Containers & Packaging">Containers & Packaging</option>
+                                <option value="Roofing & Medical Services">Roofing & Medical Services</option>
+                                <option value="Distribution">Distribution</option>
+                                <option value="Food Distribution & Staples">Food Distribution & Staples</option>
+                                <option value="Manufacturing">Manufacturing</option>
+                                <option value="Diversified Finance">Diversified Finance</option>
+                                <option value="Hospitality">Hospitality</option>
+                                <option value="Real Estate">Real Estate</option>
+                                <option value="Internet & Direct Business Marketing">Internet & Direct Business Marketing</option>
+                                <option value="Software & IT Services">Software & IT Services</option>
+                                <option value="Machinery">Machinery</option>
+                                <option value="Merchandise">Merchandise</option>
+                                <option value="Hardware & Technology Equipment">Hardware & Technology Equipment</option>
+                                <option value="Military">Military</option>
+                                <option value="Media & Entertainment">Media & Entertainment</option>
+                                <option value="Metals & Mining">Metals & Mining</option>
+                                <option value="Non-Profit Organization Profit">Non-Profit Organization Profit</option>
+                                <option value="Chemicals">Chemicals</option>
+                                <option value="Pharmaceuticals & Biotechnology">Pharmaceuticals & Biotechnology</option>
+                                <option value="Semiconductors">Semiconductors</option>
+                                <option value="Customer Service">Customer Service</option>
+                                <option value="Business & Professional Services">Business & Professional Services</option>
+                                <option value="Legal Services">Legal Services</option>
+                                <option value="Public Services">Public Services</option>
+                                <option value="Research & Consulting Services">Research & Consulting Services</option>
+                                <option value="Trading Companies & Distributors">Trading Companies & Distributors</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Telecommunications">Telecommunications</option>
+                                <option value="Travel & Tourism">Travel & Tourism</option>
+                                <option value="Education">Education</option>
+                            </select>
+                            <label
+                                htmlFor="floatingSelect"
+                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                            >
+                                Industry
+                            </label>
+                        </div>
+                        {/* <!--Company Name input--> */}
+                        <div className="relative mb-3 w-full">
+                            <input
+                                type="text"
+                                onChange={handleCompanyName}
+                                className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                id="floatingInput"
+                                placeholder="name@example.com" />
+                            <label
+                                htmlFor="floatingInput"
+                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                >Company Name
+                            </label>
+                        </div>
+                        {/* <!--Phone Number input--> */}
+                        <div className="relative mb-3 pt-5 w-full h-[60px] border rounded-[10px] border-solid border-slate-400 flex items-center">
+                            <label className="absolute z-[5] top-0 left-0 px-2 pt-1 font-light text-xs leading-4 text-blue-400">Phone Number</label>
+                            <PhoneInput
+                                defaultCountry="tn"
+                                value={phoneNumber}
+                                onChange={handlePhoneNumber}
+                                className="-ml-[50px]"
+                                inputStyle={{
+                                    width: '100%',
+                                    height: '36px',
+                                    outline: 'none',
+                                    border: 'none',
+                                    backgroundColor: 'transparent', // Set to transparent to match the container
+                                    paddingLeft: '60px', // Adjust this padding as needed
+                                    fontSize: '16px', // Adjust font size as needed
+                                    color: '#000', // Set text color if needed
+                                }}
                             />
-                             { domainError && <div className="      h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {domainError}
-                                    </div>
-                                </div>}
-
                         </div>
-                      
-                        <div className={styles.InputContainer}>
-
-
-                            <Input3 onChange={handleCompanyName} label="Company Name" placeholder="exemple" type="text" />
-                            { companyNameError && <div className="      h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {companyNameError}
-                                    </div>
-                                </div>}
-                        </div>
-                      
-
-
-                        <div style={{ marginBottom: '5px' }} className='  mb-6 flex flex-col '>
-
-
-
-                            <div className="relative">
-                                <label className="absolute z-[5] transform translate-x-[100px] top-0 left-0 px-2 pt-1 font-light text-xs leading-4 text-indigo-600">Phone Number</label>
-                                <PhoneInput
-                                    defaultCountry="ua"
-                                    value={phoneNumber}
-                                    onChange={handlePhoneNumber}
-                                    inputStyle={{
-                                        width: '446px',
-                                        height: '56px',
-                                        padding: '16px',
-                                        paddingLeft: '65px',
-                                        transform: 'translateX(9px)',
-                                        border: '1px solid #ccc',
-                                        borderRadius: '10px',
-                                        borderLeft: 'none',
-                                        outline: 'none',
-                                        transition: 'border-color 0.3s ease-in-out',
-                                        borderColor: '#ccc',
-                                    }}
-                                />
-                                 { phoneNumberError && <div className=" translate-x-[54px]  translate-y-[13px]   h-[30px] w-[445px] flex items-center p-4  text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 " role="alert">
-                                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                    </svg>
-                                    <span className="sr-only">Info</span>
-                                    <div>
-                                        {phoneNumberError}
-                                    </div>
-                                </div>}
-                            </div>
-                        </div>
-                       
-
-
                     </div>
-
                     {/*End Dynamic Layout of Singup 3*/}
-
-
-
 
                     <div className='mb-8 w-[61px] mt-[80px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
                         <ButtonSubmit timing={500} text={loading ? <><ImSpinner8 className="animate-spin  text-[20px]" /> Loading...</> : <FaArrowRight className='text-white text-[20px]' />} fct={() => handleNext(Page)} />
                     </div>
-
-
-
                     {/*4 cercle indicator of current Page */}
-
                     <div className=" ml-6 flex flex-row  justify-center items-center w-[155px] h-[17px]  ">
                         <div className={`${styles.cercle} ${Page === 'signup1' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup2' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup3' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup4' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
-
                     </div>
-
-
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <div className={`  ${Page === "signup4" ? "block" : "hidden"}    w-[90%] h-screen   flex  justify-center items-center `} >
-
-                <div onClick={(e: any) => { setPage(`signup${parseInt(Page.replace('signup', '')) - 1}`) }}> <IoArrowBackCircleSharp className={`  ${Page != "signup4" ? "hidden" : "block"}    absolute top-[132px] right-[77%] text-[30px] text-[#7152F3] hover:cursor-pointer`} /></div>
-
-                <div className="  absolute top-9 left-11 h-[40px] mr-[500px]  flex items-center justify-center  header-nav    ">
-
+            <div className={`${Page === "signup4" ? "block" : "hidden"} w-screen h-screen flex justify-center items-center`} >
+            
+                <div onClick={(e: any) => { setPage(`signup${parseInt(Page.replace('signup', '')) - 1}`) }}> <IoArrowBackCircleSharp className={`  ${Page != "signup4" ? "hidden" : "block"} absolute top-8 left-8 text-[50px] text-[#7152F3] hover:cursor-pointer`} /></div>
+                {/*LOGO*/}
+                <div className="h-[40px] flex items-center justify-center absolute top-10 right-10">
                     <Image
                         width={40}
                         height={40}
-                        className="w-11 h-10 mr-[5px]"
+                        className="w-20 mr-[5px]"
                         src="/logo.png"
                         alt="" />
-
-                    <p className=" leading-[40px] text-[30px] font-semibold">NRH </p>
                 </div>
 
-
-
-                <div className="  flex mb-6 ml-[120px] flex-col items-center mt-[60px]">
-
+                <div className="flex mb-6 flex-col items-center mt-[60px] w-[550px]">
                     <p className={styles.maintext}>Set Your Password</p>
-                    <p className="mb-[80px] font-lexend text-body-2 font-light text-[16px] text-gray-400 text-sm leading-[24px] tracking-normal text-left   ">Please follow the requested Format</p>
-                    <div className='mb-[10px]'>
-                        <div className={styles.InputContainer}>
-
-
-                            <div className={styles.InputWithEye}>
-                                <Input3
+                    <p className="mb-[80px] font-lexend text-body-2 font-light text-[16px] text-gray-400 text-sm leading-[24px] tracking-normal text-left">Please follow the requested Format</p>
+                    <div className='mb-[10px] w-[450px]'>
+                            {/* <!--Password input--> */}
+                            <div className="relative mb-3">
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
                                     onChange={handleChangePassword1}
-                                    label="Password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    value={password1}
+                                    className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-black transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:shadow-twe-primary focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                    id="floatingPassword"
+                                    placeholder="Password" 
                                 />
-                                <button type="button" onClick={toggleShowPassword}>
-                                {showPassword ? <FaEye /> : <FaEyeSlash />}
-                                </button>
+                                <label
+                                    htmlFor="floatingPassword"
+                                    className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                    >Password
+                                </label>
+                                <div className="absolute top-5 right-5 cursor-pointer" onClick={toggleShowPassword} >
+                                    { showPassword ? <HiOutlineEye size={20} /> : <HiOutlineEyeOff size={20} /> }
+                                </div>
                             </div>
-                        </div>
-                        <div className={styles.InputContainer}>
-
-
-                            <div className={styles.InputWithEye}>
-                                <Input3
+                            {/* <!--Password input--> */}
+                            <div className="relative mb-3">
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
                                     onChange={handleChangePassword2}
-                                    label="Password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    value={password2}
+                                    className="peer m-0 block h-[58px] w-full rounded-lg border border-solid border-secondary-500 bg-transparent bg-clip-padding px-3 py-4 text-base font-normal leading-tight text-black transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:shadow-twe-primary focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-black dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
+                                    id="floatingPassword"
+                                    placeholder="Password" 
                                 />
-                                <button  type="button" onClick={toggleShowPassword}>
-                                {showPassword  ? <FaEye  /> : <FaEyeSlash />}
-                                </button>
+                                <label
+                                    htmlFor="floatingPassword"
+                                    className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-blue-400 dark:peer-focus:text-primary"
+                                    >Confirm Password
+                                </label>
+                                <div className="absolute top-5 right-5 cursor-pointer" onClick={toggleShowPassword} >
+                                    { showPassword ? <HiOutlineEye size={20} /> : <HiOutlineEyeOff size={20} /> }
+                                </div>
                             </div>
-
-                        </div>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center">
-                        <h3 className='flex'> <BiErrorCircle className={` ${password1.length < 12 ? 'block' : 'hidden'} mt-[2px] mr-[1px]  text-[20px] text-red-500`} /> <TiTick className={` ${password1.length >= 12 ? 'block' : 'hidden'} text-[20px] text-green-500`} />12 charcters or higher</h3>
-                        <h3 className='flex'> <BiErrorCircle className={` ${! /[A-Z]/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[1px]  text-[20px] text-red-500`} /> <TiTick className={` ${/[A-Z]/.test(password1) ? 'block' : 'hidden'} text-[20px] text-green-500`} />Uppercase</h3>
-                        <h3 className='flex'> <BiErrorCircle className={` ${! /[a-z]/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[1px]  text-[20px] text-red-500`} /> <TiTick className={` ${/[a-z]/.test(password1) ? 'block' : 'hidden'} text-[20px] text-green-500`} />Lowercase</h3>
-                        <h3 className='flex'> <BiErrorCircle className={` ${! /\d/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[1px]  text-[20px] text-red-500`} /> <TiTick className={` ${/\d/.test(password1) ? 'block' : 'hidden'} text-[20px] text-green-500`} />Numbers</h3>
-                        <h3 className='flex'> <BiErrorCircle className={` ${!  /[!@#$%^&*(),.?":{}|<>]/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[1px]  text-[20px] text-red-500`} /> <TiTick className={` ${/[!@#$%^&*(),.?":{}|<>]/.test(password1) ? 'block' : 'hidden'} text-[20px] text-green-500`} />Special Caracters</h3>
-                        <h3 className='flex mb-2'> <BiErrorCircle className={` ${password1 != password2 ? 'block' : 'hidden'} mt-[2px] mr-[1px]  text-[20px] text-red-500`} /> <TiTick className={` ${password1 == password2 ? 'block' : 'hidden'} text-[20px] text-green-500`} />Password Matches</h3>
-
-
-                    
-
-
-
+                    <div className="flex flex-col w-[450px]">
+                        <h3 className='flex items-center text-gray-400'> <TiMinusOutline className={` ${password1.length < 12 ? 'block' : 'hidden'} mt-[2px] mr-[3px]  text-[20px] text-red-500`} /> <FaCheck  className={` ${password1.length >= 12 ? 'block' : 'hidden'} text-[20px] mr-[3px] text-green-500`} />12 charcters</h3>
+                        <h3 className='flex items-center text-gray-400'> <TiMinusOutline className={` ${! /[A-Z]/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[3px]  text-[20px] text-red-500`} /> <FaCheck  className={` ${/[A-Z]/.test(password1) ? 'block' : 'hidden'} text-[20px] mr-[3px] text-green-500`} />One Uppercase</h3>
+                        <h3 className='flex items-center text-gray-400'> <TiMinusOutline className={` ${! /[a-z]/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[3px]  text-[20px] text-red-500`} /> <FaCheck  className={` ${/[a-z]/.test(password1) ? 'block' : 'hidden'} text-[20px] mr-[3px] text-green-500`} />One Lowercase</h3>
+                        <h3 className='flex items-center text-gray-400'> <TiMinusOutline className={` ${! /\d/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[3px]  text-[20px] text-red-500`} /> <FaCheck  className={` ${/\d/.test(password1) ? 'block' : 'hidden'} text-[20px] mr-[3px] text-green-500`} />One Number</h3>
+                        <h3 className='flex items-center text-gray-400'> <TiMinusOutline className={` ${!  /[!@#$%^&*(),.?":{}|<>]/.test(password1) ? 'block' : 'hidden'} mt-[2px] mr-[3px]  text-[20px] text-red-500`} /> <FaCheck  className={` ${/[!@#$%^&*(),.?":{}|<>]/.test(password1) ? 'block' : 'hidden'} text-[20px] mr-[3px] text-green-500`} />Special Caracters (!, %, &, etc)</h3>
+                        <h3 className='flex items-center text-gray-400 mb-2'> <TiMinusOutline className={` ${password1 != password2 ? 'block' : 'hidden'} mt-[2px] mr-[3px]  text-[20px] text-red-500`} /> <FaCheck className={` ${password1 == password2 ? 'block' : 'hidden'} text-[20px] mr-[3px] text-green-500`} />Password Matches</h3>
                     </div>
-
-              
-                    <div className='mb-8 w-[61px] mt-[34px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
+                    <button className='mb-8 w-[61px] mt-[34px] h-[61px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3] ' >
                         <ButtonSubmit timing={500} text={loading ? <><ImSpinner8 className="animate-spin  text-[20px]" /> Loading...</> : <FaArrowRight className='text-white text-[20px]' />} fct={() => handleNext(Page)} />
-                    </div>
+                    </button>
                     <div className="translate-y-[10px]  ml-6 flex flex-row  justify-center items-center w-[155px] h-[17px]  ">
                         <div className={`${styles.cercle} ${Page === 'signup1' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup2' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup3' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
                         <div className={`${styles.cercle} ${Page === 'signup4' ? "bg-[#7152F3]" : "bg-[#B2B2B2]"} `} ></div>
-
                     </div>
-                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
-
-
-
         </div>
-
-
-
-
     );
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 export default Register;

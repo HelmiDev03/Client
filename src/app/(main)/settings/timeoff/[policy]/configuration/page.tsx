@@ -13,6 +13,7 @@ import axios from 'axios';
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button';
 import { Modal } from 'flowbite-react';
 import { MdSecurityUpdateGood } from 'react-icons/md'
+import toast from 'react-hot-toast';
 const Config = () => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -32,14 +33,13 @@ const Config = () => {
   const { policy } = useParams();
   const success = useSelector((state: any) => state.success);
   const dispatch = useDispatch();
-  const closeModel = () => {
-    dispatch({
-      type: 'SUCCESS',
-      payload: ''
-    });
-    window.location.reload();
-  }
+  
   const updatePolicy = () => {
+    //check if all field are not empty
+    if (!name  || !StartMonth || !duration || !workingDays || !timeOffDays || !ParentalLeaveMaxTimeOffDaysForWomen || !ParentalLeaveMaxTimeOffDaysForMen || !SickLeaveMaxTimeOffDays || !maxcounter || !bankHoliday || !canbeused || !includerest){
+     toast.error("all field are  required");
+      return;
+    }
     const data = {
       name,
       description,
@@ -60,10 +60,7 @@ const Config = () => {
 
     axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/update/${policy}`, data)
       .then(res => {
-        dispatch({
-          type: 'SUCCESS',
-          payload: 'updated'
-        });
+       toast.success(res.data.message);
         dispatch({
           type: 'SET_POLICIES',
           payload: res.data.policies
@@ -107,21 +104,7 @@ const permission = useSelector((state: any) => state.permission);
       </div> }
 
 
-      <Modal className='absolute w-[400px] translate-x-[520px] translate-y-[-30px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
-        <Modal.Header />
-        <Modal.Body >
-          <div className="text-center">
-            <MdSecurityUpdateGood className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
-            <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">
-              Successfully Updated
-            </h3>
-            <div className="flex justify-center gap-4">
-
-            </div>
-
-          </div>
-        </Modal.Body>
-      </Modal>
+   
       <div className='flex flex-row justify-between mb-[30px]'>
         <div className='flex flex-col justify-center items-start h-[150px] w-[350px]   rounded-[36px] hover:cursor-pointer'>
           <FaPen className='text-[24px] text-[#7152F3] mb-4' />

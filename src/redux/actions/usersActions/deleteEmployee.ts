@@ -3,7 +3,7 @@
 
 import { Dispatch } from 'redux';
 import axios from 'axios';
-
+import toast, { Toaster } from "react-hot-toast";
 
 
 
@@ -16,6 +16,7 @@ export const Deleteemployee = (id: any, publicId: any) => (dispatch: Dispatch<an
                 type: 'SET_POLICIES',
                 payload: res.data.policies
               })
+              toast.success('Employee deleted successfully');
             window.location.href = '/employees';
         })
         .catch(error => {

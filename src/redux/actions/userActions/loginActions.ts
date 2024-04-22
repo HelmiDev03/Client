@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { jwtDecode } from 'jwt-decode';
 import { setAuth } from '@/redux/utils/setAuth';
+import toast from 'react-hot-toast';
 
 interface UserData {
     // Define the structure of your user data object
@@ -18,15 +19,12 @@ export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
                         window.location.href = '/login/tfa?email=' + res.data.email + '&token=' + res.data.token + '&expiredAt=' + res.data.expiredAt;
                     })
                     .catch(err => {
-                        localStorage.setItem('errorMessage', err.response?.data.message);
-                        window.location.href = '/login';
+                        toast.error(err.response?.data.message);
                     });
             }
         })
         .catch((err: any) => {
-            localStorage.setItem('errorMessage', err.response?.data.message);
-            window.location.href = '/login';
-            console.log(err.response);
+            toast.error(err.response?.data.message);
         });
 };
 
@@ -67,9 +65,9 @@ export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {
             }
         });
     }
-
-
     window.location.href = '/dashboard'; // Redirect to dashboard
+    toast.success('Logged in successfully');
+   
 
        
     };

@@ -71,10 +71,7 @@ export const SelectInput2 = (props: any) => {
         disabled={isDisabled}
         name={name}
         defaultValue={placeholder}
-        className="w-[330px] h-[56px]  p-[16px] md:p-[16px] lg:p-[20px]  font-lexend font-light  text-[16px] leading-[24px] text-[#16151C] 
-                xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
-                border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors 
-                duration-300 ease-in-out"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
       >
         {/* Render placeholder option */}
         <option value={placeholder}>
@@ -142,10 +139,7 @@ export const SelectInput222 = (props: any) => {
         disabled={isDisabled}
         name={name}
         value={placeholder} // Set value to placeholder
-        className="w-[330px] h-[56px]  p-[16px] md:p-[16px] lg:p-[20px]  font-lexend font-light  text-[16px] leading-[24px] text-[#16151C] 
-                xl:p-[16px] mb-2 border border-solid border-gray-300 rounded-[10px] border-solid border-[1px] 
-                border-gray-300 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 transition-colors 
-                duration-300 ease-in-out"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg block w-full p-2.5"
       >
         {/* Render placeholder option only if it is not disabled */}
         {!isDisabled && (

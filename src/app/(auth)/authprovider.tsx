@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useRef } from "react";
 const Authprovider = ({ children }: { children: React.ReactNode }) => {
-    const mainRef = useRef<HTMLElement | null>(null);
+
     const auth = useSelector((state: any) => state.auth);
     const router=useRouter();
 

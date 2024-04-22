@@ -33,7 +33,7 @@ const EmployeeAttendance = () => {
     const fecthData = () => {
       axios.get(process.env.NEXT_PUBLIC_DOMAIN + '/api/attendance/history')
         .then((res: any) => {
-          console.log(new Date(res.data.workingHours[res.data.workingHours.length - 1].date).toString().slice(0, 10) === new Date().toString()?.slice(0, 10))
+          console.log(new Date(res.data.workingHours[res.data.workingHours.length - 1]?.date).toString().slice(0, 10) === new Date().toString()?.slice(0, 10))
 
           setworkingHours(res.data.workingHours)
         })

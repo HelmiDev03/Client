@@ -1,21 +1,18 @@
 'use client';
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
-import {useEffect, useState } from "react";
-import DropDown from "./DropDown";
+import { useEffect, useState } from "react";
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, usePathname,useRouter } from "next/navigation";
-import { IoArrowBackCircleSharp } from "react-icons/io5"
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { IoIosArrowForward } from "react-icons/io";
 
-import {io} from 'socket.io-client';
-
-
-
-
-
-
-
+import { io } from 'socket.io-client';
+import Link from "next/link";
+import { PiBell, PiCaretDownBold } from "react-icons/pi";
+import { AppDispatch } from '@/redux/store';
+import { LogoutAction } from '@/redux/actions/userActions/lougoutActions';
 
 
 
@@ -24,129 +21,110 @@ import {io} from 'socket.io-client';
 
 
 
-const Header= () => {
+
+
+
+
+
+const Header = () => {
   const auth = useSelector((state: any) => state.auth);
   const notif = useSelector((state: any) => state.notif);
   const dispatch = useDispatch();
+  const Dispatch = useDispatch<AppDispatch>();
   const socket = io(process.env.NEXT_PUBLIC_DOMAIN as any);
-  
-    
-    socket.on('unreadNotificationsCount', (ob: any) => {
-      
-      auth.user._id===ob.userId ?  dispatch({
-        type: 'SET_NOTIFICATIONS_COUNT',
-        payload: ob.unreadNotificationsCount
+  socket.on('unreadNotificationsCount', (ob: any) => {
+    auth.user._id === ob.userId ? dispatch({
+      type: 'SET_NOTIFICATIONS_COUNT',
+      payload: ob.unreadNotificationsCount
     }) : null;
-    });
+  });
 
-
-  
-
-  
   const [Title1, setTitle1] = useState("");
   const [Title2, setTitle2] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
- 
+
   const { employeeId } = useParams()
   const router = useRouter();
   const pathname = usePathname();
 
+
   useEffect(() => {
-  const pathParts = pathname.split('/');
-  pathParts.forEach((part, index) => {
-    if (part.includes(' ')) {
-      const words = part.split(' ');
-      const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-      pathParts[index] = capitalizedWords.join(' ');
-    } else {
-      pathParts[index] = part.charAt(0).toUpperCase() + part.slice(1);
+    const pathParts = pathname.split('/');
+    pathParts.forEach((part, index) => {
+      if (part.includes(' ')) {
+        const words = part.split(' ');
+        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+        pathParts[index] = capitalizedWords.join(' ');
+      } else {
+        pathParts[index] = part.charAt(0).toUpperCase() + part.slice(1);
+      }
+    });
+
+    setTitle1(pathParts[1])
+    setTitle2(pathParts[2])
+    if (pathname === '/employees') {
+      setTitle2('All Employees Information')
     }
-   
-   
-
-  });
-
-  setTitle1(pathParts[1])
-  setTitle2(pathParts[2])
-  if ( pathname ==='/employees'  ) {
-    setTitle2('All Employees Information')
-  }
-  if(pathParts[2]=='Personalinformation'){
-    setTitle2('Personal Information')
-  }
-  if(pathParts[2]=='ProfessionelInformation'){
-    setTitle2('Professionel Information')
-  }
-  if (employeeId){
-    setTitle2('Employee Profile')
-  }
-  if ( pathname.includes('/projects')  ) {
-    setTitle2('')
-  }
+    if (pathParts[2] == 'Personalinformation') {
+      setTitle2('Personal Information')
+    }
+    if (pathParts[2] == 'ProfessionelInformation') {
+      setTitle2('Professionel Information')
+    }
+    if (employeeId) {
+      setTitle2('Employee Profile')
+    }
+    if (pathname.includes('/projects')) {
+      setTitle2('')
+    }
   }, [pathname])
 
-
-    return     (
-
-
-        <header  className={` ${pathname==='/packages' ? 'hidden' : 'block'}         fixed z-[999] top-[-2px] w-[82%]   h-[82px]  flex items-center justify-between px-8 bg-[#ffffff] mb-10 ml-2 `}>
-
-<IoArrowBackCircleSharp onClick={()=>router.back()} className="  absolute top-[17px] right-[98%] text-[30px] text-[#7152F3] hover:cursor-pointer" />
-            <div className= " h-[52px]flex  flex-row items-center">
-
-            <p className="text-lg font-bold font-lexend    text-[#16151C]   ">{Title1}</p>
-            <p className="font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left   ">{Title2}</p>
-            
-     
+  return (
+    <header className={` ${pathname === '/packages' ? 'hidden' : 'block'} fixed z-[9] top-0 right-2 w-[82%] h-[70px] px-16 flex items-center justify-between bg-white mb-10`}>
+      <div className="h-[52px] flex gap-4 items-center">
+        {/^\/[^\/]+(\/.+)+$/.test(pathname) && (<IoArrowBackCircleSharp onClick={() => router.back()} className="text-[45px] text-[#7152F3] hover:cursor-pointer" />)}
+        <div>
+          <p className="text-lg font-bold text-[#16151C]">{Title1}</p>
+          <p className="text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left">{Title2}</p>
+        </div>
+      </div>
+      <div className="flex items-center">
+        <Link href={"/notifications"} className='grid place-items-center bg-blue-100 rounded-md h-10 w-10'>
+          <button className="relative">
+            <PiBell size={23} />
+            {notif != 0 && <div className="absolute w-[12px] h-[12px] top-[1%] right-[1%] text-center text-[9px] rounded-full bg-red-500 text-white" >{notif}</div>}
+          </button>
+        </Link>
+        <button onClick={() => setIsDropdownOpen((prev) => !prev)} className="flex items-center ml-4 p-2 bg-white rounded-lg border-solid border-2 border-gray-200">
+          <div className="w-8 h-8 bg-white rounded-lg border-solid border border-gray-200">
+            <img className="object-fill w-full h-full rounded-lg"
+              src={auth.user.profilepicture ? auth.user.profilepicture : '/defaultprofilepicture.png'}
+              alt="Profile Picture"
+            />
+          </div>
+          <div className="ml-4">
+            <p className="text-base font-semibold">{auth.user.firstname} {auth.user.lastname}</p>
+            <p className="text-xs text-gray-400">{auth.user.role}</p>
+          </div>
+          <div className="ml-4 ">
+            <PiCaretDownBold />
+          </div>
+          {isDropdownOpen && (
+            <div className="absolute top-full right-[70px] bg-white shadow-md rounded-lg -mt-1">
+              {/* Dropdown content goes here */}
+              <ul className="pt-2 w-48">
+                <li className='p-1'><Link href="/profile" className="rounded border-b block px-4 py-2 text-gray-800 hover:bg-blue-100">My Profile</Link></li>
+                <li className='p-1'><Link href="/profile/security" className="rounded border-b block px-4 py-2 text-gray-800 hover:bg-blue-100">Security</Link></li>
+                <li className='p-1'><button onClick={() => Dispatch(LogoutAction())} className="rounded block px-4 py-2 text-gray-800 hover:bg-blue-100 w-full">Sign out</button></li>
+              </ul>
             </div>
-               
-         
-
-        
-          <div className="flex items-center justify-between ">
-              
-     
-
-           <div onClick={()=>router.push('/notifications')}   className="relative mr-[18px] w-[40px] h-[40px] flex justify-center items-centernded-[10px] hover:cursor-pointer  ">
-            <IoIosNotificationsOutline className=" w-[38px] h-[38px] translate-y-[-3px]  hover:cursor-pointer" />
-         {notif !=0 &&   <div className="absolute w-[20px] h-[20px] top-[1%] right-[10%]   text-center rounded-[50%] bg-red-500 text-[#ffffff]" >{notif}</div> }
-                  
-                 </div>
-
-            <div  onClick={() => setIsDropdownOpen((prev) => !prev)}
-      className="h-50 w-184 top-36 left-1226  p-3 border  border-gray-300 rounded-lg  flex items-center  hover:cursor-pointer hover:duration-300"
-    
-    >
-        
-   <Image  style={{ borderRadius: '8px', marginRight: '4px'  , width : '40px' , height:'40px' }} src={auth.user.profilepicture ? auth.user.profilepicture: '/defaultprofilepicture.png'} width={40} height={40}
-        alt="Profile" />
-      <div className="mr-2">
-        <p className="font-lexend text-body-1 font-bold text- [#16151C] text-base leading-6 tracking-normal text-left ">{auth.user.firstname } {auth.user.lastname} </p>
-        <p className="font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal ">{auth.user.role}</p>
+          )}
+        </button>
       </div>
 
-      <div className="ml-[3px]">
-      <IoIosArrowDown />
-      </div>
-      {isDropdownOpen &&    <DropDown />                }
-             </div>
-
-          
-
-           </div>
-        
-           
-      
-
-
-
-        </header>
-
-
-
-
-    );
+    </header>
+  );
 
 
 
@@ -168,7 +146,6 @@ const Header= () => {
 
 
 
-
-} 
+}
 
 export default Header;

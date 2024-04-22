@@ -14,6 +14,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { useParams, useRouter } from 'next/navigation';
 import { SelectInput8 } from '@/app/(components)/Inputs/SelectInput';
 import { CiLogout } from 'react-icons/ci';
+import toast from 'react-hot-toast';
 
 const Employees = () => {
     const [Name, setName] = React.useState('')
@@ -44,6 +45,7 @@ const Employees = () => {
     const AddNewEmployeeToPolicy = async () => {
 
         if (selectedUserIds.length === 0) {
+            toast.error('Please select at least one employee to add to this policy');
             return;
         }
         axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/policy/addemployeestopolicy/${policy}`, { employeesId: selectedUserIds })
@@ -52,6 +54,7 @@ const Employees = () => {
                     type: 'SET_POLICIES',
                     payload: res.data.policies
                 });
+                toast.success('Employees added successfully');
                 window.location.reload()
             })
     }
@@ -201,9 +204,11 @@ const Employees = () => {
                 });
             })
             setPopupAssignPolicy(false)
+            toast.success('Policy assigned successfully');
             window.location.reload()
         }
         else {
+            toast.error('Please select a new policy to assign to this employee');
             return;
         }
     }

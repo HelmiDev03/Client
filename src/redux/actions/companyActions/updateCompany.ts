@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux'
 
-
+import toast, { Toaster } from "react-hot-toast";
 
 export const UpdateCompany = (data: any) => (dispatch: Dispatch<any>) => {
     axios.put(process.env.NEXT_PUBLIC_DOMAIN+'/api/company/update', data )
@@ -14,10 +14,7 @@ export const UpdateCompany = (data: any) => (dispatch: Dispatch<any>) => {
             type: 'UPDATE_COMPANY',
             payload: res.data.company
         });
-        dispatch({
-            type: 'SUCCESS',
-            payload: res.data.message
-        });
+        toast.success(res.data.message);
        
     })
 

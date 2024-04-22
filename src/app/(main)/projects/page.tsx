@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { GetAllEmployees } from '@/redux/actions/usersActions/getAllEmployees';
 import { IoCloseOutline } from "react-icons/io5";
-
+import toast, { Toaster } from "react-hot-toast";
 
 const Projects = () => {
 
@@ -30,7 +30,7 @@ const Projects = () => {
 
 
     const [ProjectBudget, setProjectBudget] = React.useState<number>(0);
-    const errors = useSelector((state: any) => state.errors)
+
     const projects = useSelector((state: any) => state.projects)
     const users = useSelector((state: any) => state.users)
     const user = useSelector((state: any) => state.auth.user)
@@ -54,7 +54,7 @@ const Projects = () => {
         dispatch({ type: 'ERRORS', payload: {} })
         if (PopupAddProject1) {
             if (ProjectName === '' || ProjectStartDate === '' || ProjectEndDate === '') {
-                dispatch({ type: 'ERRORS', payload: { message: 'Please fill all fields' } })
+                toast.error('Please fill all fields')
             } else {
                 setPopupAddProject1(false)
                 setPopupAddProject11(true)
@@ -69,7 +69,7 @@ const Projects = () => {
         }
         else if (PopupAddProject2) {
             if (ProjectBudget === 0) {
-                dispatch({ type: 'ERRORS', payload: { message: 'Please fill all fields' } })
+                toast.error('Please fill all fields')
             } else {
                 AddProject()
 
@@ -104,6 +104,7 @@ const Projects = () => {
                 setProjectEndDate('')
                 setProjectBudget(0)
                 setSelectedUsers([])
+                toast.success('Project created successfully');
             })
             .catch((err) => {
                 dispatch({ type: 'ERRORS', payload: err.response.data })
@@ -153,10 +154,10 @@ const Projects = () => {
                 <div onClick={() => { router.push('/projects/' + row.projectid + '/projectemployees') }} className='p-2 mr-4 ml-[-10px] rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                     <button type="submit"      ><FaArrowRight className='  font-lexend font-lexend  leading-[20px] text-[#7152F3] text-[20px]' /></button>
                 </div>
-                <div onClick={() => { axios.delete(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/deleteproject/' + row.projectid).then((res) => { dispatch({ type: 'SET_PROJECTS', payload: res.data.projects }) }).catch((err) => console.log(err)) }} className='p-2 rounded-[50%] mr-4 w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
+                <div onClick={() => { axios.delete(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/deleteproject/' + row.projectid).then((res) => { dispatch({ type: 'SET_PROJECTS', payload: res.data.projects });toast.success('Project Deleted');  }).catch((err) => console.log(err)) }} className='p-2 rounded-[50%] mr-4 w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                     <button type="submit"      ><MdOutlineDeleteOutline className='  font-lexend font-light  leading-[20px] text-red-500 text-[20px]' /></button>
                 </div>
-                {row.status === 'Active' &&   <div onClick={() => { axios.put(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/closeproject/' + row.projectid).then((res) => { dispatch({ type: 'SET_PROJECTS', payload: res.data.projects }) }).catch((err) => console.log(err)) }} className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
+                {row.status === 'Active' &&   <div onClick={() => { axios.put(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/closeproject/' + row.projectid).then((res) => { dispatch({ type: 'SET_PROJECTS', payload: res.data.projects });toast.success('Project Closed'); }).catch((err) => console.log(err)) }} className='p-2 rounded-[50%] w-[35px] height-[35px] flex justify-center items-center border border-gray-300 hover:border hover:border-gray-500'>
                     <button type="submit"      ><IoCloseOutline  className='  font-lexend font-light  leading-[20px] _1m2pwdr0 _1m2pwdr6 _1m2pwdr8 text-[20px]' /></button>
                 </div> }
 
@@ -437,15 +438,7 @@ const Projects = () => {
 
                         </div>
 
-                        {errors?.message && <div className=" h-[30px] w-[300px] absolute right-[24%] top-[65%]  flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
-                            <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span className="sr-only">Info</span>
-                            <div>
-                                {errors.message}
-                            </div>
-                        </div>}
+                      
 
 
 

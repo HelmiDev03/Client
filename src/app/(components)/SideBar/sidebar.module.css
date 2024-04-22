@@ -1,0 +1,37 @@
+.container{
+  /* position: fixed; */
+  margin-top: 10px;
+  margin-left: 5px;
+  height: 97%;
+  background-color: rgb(239 246 255);
+  border-radius: 20px;
+  width: 265px;
+}
+
+.user{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.userImage{
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  object-fit: fit;
+}
+
+.list{
+  list-style: none;
+  padding-left: 15px;
+}
+
+.cat{
+  color: var(--textSoft);
+  font-weight: bold;
+  font-size: 13px;
+  margin: 10px 0px;
+}

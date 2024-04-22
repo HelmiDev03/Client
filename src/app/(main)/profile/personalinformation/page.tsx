@@ -1,4 +1,3 @@
-
 'use client'
 import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button'
 import {Input4} from '@/app/(components)/Inputs/TextInput'
@@ -11,6 +10,7 @@ import { AppDispatch } from '@/redux/store'
 import { EditPersonalInformation } from '@/redux/actions/userActions/editAction'
 import {  Modal } from 'flowbite-react';
 import { MdSecurityUpdateGood } from 'react-icons/md'
+import { PiPencilSimpleLineLight } from 'react-icons/pi'
 
 const Personnel = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -85,120 +85,202 @@ const Personnel = () => {
        
     }
     return (
-        
-        <div className="flex flex-row flex-wrap " >
-             
-            <Modal className ='absolute w-[400px] translate-x-[520px] translate-y-[180px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
-        <Modal.Header />
-        <Modal.Body className=''>
-          <div className="text-center">
-            <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
-            <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">
-                        Successfully Updated
-            </h3>
-            <div className="flex justify-center gap-4">
-            
-            </div>
-          
-          </div>
-        </Modal.Body>
-      </Modal>
-
-            <div className=' absolute   top-[25%] right-[6%]   top-[-50%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-                <ButtonSubmit timing={200} text="Edit" fct={edit} />
-            </div>
-        
-           
-
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>First Name</h3>
-                <Input4 onChange={(e:any) => {setFirstname(e.target.value)}} isDisabled={inputDisble} value={firstname} type='text'      />
-                {errors.firstname && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50  " role="alert">
-                            <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span className="sr-only">Info</span>
-                            <div>
-                                       {errors.firstname}
-                            </div>
-                        </div>}
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Last Name</h3>
-                <Input4 onChange={(e:any)=>setLastname(e.target.value)}   isDisabled={inputDisble} value={lastname} type='text'      />
-                {errors.lastname  && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                            <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span className="sr-only">Info</span>
-                            <div>
-                                       {errors.lastname}
-                            </div>
-                        </div>}
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Phone Number</h3>
-                <Input4 onChange={(e:any)=>setPhonenumber(e.target.value)}   isDisabled={inputDisble} value={phonenumber} type='text'      />
-                {errors.phonenumber  && <div className=" h-[30px] w-[330px] flex justify-center items-center p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                            <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span className="sr-only">Info</span>
-                            <div>
-                                       {errors.phonenumber}
-                            </div>
-                        </div>}
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Cin</h3>
-                <Input4  isDisabled={true} value={auth.user.cin } type='text'      />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Date Of Birth</h3>
-                <Input4 onChange={(e:any)=>setBirthday(e.target.value)}  isDisabled={inputDisble}  value={birthday} type='date'      />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Marital Status</h3>
+        <div className="h-full py-14 px-12 flex flex-col" >
+            <Modal className ='absolute w-[400px] translate-x-[520px] translate-y-[20px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
+                <Modal.Header />
+                <Modal.Body className=''>
+                <div className="text-center">
+                    <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
+                    <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">Successfully Updated</h3>
+                    <div className="flex justify-center gap-4">
+                    </div>
+                </div>
+                </Modal.Body>
+            </Modal>
+            <button onClick={edit} className="absolute top-[25%] right-[5%] bg-blue-500 text-white hover:bg-blue-300 shadow-md rounded-md flex gap-2 h-12 items-center p-4 m-8">
+                <PiPencilSimpleLineLight size={20} />
+                <p className="font-medium">Edit Profile</p>
+            </button>
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="first_name"
+                  value={firstname}
+                  onChange={(e:any) => {setFirstname(e.target.value)}}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled={inputDisble}
+                />
+                {errors.firstname && <div className="h-[30px] w-full flex items-center p-4 text-sm text-red-500" role="alert">
+                    {errors.firstname}
+                </div>}
+              </div>
+              <div className="mb-3 w-full">
+                <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="last_name"
+                  value={lastname}
+                  onChange={(e:any)=>setLastname(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled={inputDisble}
+                />
+                {errors.lastname && <div className="h-[30px] w-full flex items-center p-4 text-sm text-red-500" role="alert">
+                    {errors.lastname}
+                </div>}
+              </div>
+            </section>
+            <section className="flex gap-12 pb-4">
+                <div className="mb-3 w-full">
+                    <label htmlFor="mobile" className="block mb-2 text-sm font-medium text-gray-900">
+                    Mobile Number
+                    </label>
+                    <input
+                    type="text"
+                    id="mobile"
+                      value={phonenumber}
+                      onChange={(e:any)=>setPhonenumber(e.target.value)}
+                    maxLength={8}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    disabled={inputDisble}
+                    />
+                    {errors.phonenumber && <div className="h-[30px] w-full flex items-center p-4 text-sm text-red-500" role="alert">
+                    {errors.phonenumber}
+                </div>}
+                </div>
+                <div className="mb-3 w-full">
+                    <label htmlFor="cin" className="block mb-2 text-sm font-medium text-gray-900">
+                    CIN
+                    </label>
+                    <input
+                    type="text"
+                    id="cin"
+                    value={auth.user.cin }
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    disabled
+                    />
+                </div>
+            </section>
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="birth" className="block mb-2 text-sm font-medium text-gray-900">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  id="birth"
+                  value={birthday}
+                  onChange={(e:any)=>setBirthday(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled={inputDisble}
+                />
+              </div>
+              <div className="mb-3 w-full">
+                <label htmlFor="matrialstatus" className="block mb-2 text-sm font-medium text-gray-900">
+                  Marital Status
+                </label>
                 <SelectInput2
                    placeholder={auth.user.maritalstatus ? auth.user.maritalstatus : 'not mentionned'}
                     options={['Single', 'Married', 'Divorced', ]}
                     isDisabled={inputDisble}
                     onChange={(e:any) => setMaritalstatus(e.target.value)}
                 />
-                </div>
-                <div className={styles.InputContainer}>
-                    <h3 className={styles.InputLabel}>Gender</h3>
-                    <SelectInput2
+              </div>
+            </section>
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900">
+                  Gender
+                </label>
+                <SelectInput2
                     placeholder={auth.user.gender ? auth.user.gender : 'not mentionned'}
                     options={['Male', 'Female']}
                     isDisabled={inputDisble}
-                  onChange={(e:any)=>setGender(e.target.value)} 
+                    onChange={(e:any)=>setGender(e.target.value)} 
                
-            />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Country</h3>
-                <Input4 onChange={(e:any)=>setCountry(e.target.value)}  isDisabled={inputDisble} value={country} type='text'      />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Adress</h3>
-                <Input4  onChange={(e:any)=>setAdress(e.target.value)}  isDisabled={inputDisble} value={adress} type='text'      />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>City</h3>
-                <Input4 onChange={(e:any)=>setCity(e.target.value)}  isDisabled={inputDisble}  value={city} type='text'      />
-            </div>
-            <div className={styles.InputContainer}>
-                <h3 className={styles.InputLabel}>Postal Code</h3>
-                <Input4 onChange={(e:any)=>setPostalcode(e.target.value)}   isDisabled={inputDisble} value={postalcode} type='text'      />
-            </div>
-            { !inputDisble &&  <div className=' absolute   top-[145%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-                <ButtonSubmit timing={200} text="Update" fct={Update} />
-            </div> }
-            { !inputDisble &&   <div className= ' absolute   top-[145%] right-[13%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#eee]   ' >
-                <ButtonCancel text="Cancel" fct={Cancel} />
-            </div>}
-           
+                />
+              </div>
+              <div className="mb-3 w-full">
+                <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900">
+                    Country
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                    value={country}
+                    onChange={(e:any)=>setCountry(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    disabled={inputDisble}
+                />
+              </div>
+            </section>
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="Address" className="block mb-2 text-sm font-medium text-gray-900">
+                Address
+                </label>
+                <input
+                  type="text"
+                  id="Address"
+                  value={adress}
+                  onChange={(e:any)=>setAdress(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled={inputDisble}
+                />
+                {errors.adress && <div className="h-[30px] w-full flex items-center p-4 text-sm text-red-500" role="alert">
+                    {errors.adress}
+                </div>}
+              </div>
+              <div className="mb-3 w-full">
+                <label htmlFor="city" className="block mb-2 text-sm font-medium text-gray-900">
+                  City
+                </label>
+                <input
+                  type="text"
+                  id="city"
+                  value={city}
+                  onChange={(e:any)=>setCity(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled={inputDisble}
+                />
+                {errors.city && <div className="h-[30px] w-full flex items-center p-4 text-sm text-red-500" role="alert">
+                    {errors.city}
+                </div>}
+              </div>
+            </section>
+            <section className="flex gap-12 pb-4">
+              <div className="mb-3 w-full">
+                <label htmlFor="Postal Code" className="block mb-2 text-sm font-medium text-gray-900">
+                Postal Code
+                </label>
+                <input
+                  type="text"
+                  id="Postal Code"
+                  value={postalcode}
+                  onChange={(e:any)=>setPostalcode(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  disabled={inputDisble}
+                />
+                {errors.postalcode && <div className="h-[30px] w-full flex items-center p-4 text-sm text-red-500" role="alert">
+                    {errors.postalcode}
+                </div>}
+              </div>
+            </section>
+            { !inputDisble && 
+            <div className="flex gap-4 self-end mt-4">
+                <button onClick={Cancel} className="bg-gray-200 hover:bg-pink-300 shadow-md rounded-md flex h-12 items-center p-4">
+                        <p className="font-medium">Cancel</p>
+                </button>
+                <button onClick={Update} className="bg-pink-500 text-white hover:bg-pink-300 shadow-md rounded-md flex h-12 items-center p-4">
+                    <p className="font-medium">Update information</p>
+                </button>
+            </div>            
+            }
         </div>
         
     )
