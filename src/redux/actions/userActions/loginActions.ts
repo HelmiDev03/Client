@@ -25,17 +25,20 @@ export const LoginAction = (data: UserData) => (dispatch: Dispatch<any>) => {
                         toast.error(err.response?.data.message);
                     });
             }
-        })
-        .catch((err: any) => {
-            toast.error(err.response?.data.message);
-            
-        })
-        .finally(() => {
             dispatch({
                 type: 'Chnage_State',
                 payload: false
             })
         })
+        .catch((err: any) => {
+            toast.error(err.response?.data.message);
+            dispatch({
+                type: 'Chnage_State',
+                payload: false
+            })
+            
+        })
+       
 };
 
 export const LoginActionAfterTFA = (res: any) => (dispatch: Dispatch<any>) => {

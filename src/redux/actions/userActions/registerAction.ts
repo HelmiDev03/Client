@@ -15,18 +15,18 @@ export const Registration = (data: UserData ) => (dispatch: Dispatch<any>) => {
         
         localStorage.setItem('successMessage' , 'Successfully Created. Please Check Your Email For Verification');
         window.location.href = '/login';
+        dispatch({
+            type: 'Chnage_State',
+            payload: false
+        })
     
     })
     .catch((err) => {
-        dispatch({
-            type: 'ERRORS',
-            payload: err.response ? err.response.data : {}
-        });
-    })
-    .finally(() => {
+        
         dispatch({
             type: 'Chnage_State',
             payload: false
         })
     })
+    
 };
