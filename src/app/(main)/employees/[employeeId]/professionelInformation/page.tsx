@@ -12,6 +12,7 @@ import { useParams } from 'next/navigation'
 import {  Modal } from 'flowbite-react';
 import { MdSecurityUpdateGood } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
 
 const Prof = () => {
     const dispatch = useDispatch()
@@ -33,10 +34,12 @@ const Prof = () => {
         axios.put(process.env.NEXT_PUBLIC_DOMAIN+`/api/employees/updatemanager/${employeeId}/${newmanagerid}`)
         .then((res) => {
             
-            dispatch({
-                type: 'SUCCESS',
-                payload: res.data.message
-            });
+            toast.success('Manager Successfully Updated')
+           
+        })
+        .catch((res) => {
+            
+            toast.error('Error Updating Manager')
            
         })
 
