@@ -1,25 +1,14 @@
 'use client'
-import ButtonSubmit from '@/app/(components)/ButtonSubmit/Button'
-import {Input4} from '@/app/(components)/Inputs/TextInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { SelectInput2 } from '@/app/(components)/Inputs/SelectInput'
-import ButtonCancel from '@/app/(components)/ButtonCancel/Button'
-import styles from '../profile.module.css'
 import { AppDispatch } from '@/redux/store'
 import { EditPersonalInformation } from '@/redux/actions/userActions/editAction'
-import {  Modal } from 'flowbite-react';
-import { MdSecurityUpdateGood } from 'react-icons/md'
 import { PiPencilSimpleLineLight } from 'react-icons/pi'
 
 const Personnel = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const closeModel = () => {
-        dispatch({
-            type: 'SUCCESS',
-            payload: ''
-        });
-    }
+    
 
 
     const errors = useSelector((state: any) => state.errors)
@@ -86,17 +75,7 @@ const Personnel = () => {
     }
     return (
         <div className="h-full py-14 px-12 flex flex-col" >
-            <Modal className ='absolute w-[400px] translate-x-[520px] translate-y-[20px] center rounded-[25px] ' show={success.message!=''}  onClose={ closeModel} size="md"  popup>
-                <Modal.Header />
-                <Modal.Body className=''>
-                <div className="text-center">
-                    <MdSecurityUpdateGood  className="mx-auto mb-4 h-14 w-14 text-[#ffffff] " />
-                    <h3 className="mb-5 text-lg font-normal  text-[#ffffff] dark:text-gray-400">Successfully Updated</h3>
-                    <div className="flex justify-center gap-4">
-                    </div>
-                </div>
-                </Modal.Body>
-            </Modal>
+          
             <button onClick={edit} className="absolute top-[25%] right-[5%] bg-blue-500 text-white hover:bg-blue-300 shadow-md rounded-md flex gap-2 h-12 items-center p-4 m-8">
                 <PiPencilSimpleLineLight size={20} />
                 <p className="font-medium">Edit Profile</p>

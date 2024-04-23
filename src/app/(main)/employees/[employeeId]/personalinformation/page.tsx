@@ -8,26 +8,19 @@ import { SelectInput2 } from '@/app/(components)/Inputs/SelectInput'
 import ButtonCancel from '@/app/(components)/ButtonCancel/Button'
 import styles from '@/app/(main)/profile/profile.module.css'
 import { AppDispatch } from '@/redux/store'
-import { Modal } from 'flowbite-react';
-import { MdSecurityUpdateGood } from 'react-icons/md'
 import { useParams } from 'next/navigation'
 import { useEffect } from 'react'
 import axios from 'axios'
 const Personnel = () => {
-    const [openModal, setOpenModal] = useState(false);
+    
     const { employeeId } = useParams()
     const dispatch = useDispatch<AppDispatch>()
-    const closeModel = () => {
-        dispatch({
-            type: 'SUCCESS',
-            payload: ''
-        });
-    }
+    
 
 
 
     const errors = useSelector((state: any) => state.errors)
-    const success = useSelector((state: any) => state.success)
+   
 
     const [inputDisble, setInputDisable] = useState(true)
     const [firstname, setFirstname] = useState('')
@@ -131,21 +124,7 @@ const Personnel = () => {
 
         <div className="flex flex-row flex-wrap " >
 
-            <Modal className='absolute w-[400px] translate-x-[520px] center rounded-[25px] ' show={success.message != ''} onClose={closeModel} size="md" popup>
-                <Modal.Header />
-                <Modal.Body className='bg-lavender '>
-                    <div className="text-center">
-                        <MdSecurityUpdateGood className="mx-auto mb-4 h-14 w-14 text-[#7152F3] " />
-                        <h3 className="mb-5 text-lg font-normal  text-[#7152F3] dark:text-gray-400">
-                            Successfully Updated
-                        </h3>
-                        <div className="flex justify-center gap-4">
-
-                        </div>
-
-                    </div>
-                </Modal.Body>
-            </Modal>
+           
 
            {permission.editemployeedetails && <div className=' absolute   top-[25%] right-[6%]   top-[-50%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit timing={200} text="Edit" fct={edit} />
@@ -235,10 +214,10 @@ const Personnel = () => {
                 <h3 className={styles.InputLabel}>Postal Code</h3>
                 <Input4 onChange={(e: any) => setPostalcode(e.target.value)} isDisabled={true} value={postalcode} type='text' />
             </div>
-            {!inputDisble && <div className=' absolute   top-[145%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
+            {!inputDisble && <div className=' absolute   top-[155%] right-[5%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
                 <ButtonSubmit timing={200} text="Update" fct={Update} />
             </div>}
-            {!inputDisble && <div className=' absolute   top-[145%] right-[13%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#eee]   ' >
+            {!inputDisble && <div className=' absolute   top-[155%] right-[13%]     w-[82px] h-[24px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#eee]   ' >
                 <ButtonCancel text="Cancel" fct={Cancel} />
             </div>}
 

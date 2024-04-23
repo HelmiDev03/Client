@@ -95,9 +95,10 @@ const Employees = () => {
 
 
 
-
+   
     const ActionCellRenderer = (props: { row: any }) => {
         const { row } = props;
+        const auth=useSelector((state:any)=>state.auth)
 
 
 
@@ -106,7 +107,7 @@ const Employees = () => {
         return (
 
             <div>  { permission.viewemployeedetails && <button onClick={() => router.push(`/employees/${row.userid}`)} type="submit"    ><FiEye className=' font-lexend font-light  leading-[24px] text-[#7152F3] text-[20px] mr-2' /></button>}
-               {permission.deleteemployee && <button onClick={() => { setPopupDeletePage(1); setOpenPopupDelete(true); setEmployeeSelected(row.fullname); setEmployeeId(row.userid); setEmployeeImage(row.profilepicture) }} type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button>}</div>
+               {permission.deleteemployee &&row.userid!==auth.user._id   && <button onClick={() => { setPopupDeletePage(1); setOpenPopupDelete(true); setEmployeeSelected(row.fullname); setEmployeeId(row.userid); setEmployeeImage(row.profilepicture) }} type="submit"      ><AiOutlineDelete className='  font-lexend font-light  leading-[24px] text-red-500 text-[20px]' /></button>}</div>
 
         );
     };
