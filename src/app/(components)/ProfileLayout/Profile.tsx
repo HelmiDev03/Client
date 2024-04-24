@@ -21,7 +21,7 @@ import { FaUser, FaUserTie, FaUserShield } from "react-icons/fa6";
 
 
 
-const activeLinkStyle = "text-blue-500 font-bold border-b-4 border-blue-500 rounded-sm pr-2";
+const activeLinkStyle = "text-[#7152F3] font-bold border-b-4 border-[#7152F3]  rounded-sm pr-2";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     const errors = useSelector((state: any) => state.errors);
@@ -180,13 +180,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
                 <div className={`flex flex-col w-full ml-4 gap-8 pt-4`}>
                     {pathname !== '/profile/employeeprojects' && <ul className="flex gap-4">
-                        <li className={`pr-2  hover:text-blue-500 ${pathname === '/profile/personalinformation' || pathname === '/profile' ? activeLinkStyle : ''}`}>
+                        <li className={`pr-2  hover:text-[#7152F3] [#7152F3]  ${pathname === '/profile/personalinformation' || pathname === '/profile' ? activeLinkStyle : ''}`}>
                         <Link href='/profile/personalinformation' className="flex gap-2"><FaUser size={20} />Personal Information</Link>
                         </li>
-                        <li className={`pr-2  hover:text-blue-500 ${pathname === '/profile/professionelInformation' ? activeLinkStyle : ''}`}>
+                        <li className={`pr-2  hover:text-[#7152F3]  ${pathname === '/profile/professionelInformation' ? activeLinkStyle : ''}`}>
                         <Link href='/profile/professionelInformation' className="flex gap-2"><FaUserTie size={20} />Professional Information</Link>
                         </li>
-                        <li className={`hover:text-blue-500 ${pathname === '/profile/security' ? activeLinkStyle : ''}`}>
+                        <li className={`hover:text-[#7152F3]  ${pathname === '/profile/security' ? activeLinkStyle : ''}`}>
                         <Link href='/profile/security' className="flex gap-2"><FaUserShield  size={20} />Security</Link>
                         </li>
                     </ul>}

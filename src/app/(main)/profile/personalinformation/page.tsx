@@ -76,7 +76,7 @@ const Personnel = () => {
     return (
         <div className="h-full py-14 px-12 flex flex-col" >
           
-            <button onClick={edit} className="absolute top-[25%] right-[5%] bg-blue-500 text-white hover:bg-blue-300 shadow-md rounded-md flex gap-2 h-12 items-center p-4 m-8">
+            <button onClick={edit} className="absolute top-[25%] right-[5%] bg-[#7152F3] text-white hover:bg-blue-300 shadow-md rounded-md flex gap-2 h-12 items-center p-4 m-8">
                 <PiPencilSimpleLineLight size={20} />
                 <p className="font-medium">Edit Profile</p>
             </button>

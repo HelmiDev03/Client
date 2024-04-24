@@ -42,7 +42,7 @@ const Prof = () => {
     return (
         <div className="h-full py-14 px-12 flex flex-col">
             <section className="flex gap-12 pb-4">
-              <div className="mb-3 w-full">
+              <div className="mb-3 w-full ">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
                 Email Adress
                 </label>
@@ -50,11 +50,11 @@ const Prof = () => {
                   type="text"
                   id="email"
                   value={email}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 h-[40.8px] border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   disabled
                 />
               </div>
-              <div className="mb-3 w-full">
+              <div className="mb-3 w-full h-[56px]">
                 <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900">
                 Role
                 </label>
@@ -63,16 +63,19 @@ const Prof = () => {
                     options={['Admin', 'Manager', 'Employee']}
                     isDisabled={true}
                 />
+                
               </div>
             </section>
             <section className="flex gap-12 pb-4">
-              <div className="mb-3 w-full">
+              <div className="mb-3 w-full relative ">
                 <label htmlFor="Manager" className="block mb-2 text-sm font-medium text-gray-900">
                 Manager
                 </label>
+                <img src={manager.profilepicture ? manager.profilepicture : '/defaultprofilepicture.png'} className='absolute w-[40px] h-[40px] translate-x-[300px] translate-y-[1px] rounded-[50%] ' />
                 <SelectInput222
                     placeholder={manager.firstname + ' ' + manager.lastname }
                     options={[{label: manager.firstname + ' ' + manager.lastname, value: auth.user.manager}]}
+                    disabled={true}
                 />
               </div>
               
@@ -84,14 +87,14 @@ const Prof = () => {
                   type="text"
                   id="Matricule"
                   value={auth.user.matricule}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 h-[40.8px] border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   disabled
                 />
               </div>
             </section>
             <section className="flex gap-12 pb-4">
               <div className="mb-3 w-full">
-                <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900">
+                <label htmlFor="date" className="h-[40.8px] block  text-sm font-medium text-gray-900">
                 Joining Date
                 </label>
                 <DateInput value={auth.user.createdAt} type='date' isDisabled={true} />
