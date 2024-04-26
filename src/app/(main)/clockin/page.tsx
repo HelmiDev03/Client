@@ -319,15 +319,15 @@ const EmployeeAttendance = () => {
 
                     return (
                       <tr key={dayOfMonth} className="bg-white border-b ">
-                        <th scope="row" className="px-6 py-4 font-bold text-xl text-gray-900 whitespace-nowrap ">
+                       {matchingEntry && <th scope="row" className="px-6 py-4 font-bold text-xl text-gray-900 whitespace-nowrap ">
                           {dayOfMonth} {months[currentMonth]}
-                        </th>
-                        <td className="px-6 py-4">
+                        </th> }
+                      {matchingEntry &&  <td className="px-6 py-4">
                           {/* Display time if entry exists for the day, otherwise display 'Worked 0h' */}
-                          {matchingEntry ? `Worked ${matchingEntry.time.hr}h ${matchingEntry.time.min}m ${matchingEntry.time.sec}s` : 'Worked 0h 0m 0s'}
-                        </td>
-                      </tr>
-                    );
+                          {`Worked ${matchingEntry.time.hr}h ${matchingEntry.time.min}m ${matchingEntry.time.sec}s` }
+                        </td> }
+                      </tr> 
+                    ); 
                   })}
                 </tbody>
 

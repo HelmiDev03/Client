@@ -77,7 +77,7 @@ const Notifications = () => {
   return (
     <div  className={styles.container}>
 
-      <div className='flex justify-between flex-col p-12 w-[850px] '>
+      <div className='flex justify-between flex-col p-12  '>
 
 
 
@@ -85,11 +85,11 @@ const Notifications = () => {
           <>
 
             {notif.content.reason === 'Time off request' && (
-              <div key={notif._id} className='flex justify-between h-[170px] items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
-                <div className='w-[60px] h-[60px] rounded-[50% ] mr-3'>
-                  <img src={notif.content.user.profilepicture ? notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%]' />
+              <div key={notif._id} className='w-[950px] h-[170px] flex justify-between  items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-8  '>
+                <div className='w-[150px] h-[150px] ml-[5%] rounded-[50%] flex justify-between items-center mr-3'>
+                  <img src={notif.content.user.profilepicture ? notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%] object-cover' />
                 </div>
-                <div className='flex justify-between flex-col mr-12 '>
+                <div className='flex justify-between flex-col mr-[-12%] '>
                   <p className='mb-2 font-lexend text-body-1 font-bold text-[#16151C] text-base leading-6 tracking-normal text-left '>{notif.content.user.firstname} {notif.content.user.lastname}  <span className='font-lexend text-caption font-light text-[#A2A1A8] text-sm leading-5 tracking-normal '>time off request is pending</span></p>
                   <p className='mb-2 flex flex-row font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><IoIosCalendar className='mr-2 text-[#7152F3] text-[20px] ' />{notif.content.type}  from {notif.content.startdate?.slice(0, 10)}  to {notif.content.enddate?.slice(0, 10)}</p>
                   <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> requested at  : {notif.createdAt.slice(0, 10)} </p>
@@ -115,12 +115,18 @@ const Notifications = () => {
             )}
 
 
+
+
+
+
+
+
             {notif.content.reason === 'Time off request Answered' && (
-              <div key={notif._id} className='flex justify-between h-[170px] items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-6  '>
-                <div className='w-[60px] h-[60px] rounded-[50% ] mr-3'>
-                  <img src={notif.content.user.profilepicture ? notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%]' />
+              <div key={notif._id} className='w-[950px] flex justify-between h-[170px] items-center flex-row mr-2 mb-4 border border-gray-300 rounded-[10px] p-6  '>
+                <div className='w-[150px] h-[150px] ml-[5%] rounded-[50%] flex justify-between items-center '>
+                  <img  src={notif.content.user.profilepicture ? notif.content.user.profilepicture : '/defaultprofilepicture.png'} alt='profile' className='rounded-[50%] object-cover' />
                 </div>
-                <div className='flex justify-between flex-col mr-12 '>
+                <div className='flex justify-between flex-col  '>
                   <p className='mb-2 font-lexend text-body-1 font-bold text-[#16151C] text-base leading-6 tracking-normal text-left '>{notif.content.user.firstname} {notif.content.user.lastname}  <span className='font-lexend text-caption font-light text-[#A2A1A8] text-sm leading-5 tracking-normal '>has answred your time off request</span></p>
                   <p className='mb-2 flex flex-row font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><IoIosCalendar className='mr-2 text-[#7152F3] text-[20px] ' />{notif.content.type}  from {notif.content.startdate?.slice(0, 10)}  to {notif.content.enddate?.slice(0, 10)}</p>
                   <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> Answredat at  : {notif.content.answredat?.slice(0, 10)} </p>
