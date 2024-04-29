@@ -38,12 +38,12 @@ const Dashboard = () => {
     return (
 
 
-      <div className={`${row.projectUsers.length > 2 ? "translate-x-[20px]" : ""} w-[150px] pr-12 py-2 flex flex-row justify-center items-center flex flex-row `}>
-        {row.projectUsers.slice(0, 2).map((user: any) => (
+      <div className={`${row.projectUsers.length <= 6 ? "translate-x-[70px]" : "translate-x-[80px]"} w-[150px] pr-12 py-2 flex flex-row justify-center items-center flex flex-row `}>
+        {row.projectUsers.slice(0, 6).map((user: any) => (
           <img onClick={() => { router.push('/employees/' + user.user._id) }} key={user.id} src={user.user.profilepicture ? user.user.profilepicture : '/defaultprofilepicture.png'} alt="" className='w-[36px] h-[36px] rounded-[50%] mr-2 hover:cursor-pointer' />
         ))}
-        {row.projectUsers.length > 2 && (
-          <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px] mr-6'>+{row.projectUsers.length - 2}</p>
+        {row.projectUsers.length > 6 && (
+          <p className='text-[#16151C] font-lexend font-light text-[14px] leading-[22px] '>+{row.projectUsers.length - 6}</p>
         )}
 
       </div>
@@ -82,21 +82,24 @@ const Dashboard = () => {
     {
       field: 'lastName',
       headerName: 'Collaborators',
-      width: 150,
+      width: 300,
+
+      headerClassName: 'translate-x-[60px] ',
+
       renderCell: (params) => <AssignedToRenderCell row={params.row} />
 
     },
     {
       field: 'age',
       headerName: 'Status',
-      width: 160,
+      width: 100,
       renderCell: (params) => <StatusCellRenderer />
     },
     {
       field: 'hth',
       headerName: 'Action',
       type: 'number',
-      width: 110,
+      width: 50,
       renderCell: (params) => <ActionsCellRenderer row={params.row} />
     }
 
@@ -175,7 +178,7 @@ const Dashboard = () => {
       return prevMonth + 1;
     });
   };
-
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <div className="mt-20 flex flex-col gap-4 ml-5 p-4">
@@ -269,7 +272,15 @@ const Dashboard = () => {
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                       </svg>
                     </div>
-                    <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search Employees" required />
+                    <input
+                      type="search"
+                      id="default-search"
+                      className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Search Employees"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      required
+                    />
                   </div>
                 </th>
                 {Array.from({ length: getDaysInMonth(currentMonth, currentYear) }, (_, i) => i + 1).map((day) => (
@@ -278,9 +289,11 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {EmployeesTimeoffs.map((employeeTimeOffs: any) => (
-                <tr key={employeeTimeOffs.user.firstname} className='bg-white border-b'>
-                  <th onClick={()=>router.push('/Employeeleaves/?employeeid=' + employeeTimeOffs.user._id + '&policyid=' + employeeTimeOffs.user.policy + '&fullname='+employeeTimeOffs.user.fullname   + '&profilepicture='+ employeeTimeOffs.user.profilepicture)} scope="row" className="p-3 font-medium text-gray-900 whitespace-nowrap flex items-center gap-3 hover:cursor-pointer">
+              {EmployeesTimeoffs.filter((employeeTimeOffs: any) =>
+                employeeTimeOffs.user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
+              ).map((employeeTimeOffs: any) => (
+                <tr key={employeeTimeOffs.user.firstname} className='bg-white border-b' onClick={() => router.push('/Employeeleaves/?employeeid=' + employeeTimeOffs.user._id + '&policyid=' + employeeTimeOffs.user.policy + '&fullname=' + employeeTimeOffs.user.fullname + '&profilepicture=' + employeeTimeOffs.user.profilepicture)} style={{ cursor: 'pointer' }}>
+                  <th scope="row" className="p-3 font-medium text-gray-900 whitespace-nowrap flex items-center gap-3">
                     <div className="flex-shrink-0">
                       <img className="w-8 h-8 rounded-md bg-slate-200" src={employeeTimeOffs.user.profilepicture ? employeeTimeOffs.user.profilepicture : "/defaultprofilepicture.png"} alt={`${employeeTimeOffs.user.firstname} image`} />
                     </div>
@@ -289,7 +302,7 @@ const Dashboard = () => {
                   {Array.from({ length: getDaysInMonth(currentMonth, currentYear) }, (_, i) => i + 1).map((day) => {
                     const acceptedTimeOff = employeeTimeOffs.timeoffs.find((timeOff: any) => {
                       const [start, end] = timeOff.daterange.map((date: any) => new Date(date));
-                      const currentDate = new Date(currentYear, currentMonth-1 , day+1);
+                      const currentDate = new Date(currentYear, currentMonth - 1, day + 1);
                       return currentDate >= start && currentDate <= end;
                     });
 
@@ -299,15 +312,15 @@ const Dashboard = () => {
                       <th scope="col" key={day} className={cellClassName}>{day}</th>
                     );
                   })}
-
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
       </section>
 
-{/*
+      {/*
   <section className='w-full flex gap-4'>
 
         <div className='border rounded-md w-[60%] h-[280px] flex flex-col items-center'>
@@ -327,7 +340,7 @@ const Dashboard = () => {
           )}
         </div>
       </section>*/}
-   
+
     </div>
 
 
