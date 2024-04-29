@@ -55,16 +55,18 @@ const StyledTreeExample = () => {
       </StyledNode>}
     >
       {users.map((user:any) => (
-        <TreeNode key={user._id} label={<StyledNode>
-          <div onClick={()=>router.push('/employees/'+user.user._id)} className='flex flex-col items:center'>
-            <img className='hover:cursor-pointer w-[80px] mb-2 h-[80px] rounded-[10px]' src={user.user.profilepicture ? user.user.profilepicture : '/defaultprofilepicture.png'} />
-            <span title="hhhhhh nnnnnnnnnnn" className="_1sco1wt1 font-bold mb-2 " >{user.user.firstname} {user.user.lastname}</span>
-
-            <h1 className='text-[16px] bg-[#FFD7DF] p-1 rounded-[10px]  font-lexend font-light text-[#16151C]'>{user.position}</h1>
-          </div>
-        </StyledNode>}
-        >
-        </TreeNode>
+        <TreeNode className='' key={user._id} label={<StyledNode style={{ marginLeft: '20px'  , display : 'flex' , flexDirection : 'column' , justifyContent : 'center' , alignItems:'center'}}> {/* Adjust the marginLeft */}
+        <div onClick={()=>router.push('/employees/'+user.user._id)} className='flex flex-col items:center justify-center text-center'>
+        <div className=' w-[80px]  h-[80px] '>
+        <img className='hover:cursor-pointer  h-[80px]  object-fit mb-2 rounded-[10px] object-fit ' src={user.user.profilepicture ? user.user.profilepicture : '/defaultprofilepicture.png'} />
+        </div>  
+          <span title="hhhhhh nnnnnnnnnnn" className="_1sco1wt1 font-bold mb-2 " >{user.user.firstname} {user.user.lastname}</span>
+          <h1 className='text-[16px] bg-[#FFD7DF] p-1 rounded-[10px]  font-lexend font-light text-[#16151C]'>{user.position}</h1>
+        </div>
+      </StyledNode>}
+      >
+      </TreeNode>
+      
       ))}
     
     </Tree>
