@@ -481,7 +481,7 @@ const Leave = () => {
 
 
 
-                <div className="card flex justify-content-center absolute right-[-2%] top-[20px] mr-[80px]">
+                <div className="card flex justify-content-center absolute right-[-2%] top-[-60px] mr-[80px]">
 
                     <Calendar
                         value={date}

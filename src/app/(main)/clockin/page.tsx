@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 const EmployeeAttendance = () => {
 
   const [workingHours, setworkingHours] = useState([] as any);
-  const user = useSelector((state: any) => state.auth.user);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
