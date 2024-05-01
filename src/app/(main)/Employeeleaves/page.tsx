@@ -20,7 +20,7 @@ const Leave = () => {
     const id = useSearchParams().get('employeeid');
     const policy = useSearchParams().get('policyid');
     const employeefullname = useSearchParams().get('fullname')
-    const employeeprofilepicture = useSearchParams().get('profilepicture')
+    const employeeprofilepicture = useSearchParams().get('profilepicture') 
     const [maxcounter, setmaxcounter] = useState(0)
     const [date, setDate] = useState(null);
     const [workingDays, setWorkingDays] = useState(0);
@@ -30,10 +30,7 @@ const Leave = () => {
     const [timeoffapproved, setTimeOffApproved] = useState([]);
     const [userStartDate, setUserStartDate] = useState("")
     const [enddate, setEndDate] = useState("")
-    const [dates, setDates] = useState([]);
-    const [absence, setAbcense] = useState('');
     const [absenceType, setAbsenceType] = useState([]);
-    const [description, setDescription] = useState('');
     const [policyName, setPolicyName] = useState('Default')
     const [PopupViewTimeoffFromCalendar, setPopupViewTimeoffFromCalendar] = useState(false)
     const [popupDate, setpopupDate] = useState('')
@@ -206,7 +203,7 @@ const Leave = () => {
         <div className={styles.container} style={{ overflowY: 'hidden' }}>
 
             <div className='absolute  top-[11%] right-[45%] flex flex-row items-center'>
-                <img className='w-[50px] h-[50px] rounded-[50%] mr-4' src={employeeprofilepicture ? employeeprofilepicture : '/defaultprofilepicture.png'} alt='profilepicture' />
+                <img className='w-[50px] h-[50px] rounded-[50%] mr-4' src={employeeprofilepicture !== null && employeeprofilepicture !== 'undefined' ? employeeprofilepicture : '/defaultprofilepicture.png'} alt='profilepicture' />
                 <h1 className='font-lexend font-semibold text-[24px] leading-[30px] text-[#16151C]'>{employeefullname}</h1>
             </div>
 
