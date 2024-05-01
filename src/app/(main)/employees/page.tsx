@@ -81,7 +81,10 @@ const Employees = () => {
                         employeeImage
                     )
                 }
-
+                dispatch({
+                    type: 'Chnage_State',
+                    payload: true
+                })
                 dispatch(Deleteemployee(employeeId, publicId !== '/defaultprofilepicture.png' ? publicId : "error"))
             }
         }
@@ -185,6 +188,7 @@ const Employees = () => {
         profilepicture: user.profilepicture ? user.profilepicture : '/defaultprofilepicture.png',
         role: user.role,
     }));
+    const isbuttondisabled = useSelector((state: any) => state.isbuttondisabled);
 
 
     return (
@@ -240,7 +244,9 @@ const Employees = () => {
                                         {popupDeletePage === 1 ? 'I have read and understand these effects' : 'Delete this employee'}
                                     </div>
                                 }
+                                
                                 fct={deleteEmployee}
+                                isbuttondisabled   = { isbuttondisabled }
 
                             />
                         </div>

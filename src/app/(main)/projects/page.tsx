@@ -88,7 +88,10 @@ const Projects = () => {
                 projectemployees.push({ user: selectedUsers[i], position: 'member' });
         }
 
-
+        dispatch({
+            type: 'Chnage_State',
+            payload: true
+        })
 
         axios.post(process.env.NEXT_PUBLIC_DOMAIN + '/api/projects/addnewproject',
             { name: ProjectName, startdate: ProjectStartDate, enddate: ProjectEndDate, budget: ProjectBudget  , projectemployees :projectemployees }
@@ -105,8 +108,16 @@ const Projects = () => {
                 setProjectBudget(0)
                 setSelectedUsers([])
                 toast.success('Project created successfully');
+                dispatch({
+                    type: 'Chnage_State',
+                    payload: false
+                })
             })
             .catch((err) => {
+                dispatch({
+                    type: 'Chnage_State',
+                    payload: false
+                })
                 dispatch({ type: 'ERRORS', payload: err.response.data })
             })
 
@@ -321,7 +332,7 @@ const Projects = () => {
 
 
 
-
+    const isbuttondisabled = useSelector((state: any) => state.isbuttondisabled);
 
     return (
         <div className={styles.container}>
@@ -444,7 +455,7 @@ const Projects = () => {
 
 
                         <div className=' bg-white-500 border-[2px] absolute right-[10%] top-[83%] flex justify-center items-center border-[#7152F3] w-[90px] h-[40px] w-[250px] text-white rounded-[10px] p-1  ' >
-                            <ButtonSubmit fct={handleButton} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Next</h3>} />
+                            <ButtonSubmit isbuttondisabled={isbuttondisabled} fct={handleButton} spincol='[#7152F3]' timing={200} text={<h3 className='text-[14px] text-[#7152F3]'>Next</h3>} />
 
 
                         </div>

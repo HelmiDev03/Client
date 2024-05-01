@@ -21,11 +21,18 @@ export const Addnewemployee = (data:any , router:any) => (dispatch: Dispatch<any
                 type: 'SET_PERMISSION_GROUPS',
                 payload: res.data.permissionGroups
             });
+            dispatch({
+                type: 'Chnage_State',
+                payload: false
+            })
 
             router.push('/employees');
         })
         .catch (error=> {
-            // Handle errors if needed
+            dispatch({
+                type: 'Chnage_State',
+                payload: false
+            })
             console.error('Error fetching employees:', error);
         })
         

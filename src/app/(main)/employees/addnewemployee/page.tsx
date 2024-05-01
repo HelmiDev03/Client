@@ -253,10 +253,7 @@ const AddNewEmployee = () => {
       payload: true
   })
     dispatch(Addnewemployee(data, router));
-    dispatch({
-      type: 'Chnage_State',
-      payload: false
-  })
+   
 
 
   };
@@ -482,7 +479,7 @@ const AddNewEmployee = () => {
             <ButtonCancel text="Return" fct={handleCancel} />
           </div>
           <div className=' w-[91px] h-[50px] flex justify-center items-center rounded-[10px] p-[20px] bg-[#7152F3]   ' >
-            <ButtonSubmit text="Add" fct={handleFinish} />
+            <ButtonSubmit isbuttondisabled={isbuttondisabled} text="Add" fct={handleFinish} />
           </div>
 
 

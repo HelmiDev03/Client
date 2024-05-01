@@ -17,10 +17,17 @@ export const Deleteemployee = (id: any, publicId: any) => (dispatch: Dispatch<an
                 payload: res.data.policies
               })
               toast.success('Employee deleted successfully');
+              dispatch({
+                type: 'Chnage_State',
+                payload: false
+            })
             window.location.href = '/employees';
         })
         .catch(error => {
-            // Handle errors if needed
+            dispatch({
+                type: 'Chnage_State',
+                payload: false
+            })
             console.error('Error fetching employees:', error);
         });
 };
