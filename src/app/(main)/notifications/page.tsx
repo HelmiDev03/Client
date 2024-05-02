@@ -12,6 +12,7 @@ import { TextareaInput } from '@/app/(components)/Inputs/textarea'
 import { useDispatch } from "react-redux";
 import { InputTextarea } from "primereact/inputtextarea";
 import toast from "react-hot-toast";
+import { RiQuestionAnswerLine } from "react-icons/ri";
 const Notifications = () => {
   const [PopupAcceptOrRejectLeaveRequest, setPopupAcceptOrRejectLeaveRequest] = React.useState(false)
   const [notifications, setNotifications] = React.useState([])
@@ -130,7 +131,7 @@ const Notifications = () => {
                   <p className='mb-2 font-lexend text-body-1 font-bold text-[#16151C] text-base leading-6 tracking-normal text-left '>{notif.content.user.firstname} {notif.content.user.lastname}  <span className='font-lexend text-caption font-light text-[#A2A1A8] text-sm leading-5 tracking-normal '>has answred your time off request</span></p>
                   <p className='mb-2 flex flex-row font-lexend text-caption font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><IoIosCalendar className='mr-2 text-[#7152F3] text-[20px] ' />{notif.content.type}  from {notif.content.startdate?.slice(0, 10)}  to {notif.content.enddate?.slice(0, 10)}</p>
                   <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> Answredat at  : {notif.content.answredat?.slice(0, 10)} </p>
-                  <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><CiTimer className='mr-2 text-[#7152F3] text-[20px] ' /> Response  : {notif.content.response} </p>
+                  <p className='mb-2 font-lexend text-caption flex flex-row font-normal text-[#A2A1A8] text-sm leading-5 tracking-normal '><RiQuestionAnswerLine  className='mr-2 text-[#7152F3] text-[20px] ' /> Response  : {notif.content.response} </p>
 
 
                 </div>
