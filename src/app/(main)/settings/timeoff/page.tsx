@@ -403,7 +403,7 @@ const TimeOff = () => {
                                         {day.name}
                                     </th>
                                     <td className="px-6 py-4">
-                                        {day.day}
+                                        {day.day.slice(0,10)}
                                     </td>
                                     {permission.deletenationaldays && <td className="px-6 py-4">
                                         <button onClick={() => axios.put(process.env.NEXT_PUBLIC_DOMAIN+'/api/company/deleteNationalDays', { index }).then(res => {
