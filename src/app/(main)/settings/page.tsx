@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { MdLockPerson } from "react-icons/md";
-import { FaUserCog } from "react-icons/fa";
+import { FaRegClock, FaUserCog } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { RiListSettingsFill } from "react-icons/ri";
@@ -45,6 +45,11 @@ const Settings = () => {
                 <FaUserCog className='text-blue-600 mb-4' size={30} />
                 <h2 className='font-semibold text-xl'>Profile Settings</h2>
                 <p className='text-sm font-light text-gray-500'>View and Update your profile settings</p>
+                </div>
+                <div onClick={() => router.push('/settings/attendance')} className='flex flex-col gap-2 border-2 rounded-2xl w-[470px] p-8 cursor-pointer hover:border-slate-300'>
+                <FaRegClock className='text-blue-600 mb-4' size={30} />
+                <h2 className='font-semibold text-xl'>Clock In</h2>
+                <p className='text-sm font-light text-gray-500'>Set and assign your company's attendance policies</p>
                 </div>
             </section>
         </div>
