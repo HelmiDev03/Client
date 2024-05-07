@@ -264,7 +264,7 @@ const EmployeeAttendance = () => {
                 </div>
               </div>
               <div className='border rounded-md w-[20%] flex flex-col justify-center items-center'>
-                <h1 className='text-xl'>0h</h1>
+                <h1 className='text-xl'>{160 - Math.floor(totalHours) }h</h1>
                 <p>Balence</p>
               </div>
             </div>
