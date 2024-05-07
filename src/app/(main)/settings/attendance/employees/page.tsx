@@ -17,7 +17,7 @@ import { GetAllEmployees } from '@/redux/actions/usersActions/getAllEmployees';
 import { MdOutlineTimer } from "react-icons/md";
 
 
-const CompanySettings = () => {
+const RemoteEmployees = () => {
     const router = useRouter()
 
   const employees= useSelector((state:any)=>state.users)
@@ -146,7 +146,7 @@ const CompanySettings = () => {
 
     return (
         
-        <div className="mt-20 flex flex-col ml-5 p-16 ">
+        <div className="mt-5 flex flex-col ml-5 p-16 ">
             <div className="flex w-full h-14 justify-between items-center border-b-2 p-2">
                 <h1 className="font-semibold"></h1>
                 <ul className="flex gap-4">
@@ -159,7 +159,7 @@ const CompanySettings = () => {
                 </ul>
                 <button ><FaRegSquarePlus onClick={() => setPopupAddEmployee(!PopupAddEmployee)} className="text-blue-600"  size={30} /></button>
             </div>
-            <section className=" h-full py-14 px-12 flex flex-col gap-20">
+            <section className=" h-full py-14 px-12 flex flex-col gap-10">
                 <div id="Description">
                     <h1 className="font-bold text-xl flex items-baseline gap-2 mb-4">
                         <FaUsers size={25} className="text-blue-600" />
@@ -187,7 +187,7 @@ const CompanySettings = () => {
         <div className="w-[90vw] max-w-md">
           <div>
             <div className='text-[#16151C] font-lexend font-light text-[20px] leading-[30px] '>Assign Employees</div>
-            <div className='mb-3 font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Select the employees you would like to assign to this Attendance Policy.</div>
+            <div className='mb-3 font-lexend text-body-2 font-normal text-gray-500 text-sm leading-5 tracking-normal text-left'>Select the employees you would like to assign to work remotely.</div>
           </div>
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
@@ -289,4 +289,4 @@ const CompanySettings = () => {
     )
 }
 
-export default CompanySettings
+export default RemoteEmployees

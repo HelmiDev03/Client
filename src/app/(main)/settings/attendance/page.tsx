@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 import { TbLocationCog } from "react-icons/tb";
 
 
-const CompanySettings = () => {
+const GeoLocationCompanySettings = () => {
     const dispatch = useDispatch<AppDispatch>()
     const pathname = usePathname();
     const errors = useSelector((state: any) => state.errors);
@@ -93,4 +93,4 @@ const CompanySettings = () => {
     )
 }
 
-export default CompanySettings
+export default GeoLocationCompanySettings
