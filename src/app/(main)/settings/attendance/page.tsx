@@ -27,6 +27,7 @@ const CompanySettings = () => {
 
     return (
         <div className="mt-20 flex flex-col ml-5 p-16 ">
+          
             <ul className="flex gap-4 justify-self-center self-center">
                 <li className={`pr-2 ${pathname === '/settings/attendance' ? activeLinkStyle : ''}`}>
                     <Link href={'/settings/attendance'} className="flex gap-2"><TbLocationCog size={20} />Configuration</Link>
@@ -79,8 +80,7 @@ const CompanySettings = () => {
                             <input
                                 type="text"
                                 id="address"
-                                onChange={(e:any) => {setAdress(e.target.value)}}
-                                 value={adress}
+                                 value="Bloc Amira, 3e étage - Montplaisir 1073 Tunis - Tunisie"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             />
                             {errors.adress && <div className="h-[30px] flex items-center p-4 text-sm font-semibold text-red-500" role="alert">{errors.adress}</div>}

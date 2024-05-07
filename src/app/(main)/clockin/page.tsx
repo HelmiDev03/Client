@@ -212,6 +212,26 @@ const EmployeeAttendance = () => {
   const totalHours = totalSeconds / 3600;
   return (
     <div className={styles.container}>
+      {/* <div id="info-popup"  className=" overflow-y-auto overflow-x-hidden fixed translate-x-[500px]  top-center right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+  <div className="relative p-4 w-full max-w-lg h-full md:h-auto">
+      <div className="relative p-4 bg-white rounded-lg shadow ">
+          <div className="mb-4 text-sm font-light text-gray-500 ">
+              <h3 className="mb-3 text-2xl font-bold text-gray-900 ">Unauthorized Place</h3>
+              <p>
+                 
+Our system has detected that you are currently located outside the authorized work area. Please ensure that you are within the designated work zone to continue your work activities effectively. If you believe this is an error, please contact your manager immediately for further assistance.
+              </p>
+          </div>
+          <div className="justify-between items-center pt-0 space-y-4 sm:flex sm:space-y-0">
+              <a href="#" className="font-medium text-primary-600 hover:underline">Learn more </a>
+              <div className="items-center space-y-4 sm:space-x-4 sm:flex sm:space-y-0">
+                  <button id="close-modal" type="button"  className="py-2 px-4 w-full text-sm font-medium text-[#ffffff] bg-red-500 rounded-lg border border-gray-200 sm:w-auto hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 ">Close</button>
+                
+              </div>
+          </div>
+      </div>
+  </div>
+      </div> */}
       <section className='flex flex-col items-center gap-8'>
 
         <div className='flex gap-4'>
